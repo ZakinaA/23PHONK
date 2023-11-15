@@ -1,3 +1,7 @@
 controllers:
     resource: ../src/Controller/
     type: attribute
+
+instrument:
+    path: /instrument
+    controller: App\Controller\instrumentController::index
