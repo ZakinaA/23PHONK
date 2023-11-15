@@ -1,3 +1,13 @@
 controllers:
     resource: ../src/Controller/
     type: attribute
+
+index:
+    path: /contrat
+    controller: App\Controller\ContratController::index
+
+contratLister:
+    path: /contrat/lister
+    controller: App\Controller\ContratController::contratLister
+
+
