@@ -31,6 +31,12 @@ class Eleve
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $ville = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $tel = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $mail = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +110,30 @@ class Eleve
     public function setVille(?string $ville): static
     {
         $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getTel(): ?int
+    {
+        return $this->tel;
+    }
+
+    public function setTel(?int $tel): static
+    {
+        $this->tel = $tel;
+
+        return $this;
+    }
+
+    public function getMail(): ?string
+    {
+        return $this->mail;
+    }
+
+    public function setMail(?string $mail): static
+    {
+        $this->mail = $mail;
 
         return $this;
     }
