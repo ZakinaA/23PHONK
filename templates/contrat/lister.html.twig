@@ -1,4 +1,29 @@
 <!DOCTYPE html>
 <html>
-<p> salut </p>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
+
+LISTE DES CONTRATS</br>
+<table>
+    {% for e in pContrats %}
+        <tr>
+        <td><a href="{{ path('app_etudiant_consulter', { 'id': e.id }) }}">{{ e.nom }}</a></td>
+        <td>{{ e.prenom }}</a></td>
+        <td>{{ e.dateNaiss|date('d/m/Y') }}</td>
+        <td>{{ e.ville}}</td>
+    {% else %}
+        <tr>
+            <td>Aucun contrat n'a été trouvé.</td>
+        </tr>
+    {% endfor %}
+</table>
+
+
+</body>
 </html>
