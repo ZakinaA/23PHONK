@@ -31,9 +31,7 @@ class InstrumentController extends AbstractController
 
         $instrument= $doctrine->getRepository(Instrument::class)->find($id);
 
-
-        $repository = $doctrine->getRepository(Intervention::class);
-        $intervention= $repository->findBy(['id' => $id]);
+        $intervention= $doctrine->getRepository(Intervention::class)->findBy(['instrument' => $id]);
 
         if (!$instrument) {
             throw $this->createNotFoundException(
