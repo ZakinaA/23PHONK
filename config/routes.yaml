@@ -9,3 +9,8 @@ coursLister:
 coursConsulter:
     path: /cours/consulter/{id}
     controller: App\Controller\CoursController::consulter
+
+coursAjouter:
+    path: /cours/ajouter
+    controller: App\Controller\CoursController::ajouter
+    methods: ['GET', 'POST']
