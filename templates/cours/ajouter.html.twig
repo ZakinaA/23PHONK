@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ajouter un cours</title>
+</head>
+<body>
+
+<h1>Ajouter un cours</h1>
+
+<form method="post" action="{{ path('coursAjouter') }}">
+    {{ form_start(form) }}
+
+    {{ form_widget(form) }}
+
+    <button type="submit">Ajouter le cours</button>
+
+    {{ form_end(form) }}
+</form>
+
+</body>
+</html>
