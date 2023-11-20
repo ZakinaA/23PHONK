@@ -4,10 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Instrument;
 use App\Entity\Intervention;
+use App\Form\InstrumentType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 
 class InstrumentController extends AbstractController
 {
@@ -42,4 +45,26 @@ class InstrumentController extends AbstractController
         return $this->render('instrument/consulter.html.twig',
             ['instrument' => $instrument, 'pIntervention' => $intervention]);
     }
+
+    public function ajouter(Request $request, PersistenceManagerRegistry $doctrine):Response
+    {
+        $instrument = new instrument();
+        $form = $this->createForm(InstrumentType::class, $instrument);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($instrument);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Instrument created successfully!'); // Change the flash message
+            return $this->redirectToRoute('listerInstrument');
+        }
+
+        return $this->render('instrument/ajouter.html.twig', [ // Change the template path
+            'form' => $form->createView(),
+        ]);
+    }
+
 }
