@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EleveRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EleveRepository::class)]
@@ -30,6 +32,20 @@ class Eleve
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $ville = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $tel = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $mail = null;
+
+    #[ORM\OneToMany(mappedBy: 'eleve', targetEntity: Inscription::class)]
+    private Collection $inscriptions;
+
+    public function __construct()
+    {
+        $this->inscriptions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -104,6 +120,60 @@ class Eleve
     public function setVille(?string $ville): static
     {
         $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getTel(): ?int
+    {
+        return $this->tel;
+    }
+
+    public function setTel(?int $tel): static
+    {
+        $this->tel = $tel;
+
+        return $this;
+    }
+
+    public function getMail(): ?string
+    {
+        return $this->mail;
+    }
+
+    public function setMail(?string $mail): static
+    {
+        $this->mail = $mail;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Inscription>
+     */
+    public function getInscriptions(): Collection
+    {
+        return $this->inscriptions;
+    }
+
+    public function addInscription(Inscription $inscription): static
+    {
+        if (!$this->inscriptions->contains($inscription)) {
+            $this->inscriptions->add($inscription);
+            $inscription->setEleve($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Inscription $inscription): static
+    {
+        if ($this->inscriptions->removeElement($inscription)) {
+            // set the owning side to null (unless already changed)
+            if ($inscription->getEleve() === $this) {
+                $inscription->setEleve(null);
+            }
+        }
 
         return $this;
     }
