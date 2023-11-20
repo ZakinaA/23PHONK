@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Etudiant;
 use App\Entity\Instrument;
 use App\Entity\Intervention;
 use Doctrine\Persistence\ManagerRegistry;
