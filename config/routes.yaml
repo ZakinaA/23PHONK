@@ -9,3 +9,7 @@ instrument:
 listerInstrument:
     path: /instrument/lister
     controller: App\Controller\InstrumentController::lister
+
+consulterInstrument:
+    path: /instrument/consulter/{id}
+    controller: App\Controller\InstrumentController::consulter
