@@ -9,6 +9,7 @@ use App\Entity\Cours;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\CoursType;
+use App\Form\CoursModifierType;
 
 
 class CoursController extends AbstractController
@@ -67,6 +68,30 @@ class CoursController extends AbstractController
         else
         {
             return $this->render('cours/ajouter.html.twig', array('form' => $form->createView(),));
+        }
+    }
+
+    public function modifierCours(ManagerRegistry $doctrine, $id, Request $request)
+    {
+
+        $cours = $doctrine->getRepository(Cours::class)->find($id);
+
+        if (!$cours) {
+            throw $this->createNotFoundException('Aucun cours trouvé avec le numéro ' . $id);
+        } else {
+            $form = $this->createForm(CoursModifierType::class, $cours);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $etudiant = $form->getData();
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($cours);
+                $entityManager->flush();
+                return $this->render('cours/consulter.html.twig', ['cours' => $cours,]);
+            } else {
+                return $this->render('cours/ajouter.html.twig', array('form' => $form->createView(),));
+            }
         }
     }
 }
