@@ -27,4 +27,22 @@ class CoursController extends AbstractController
             'pCours' => $cours,]);
 
     }
+
+    public function consulter(ManagerRegistry $doctrine, int $id){
+
+        $cours= $doctrine->getRepository(Cours::class)->find($id);
+
+        if (!$cours) {
+            throw $this->createNotFoundException(
+                'Aucun cours trouvé avec le numéro '.$id
+            );
+        }
+
+        $elevesInscrits = $cours->getInscriptions();
+
+        //return new Response('Cours : '.$cours->getNom());
+        return $this->render('cours/consulter.html.twig', [
+            'cours' => $cours,
+            'elevesInscrits' => $elevesInscrits,]);
+    }
 }
