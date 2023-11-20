@@ -3,5 +3,9 @@ controllers:
     type: attribute
 
 instrument:
-    path: /instrument
-    controller: App\Controller\instrumentController::index
+    path: /instrument/
+    controller: App\Controller\InstrumentController::index
+
+listerInstrument:
+    path: /instrument/lister
+    controller: App\Controller\InstrumentController::lister
