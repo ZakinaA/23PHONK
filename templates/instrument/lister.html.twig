@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Instrument Lister !{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+
+        .tab-lister-instrument{
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+    </style>
+
+    <div class="tab-lister-instrument">
+
+        <table>
+            <tr>
+                <th>Type</th>
+                <th>Classe</th>
+                <th>N°Serie</th>
+                <th>Achat</th>
+                <th>Utilisation</th>
+                <th>Contrat de prêt</th>
+                <th>Intervention</th>
+                <th>Action</th>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+
+    </div>
+{% endblock %}
