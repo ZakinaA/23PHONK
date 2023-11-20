@@ -7,6 +7,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Cours;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
+use App\Form\CoursType;
+
 
 class CoursController extends AbstractController
 {
@@ -20,7 +23,7 @@ class CoursController extends AbstractController
 
     public function lister(ManagerRegistry $doctrine){
 
-        $repository = $doctrine->getRepository(Cours::class);
+        $repository = $doctrine->getRepository(CoursType::class);
 
         $cours= $repository->findAll();
         return $this->render('cours/lister.html.twig', [
@@ -44,5 +47,26 @@ class CoursController extends AbstractController
         return $this->render('cours/consulter.html.twig', [
             'cours' => $cours,
             'elevesInscrits' => $elevesInscrits,]);
+    }
+
+    public function ajouter(ManagerRegistry $doctrine,Request $request){
+        $cours = new cours();
+        $form = $this->createForm(CoursType::class, $cours);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $cours = $form->getData();
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($cours);
+            $entityManager->flush();
+
+            return $this->render('cours/consulter.html.twig', ['cours' => $cours,]);
+        }
+        else
+        {
+            return $this->render('cours/ajouter.html.twig', array('form' => $form->createView(),));
+        }
     }
 }
