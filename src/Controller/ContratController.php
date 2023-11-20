@@ -27,4 +27,19 @@ class ContratController extends AbstractController
             'pContrats' => $contrats,]);
 
     }
+    public function consulterContrat(ManagerRegistry $doctrine, int $id){
+
+        $contrat= $doctrine->getRepository(Contrat::class)->find($id);
+
+        if (!$contrat) {
+            throw $this->createNotFoundException(
+                'Aucun contrat trouvé avec le numéro '.$id
+            );
+        }
+
+        //return new Response('Contrat : '.$contrat->getNom());
+        return $this->render('contrat/consulter.html.twig', [
+            'contrat' => $contrat,]);
+    }
+
 }
