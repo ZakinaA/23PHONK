@@ -32,6 +32,9 @@ class Instrument
     #[ORM\ManyToOne(inversedBy: 'instruments')]
     private ?TypeInstrument $type = null;
 
+    #[ORM\ManyToOne(inversedBy: 'instruments')]
+    private ?Marque $marque = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +108,18 @@ class Instrument
     public function setType(?TypeInstrument $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getMarque(): ?Marque
+    {
+        return $this->marque;
+    }
+
+    public function setMarque(?Marque $marque): static
+    {
+        $this->marque = $marque;
 
         return $this;
     }
