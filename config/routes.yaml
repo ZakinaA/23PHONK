@@ -13,7 +13,6 @@ coursConsulter:
 coursAjouter:
     path: /cours/ajouter
     controller: App\Controller\CoursController::ajouter
-    methods: ['GET', 'POST']
 
 coursModifier:
     path: /cours/modifier/{id}
@@ -46,3 +45,7 @@ professeurLister:
 professeurConsulter:
     path: /professeur/consulter/{id}
     controller: App\Controller\ProfesseurController::consulter
+
+professeurAjouter:
+    path: /professeur/ajouter
+    controller: App\Controller\ProfesseurController::ajouter
