@@ -16,7 +16,7 @@ coursAjouter:
 
 coursModifier:
     path: /cours/modifier/{id}
-    controller: App\Controller\CoursController::modifierCours
+    controller: App\Controller\CoursController::modifier
     
 instrument:
     path: /instrument/
@@ -49,3 +49,7 @@ professeurConsulter:
 professeurAjouter:
     path: /professeur/ajouter
     controller: App\Controller\ProfesseurController::ajouter
+
+modifierProfesseur:
+    path: /professeur/modifier/{id}
+    controller: App\Controller\ProfesseurController::modifier
