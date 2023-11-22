@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+<h5>PAGE DE CONSULTATION D'UN COURS</h5>
+<p>
+<table >
+    <tr><td>Id : </td><td>{{cours.id}} </td></tr>
+    <tr><td>Libelle : </td><td>{{cours.libelle}}</td>
+    <tr><td>Jour : </td><td>{{cours.jour.libelle}}</td>
+    <tr><td>Heure de début : </td><td>{{cours.heureDebut|date('H:i:s')}}</td>
+    <tr><td>Heure de Fin : </td><td>{{cours.heureFin|date('H:i:s')}}</td>
+    <tr><td>Instrument : </td><td>{{cours.typeInstrument.libelle}}</td>
+    <tr><td>Âge Minimum : </td><td>{{cours.ageMini}}</td>
+    <tr><td>Nombre de places Max : </td><td>{{cours.nbPlaces}}</td>
+    <tr><td>Nom du professeur : </td><td>{{cours.professeur.nom}}</td></tr></tr>
+    <tr><td>Prénom du professeur : </td><td>{{cours.professeur.prenom}}</td></tr>
+
+</table>
+<h5>Liste des élèves inscrits :</h5>
+<ul>
+    {% for inscription in elevesInscrits %}
+        <li>{{ inscription.eleve.prenom }}  {{ inscription.eleve.nom }}</li>
+    {% endfor %}
+</ul>
+</body>
+</html>

@@ -2,6 +2,23 @@ controllers:
     resource: ../src/Controller/
     type: attribute
 
+coursLister:
+    path: /cours/lister
+    controller: App\Controller\CoursController::lister
+
+coursConsulter:
+    path: /cours/consulter/{id}
+    controller: App\Controller\CoursController::consulter
+
+coursAjouter:
+    path: /cours/ajouter
+    controller: App\Controller\CoursController::ajouter
+    methods: ['GET', 'POST']
+
+coursModifier:
+    path: /cours/modifier/{id}
+    controller: App\Controller\CoursController::modifierCours
+    
 instrument:
     path: /instrument/
     controller: App\Controller\InstrumentController::index

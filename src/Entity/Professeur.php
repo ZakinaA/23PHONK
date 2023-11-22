@@ -2,26 +2,26 @@
 
 namespace App\Entity;
 
-use App\Repository\EleveRepository;
+use App\Repository\ProfesseurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: EleveRepository::class)]
-class Eleve
+#[ORM\Entity(repositoryClass: ProfesseurRepository::class)]
+class Professeur
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $prenom = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $numRue = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -39,12 +39,12 @@ class Eleve
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $mail = null;
 
-    #[ORM\OneToMany(mappedBy: 'eleve', targetEntity: Inscription::class)]
-    private Collection $inscriptions;
+    #[ORM\OneToMany(mappedBy: 'professeur', targetEntity: Cours::class)]
+    private Collection $cours;
 
     public function __construct()
     {
-        $this->inscriptions = new ArrayCollection();
+        $this->cours = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -57,7 +57,7 @@ class Eleve
         return $this->nom;
     }
 
-    public function setNom(string $nom): static
+    public function setNom(?string $nom): static
     {
         $this->nom = $nom;
 
@@ -69,7 +69,7 @@ class Eleve
         return $this->prenom;
     }
 
-    public function setPrenom(string $prenom): static
+    public function setPrenom(?string $prenom): static
     {
         $this->prenom = $prenom;
 
@@ -81,7 +81,7 @@ class Eleve
         return $this->numRue;
     }
 
-    public function setNumRue(int $numRue): static
+    public function setNumRue(?int $numRue): static
     {
         $this->numRue = $numRue;
 
@@ -149,29 +149,29 @@ class Eleve
     }
 
     /**
-     * @return Collection<int, Inscription>
+     * @return Collection<int, Cours>
      */
-    public function getInscriptions(): Collection
+    public function getCours(): Collection
     {
-        return $this->inscriptions;
+        return $this->cours;
     }
 
-    public function addInscription(Inscription $inscription): static
+    public function addCour(Cours $cour): static
     {
-        if (!$this->inscriptions->contains($inscription)) {
-            $this->inscriptions->add($inscription);
-            $inscription->setEleve($this);
+        if (!$this->cours->contains($cour)) {
+            $this->cours->add($cour);
+            $cour->setProfesseur($this);
         }
 
         return $this;
     }
 
-    public function removeInscription(Inscription $inscription): static
+    public function removeCour(Cours $cour): static
     {
-        if ($this->inscriptions->removeElement($inscription)) {
+        if ($this->cours->removeElement($cour)) {
             // set the owning side to null (unless already changed)
-            if ($inscription->getEleve() === $this) {
-                $inscription->setEleve(null);
+            if ($cour->getProfesseur() === $this) {
+                $cour->setProfesseur(null);
             }
         }
 

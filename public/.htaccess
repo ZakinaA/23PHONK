@@ -1,3 +1,4 @@
+
 # For a symfony application to work properly, you MUST store this .htaccess in
 # the same directory as your front controller, index.php, in a standard symfony
 # web application is under the "public" project subdirectory.
@@ -41,6 +42,7 @@ DirectoryIndex index.php
     #   4. Execute the RewriteRule:
     #      * The %1 in the RewriteRule flag E=BASE:%1 refers to the first group captured in the RewriteCond ^(/.+)/(.*)
     #      * setting env variable 'BASE' to '/public'
+
     RewriteCond %{REQUEST_URI}::$0 ^(/.+)/(.*)::\2$
     RewriteRule .* - [E=BASE:%1]
 
@@ -49,17 +51,21 @@ DirectoryIndex index.php
     RewriteRule ^ - [E=HTTP_AUTHORIZATION:%0]
 
     # Removes the /index.php/ part from a URL, if present
+
     RewriteCond %{ENV:REDIRECT_STATUS} =""
     RewriteRule ^index\.php(?:/(.*)|$) %{ENV:BASE}/$1 [R=301,L]
 
     # If the requested filename exists, simply serve it.
+
     # Otherwise rewrite all other queries to the front controller.
+
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ %{ENV:BASE}/index.php [L]
 </IfModule>
 
 <IfModule !mod_rewrite.c>
     <IfModule mod_alias.c>
+
         # When mod_rewrite is not available, we instruct a temporary redirect
         # to the front controller explicitly so that the website
         RedirectMatch 307 ^/$ /index.php/
