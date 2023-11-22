@@ -71,7 +71,7 @@ class CoursController extends AbstractController
         }
     }
 
-    public function modifierCours(ManagerRegistry $doctrine, $id, Request $request)
+    public function modifier(ManagerRegistry $doctrine, $id, Request $request)
     {
 
         $cours = $doctrine->getRepository(Cours::class)->find($id);
@@ -84,7 +84,7 @@ class CoursController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
 
-                $etudiant = $form->getData();
+                $cours = $form->getData();
                 $entityManager = $doctrine->getManager();
                 $entityManager->persist($cours);
                 $entityManager->flush();
