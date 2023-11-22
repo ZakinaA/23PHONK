@@ -21,3 +21,7 @@ interventionLister:
 consulterIntervention:
     path: /intervention/consulter/{id}
     controller: App\Controller\InterventionController::consulterIntervention
+
+ajouterContrat:
+    path: /contrat/ajouter
+    controller: App\Controller\ContratController::ajouterContrat
