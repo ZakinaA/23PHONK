@@ -28,12 +28,15 @@ class Intervention
     #[ORM\Column(length: 20)]
     private ?string $prix = null;
 
-    #[ORM\ManyToMany(targetEntity: Contrat::class, mappedBy: 'contrat')]
-    private Collection $contrats;
+
+
+    #[ORM\ManyToMany(targetEntity: Contrat::class, inversedBy: 'interventions')]
+    private Collection $intervention;
 
     public function __construct()
     {
         $this->contrats = new ArrayCollection();
+        $this->intervention = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -89,30 +92,7 @@ class Intervention
         return $this;
     }
 
-    /**
-     * @return Collection<int, Contrat>
-     */
-    public function getContrats(): Collection
-    {
-        return $this->contrats;
-    }
 
-    public function addContrat(Contrat $contrat): static
-    {
-        if (!$this->contrats->contains($contrat)) {
-            $this->contrats->add($contrat);
-            $contrat->addContrat($this);
-        }
 
-        return $this;
-    }
 
-    public function removeContrat(Contrat $contrat): static
-    {
-        if ($this->contrats->removeElement($contrat)) {
-            $contrat->removeContrat($this);
-        }
-
-        return $this;
-    }
 }
