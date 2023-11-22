@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+
+use App\Entity\Intervention;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Contrat;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,15 +33,20 @@ class ContratController extends AbstractController
 
         $contrat= $doctrine->getRepository(Contrat::class)->find($id);
 
+
         if (!$contrat) {
             throw $this->createNotFoundException(
                 'Aucun contrat trouvé avec le numéro '.$id
             );
         }
 
-        //return new Response('Contrat : '.$contrat->getNom());
+        $interventions = $contrat->getInterventions();
+
         return $this->render('contrat/consulter.html.twig', [
-            'contrat' => $contrat,]);
+            'interventions' => $interventions,
+            'contrat' => $contrat,
+        ]);
     }
+
 
 }
