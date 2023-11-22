@@ -32,8 +32,7 @@ class Contrat
     #[ORM\Column(length: 255)]
     private ?string $etatDetailleFin = null;
 
-    #[ORM\ManyToMany(targetEntity: intervention::class, inversedBy: 'contrats')]
-    private Collection $contrat;
+
 
     #[ORM\OneToMany(mappedBy: 'contrat', targetEntity: Eleve::class)]
     private Collection $eleves;
@@ -47,6 +46,9 @@ class Contrat
     #[ORM\ManyToOne(inversedBy: 'contrats')]
     private ?Instrument $instrument = null;
 
+    #[ORM\ManyToMany(targetEntity: Intervention::class, mappedBy: 'intervention')]
+    private Collection $interventions;
+
 
 
     public function __construct()
@@ -54,6 +56,7 @@ class Contrat
         $this->contrat = new ArrayCollection();
         $this->eleves = new ArrayCollection();
         $this->instruments = new ArrayCollection();
+        $this->interventions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -121,29 +124,7 @@ class Contrat
         return $this;
     }
 
-    /**
-     * @return Collection<int, intervention>
-     */
-    public function getContrat(): Collection
-    {
-        return $this->contrat;
-    }
 
-    public function addContrat(intervention $contrat): static
-    {
-        if (!$this->contrat->contains($contrat)) {
-            $this->contrat->add($contrat);
-        }
-
-        return $this;
-    }
-
-    public function removeContrat(intervention $contrat): static
-    {
-        $this->contrat->removeElement($contrat);
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Eleve>
@@ -225,6 +206,45 @@ class Contrat
     public function setInstrument(?Instrument $instrument): static
     {
         $this->instrument = $instrument;
+
+        return $this;
+    }
+
+    public function getContrat(): ?interventionPret
+    {
+        return $this->Contrat;
+    }
+
+    public function setContrat(?interventionPret $Contrat): static
+    {
+        $this->Contrat = $Contrat;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Intervention>
+     */
+    public function getInterventions(): Collection
+    {
+        return $this->interventions;
+    }
+
+    public function addIntervention(Intervention $intervention): static
+    {
+        if (!$this->interventions->contains($intervention)) {
+            $this->interventions->add($intervention);
+            $intervention->addIntervention($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIntervention(Intervention $intervention): static
+    {
+        if ($this->interventions->removeElement($intervention)) {
+            $intervention->removeIntervention($this);
+        }
 
         return $this;
     }
