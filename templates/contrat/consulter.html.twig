@@ -24,7 +24,7 @@
 
         }
     </style>
-<table >
+<table>
     <tr><td>Id : </td><td>{{contrat.id}} </td></tr>
     <tr><td>Date de début: </td><td>{{contrat.datedebut|date("d/m/Y")}}</td>
 
@@ -36,29 +36,26 @@
     <tr><td>Nom de l'élève: </td><td>{{contrat.eleve.nom}}</td></tr>
     <tr><td>Prénom de l'élève: </td><td>{{contrat.eleve.prenom}}</td></tr>
     <tr><td>Numéro de l'instrument: </td><td>{{contrat.instrument.numSene}}</td></tr>
-
-
-
-
 </table>
 
-
-<table>
-    {% for e in interventions %}
-        <tr>
-        <td><a href="{{ path('interventionLister', { 'id': e.id }) }}">{{ e.ID }}</a></td>
-        <tr><td>Descriptif</td><td>{{e.decriptif}}</td>
-        <tr><td>Date de début: </td><td>{{e.datedebut|date("d/m/Y")}}</td>
-
-        <tr><td>Date de fin : </td><td>{{e.datefin|date("d/m/Y")}}</td></tr></tr>
-
-        <tr><td>prix: </td><td>{{e.prix}}</td></tr>
-    {% else %}
-        <tr>
-            <td>Aucun etudiant n'a été trouvé.</td>
-        </tr>
-    {% endfor %}
-</table>
-
+{% if interventions is not empty %}
+    <table>
+        {% for e in interventions %}
+            <tr>
+                <td><a href="{{ path('consulterIntervention', { 'id': e.id }) }}">{{ e.id }}</a></td>
+            </tr>
+            <tr><td>Descriptif</td><td>{{ e.decriptif }}</td></tr>
+            <tr><td>Date de début:</td><td>{{ e.datedebut|date("d/m/Y") }}</td></tr>
+            <tr><td>Date de fin :</td><td>{{ e.datefin|date("d/m/Y") }}</td></tr>
+            <tr><td>Prix:</td><td>{{ e.prix }}</td></tr>
+        {% else %}
+            <tr>
+                <td colspan="2">Aucune intervention n'a été trouvée.</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>Aucune intervention pour ce contrat.</p>
+{% endif %}
 </body>
 </html>
