@@ -35,7 +35,7 @@
     <tr><td>Etat à la fin du pret  : </td><td>{{contrat.etatdetaillefin}}</td></tr>
     <tr><td>Nom de l'élève: </td><td>{{contrat.eleve.nom}}</td></tr>
     <tr><td>Prénom de l'élève: </td><td>{{contrat.eleve.prenom}}</td></tr>
-    <tr><td>Numéro de l'instrument: </td><td>{{contrat.instrument.numSene}}</td></tr>
+    <tr><td>Numéro de l'instrument: </td><td>{{contrat.instrument.numSerie}}</td></tr>
 </table>
 
 {% if interventions is not empty %}
@@ -44,7 +44,7 @@
             <tr>
                 <td><a href="{{ path('consulterIntervention', { 'id': e.id }) }}">{{ e.id }}</a></td>
             </tr>
-            <tr><td>Descriptif</td><td>{{ e.decriptif }}</td></tr>
+            <tr><td>Descriptif</td><td>{{ e.descriptif }}</td></tr>
             <tr><td>Date de début:</td><td>{{ e.datedebut|date("d/m/Y") }}</td></tr>
             <tr><td>Date de fin :</td><td>{{ e.datefin|date("d/m/Y") }}</td></tr>
             <tr><td>Prix:</td><td>{{ e.prix }}</td></tr>
