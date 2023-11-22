@@ -4,11 +4,14 @@ namespace App\Controller;
 
 
 use App\Entity\Intervention;
+use App\Form\ContratType;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Contrat;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+
 
 class ContratController extends AbstractController
 {
@@ -47,6 +50,28 @@ class ContratController extends AbstractController
             'contrat' => $contrat,
         ]);
     }
+    public function ajouterContrat(ManagerRegistry $doctrine,Request $request){
+        $contrat = new contrat();
+        $form = $this->createForm(ContratType::class, $contrat);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $contrat = $form->getData();
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($contrat);
+            $entityManager->flush();
+
+            $interventions = $contrat->getInterventions();
+            return $this->render('contrat/consulter.html.twig', ['contrat' => $contrat,'interventions' => $interventions,]);
+
+        }
+        else
+        {
+
+            return $this->render('contrat/ajouter.html.twig', array('form' => $form->createView(),));
+        }
+    }
 
 }
