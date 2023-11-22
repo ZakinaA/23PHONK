@@ -28,7 +28,7 @@ class ContratModifierType extends AbstractType
             ->add('etatDetailleDebut')
             ->add('etatDetailleFin')
             ->add('eleve', EntityType::class, array('class' => 'App\Entity\Eleve','choice_label' => 'nom'))
-            ->add('instrument', EntityType::class, array('class' => 'App\Entity\Instrument','choice_label' => 'numSENE'))
+            ->add('instrument', EntityType::class, array('class' => 'App\Entity\Instrument','choice_label' => 'numSerie'))
             ->add('interventions', EntityType::class, [
                 'class' => 'App\Entity\Intervention',
                 'choice_label' => 'descriptif',
