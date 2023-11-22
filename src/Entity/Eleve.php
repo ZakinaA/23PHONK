@@ -47,8 +47,6 @@ class Eleve
     private Collection $contrats;
 
 
-
-
     public function __construct()
     {
         $this->Eleve = new ArrayCollection();
@@ -58,7 +56,7 @@ class Eleve
     #[ORM\OneToMany(mappedBy: 'eleve', targetEntity: Inscription::class)]
     private Collection $inscriptions;
 
-    public function __construct()
+    public function construct()
     {
         $this->inscriptions = new ArrayCollection();
 
@@ -166,7 +164,6 @@ class Eleve
     }
 
 
-
     public function getContrat(): ?Contrat
     {
         return $this->contrat;
@@ -193,6 +190,7 @@ class Eleve
             $this->contrats->add($contrat);
             $contrat->setEleve($this);
         }
+        return $this;
     }
 
     /**
@@ -223,17 +221,21 @@ class Eleve
                 $contrat->setEleve(null);
             }
         }
-
-    public function removeInscription(Inscription $inscription): static
-    {
-        if ($this->inscriptions->removeElement($inscription)) {
-            // set the owning side to null (unless already changed)
-            if ($inscription->getEleve() === $this) {
-                $inscription->setEleve(null);
-          
-            }
-        }
-
         return $this;
     }
-}
+
+        public
+        function removeInscription(Inscription $inscription): static
+        {
+            if ($this->inscriptions->removeElement($inscription)) {
+                // set the owning side to null (unless already changed)
+                if ($inscription->getEleve() === $this) {
+                    $inscription->setEleve(null);
+
+                }
+            }
+
+            return $this;
+        }
+    }
+
