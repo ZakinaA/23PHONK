@@ -63,6 +63,9 @@ class TypeInstrument
         if (!$this->cours->contains($cour)) {
             $this->cours->add($cour);
             $cour->setTypeInstrument($this);
+        }
+        return $this;
+    }
     public function getClasse(): ?ClasseInstrument
     {
         return $this->classe;
@@ -99,6 +102,10 @@ class TypeInstrument
             // set the owning side to null (unless already changed)
             if ($cour->getTypeInstrument() === $this) {
                 $cour->setTypeInstrument(null);
+            }
+        }
+        return $this;
+    }
 
     public function removeInstrument(Instrument $instrument): static
     {
