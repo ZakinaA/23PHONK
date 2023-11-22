@@ -42,3 +42,7 @@ modiferInstrument:
 professeurLister:
     path: /professeur/lister
     controller: App\Controller\ProfesseurController::lister
+
+professeurConsulter:
+    path: /professeur/consulter/{id}
+    controller: App\Controller\ProfesseurController::consulter
