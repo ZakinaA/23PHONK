@@ -34,7 +34,7 @@ class ContratType extends AbstractType
           ->add('instrument', EntityType::class, array('class' => 'App\Entity\Instrument','choice_label' => 'numSENE'))
            ->add('interventions', EntityType::class, [
                 'class' => 'App\Entity\Intervention',
-                'choice_label' => 'decriptif',
+                'choice_label' => 'descriptif',
                 'multiple' => true,
                 'expanded' => true,])
 
