@@ -16,29 +16,44 @@ class Instrument
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $numSene = null;
+
+    #[ORM\Column(length: 20)]
+    private ?string $numSerie = null;
+
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateAchat = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $prixAchat = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $utilisation = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $cheminimage = null;
 
     #[ORM\OneToMany(mappedBy: 'instrument', targetEntity: Contrat::class)]
     private Collection $contrats;
 
+  
+
+
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
+    private ?string $prixAchat = null;
+
+    #[ORM\Column(length: 20)]
+    private ?string $utilisation = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $cheminImage = null;
+
+    #[ORM\ManyToOne(inversedBy: 'instruments')]
+    private ?TypeInstrument $type = null;
+
+    #[ORM\ManyToOne(inversedBy: 'instruments')]
+    private ?Marque $marque = null;
+
+    #[ORM\OneToMany(mappedBy: 'instrument', targetEntity: Intervention::class)]
+    private Collection $interventions;
+
     public function __construct()
     {
-        $this->contrats = new ArrayCollection();
+        $this->interventions = new ArrayCollection();
     }
-
 
 
     public function getId(): ?int
@@ -46,14 +61,16 @@ class Instrument
         return $this->id;
     }
 
-    public function getNumSene(): ?string
+
+
+    public function getNumSerie(): ?string
     {
-        return $this->numSene;
+        return $this->numSerie;
     }
 
-    public function setNumSene(string $numSene): static
+    public function setNumSerie(string $numSerie): static
     {
-        $this->numSene = $numSene;
+        $this->numSerie = $numSerie;
 
         return $this;
     }
@@ -66,7 +83,7 @@ class Instrument
     public function setDateAchat(\DateTimeInterface $dateAchat): static
     {
         $this->dateAchat = $dateAchat;
-
+    
         return $this;
     }
 
@@ -94,17 +111,32 @@ class Instrument
         return $this;
     }
 
-    public function getCheminimage(): ?string
+
+    public function getCheminImage(): ?string
     {
-        return $this->cheminimage;
+        return $this->cheminImage;
     }
 
-    public function setCheminimage(string $cheminimage): static
+    public function setCheminImage(?string $cheminImage): static
     {
-        $this->cheminimage = $cheminimage;
+        $this->cheminImage = $cheminImage;
 
         return $this;
     }
+
+    public function getType(): ?TypeInstrument
+    {
+        return $this->type;
+    }
+
+    public function setType(?TypeInstrument $type): static
+    {
+        $this->type = $type;
+
+
+        return $this;
+    }
+
 
     public function getContrat(): ?Contrat
     {
@@ -114,6 +146,16 @@ class Instrument
     public function setContrat(?Contrat $Contrat): static
     {
         $this->Contrat = $Contrat;
+
+    public function getMarque(): ?Marque
+    {
+        return $this->marque;
+    }
+
+    public function setMarque(?Marque $marque): static
+    {
+        $this->marque = $marque;
+
 
         return $this;
     }
@@ -131,10 +173,25 @@ class Instrument
         if (!$this->contrats->contains($contrat)) {
             $this->contrats->add($contrat);
             $contrat->setInstrument($this);
+
+     * @return Collection<int, Intervention>
+     */
+    public function getInterventions(): Collection
+    {
+        return $this->interventions;
+    }
+
+    public function addIntervention(Intervention $intervention): static
+    {
+        if (!$this->interventions->contains($intervention)) {
+            $this->interventions->add($intervention);
+            $intervention->setInstrument($this);
+
         }
 
         return $this;
     }
+
 
     public function removeContrat(Contrat $contrat): static
     {
@@ -142,6 +199,14 @@ class Instrument
             // set the owning side to null (unless already changed)
             if ($contrat->getInstrument() === $this) {
                 $contrat->setInstrument(null);
+
+    public function removeIntervention(Intervention $intervention): static
+    {
+        if ($this->interventions->removeElement($intervention)) {
+            // set the owning side to null (unless already changed)
+            if ($intervention->getInstrument() === $this) {
+                $intervention->setInstrument(null);
+
             }
         }
 

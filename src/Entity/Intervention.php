@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\InterventionRepository;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -22,12 +23,6 @@ class Intervention
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateFin = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $decriptif = null;
-
-    #[ORM\Column(length: 20)]
-    private ?string $prix = null;
-
 
 
     #[ORM\ManyToMany(targetEntity: Contrat::class, inversedBy: 'interventions')]
@@ -38,6 +33,16 @@ class Intervention
         $this->contrats = new ArrayCollection();
         $this->intervention = new ArrayCollection();
     }
+
+    #[ORM\Column(length: 100)]
+    private ?string $descriptif = null;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
+    private ?string $prix = null;
+
+    #[ORM\ManyToOne(inversedBy: 'interventions')]
+    private ?Instrument $instrument = null;
+
 
     public function getId(): ?int
     {
@@ -68,14 +73,15 @@ class Intervention
         return $this;
     }
 
-    public function getDecriptif(): ?string
+
+    public function getDescriptif(): ?string
     {
-        return $this->decriptif;
+        return $this->descriptif;
     }
 
-    public function setDecriptif(string $decriptif): static
+    public function setDescriptif(string $descriptif): static
     {
-        $this->decriptif = $decriptif;
+        $this->descriptif = $descriptif;
 
         return $this;
     }
@@ -92,7 +98,17 @@ class Intervention
         return $this;
     }
 
+=
+    public function getInstrument(): ?Instrument
+    {
+        return $this->instrument;
+    }
 
+    public function setInstrument(?Instrument $instrument): static
+    {
+        $this->instrument = $instrument;
 
+        return $this;
+    }
 
 }
