@@ -38,3 +38,7 @@ ajouterInstrument:
 modiferInstrument:
     path: /instrument/modifier/{id}
     controller: App\Controller\InstrumentController::modifier
+
+professeurLister:
+    path: /professeur/lister
+    controller: App\Controller\ProfesseurController::lister
