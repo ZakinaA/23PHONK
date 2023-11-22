@@ -14,6 +14,7 @@
             border-style:solid;
             border-color:black;
             width:50%;
+            margin-top: 50px;
         }
         td {
             border-width: 1px;
@@ -41,6 +42,23 @@
 
 </table>
 
+
+<table>
+    {% for e in interventions %}
+        <tr>
+        <td><a href="{{ path('interventionLister', { 'id': e.id }) }}">{{ e.ID }}</a></td>
+        <tr><td>Descriptif</td><td>{{e.decriptif}}</td>
+        <tr><td>Date de début: </td><td>{{e.datedebut|date("d/m/Y")}}</td>
+
+        <tr><td>Date de fin : </td><td>{{e.datefin|date("d/m/Y")}}</td></tr></tr>
+
+        <tr><td>prix: </td><td>{{e.prix}}</td></tr>
+    {% else %}
+        <tr>
+            <td>Aucun etudiant n'a été trouvé.</td>
+        </tr>
+    {% endfor %}
+</table>
 
 </body>
 </html>
