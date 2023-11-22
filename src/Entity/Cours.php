@@ -38,9 +38,6 @@ class Cours
     private ?Jour $jour = null;
 
     #[ORM\ManyToOne(inversedBy: 'cours')]
-    private ?TypeCours $type = null;
-
-    #[ORM\ManyToOne(inversedBy: 'cours')]
     private ?Professeur $professeur = null;
 
     #[ORM\ManyToOne(inversedBy: 'cours')]
@@ -48,6 +45,9 @@ class Cours
 
     #[ORM\OneToMany(mappedBy: 'cours', targetEntity: Inscription::class)]
     private Collection $inscriptions;
+
+    #[ORM\ManyToOne(inversedBy: 'cours')]
+    private ?TypeCours $typeCours = null;
 
     public function __construct()
     {
@@ -143,17 +143,7 @@ class Cours
         return $this;
     }
 
-    public function getType(): ?TypeCours
-    {
-        return $this->type;
-    }
 
-    public function setType(?TypeCours $type): static
-    {
-        $this->type = $type;
-
-        return $this;
-    }
 
     public function getProfesseur(): ?Professeur
     {
@@ -205,6 +195,18 @@ class Cours
                 $inscription->setCours(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTypeCours(): ?TypeCours
+    {
+        return $this->typeCours;
+    }
+
+    public function setTypeCours(?TypeCours $typeCours): static
+    {
+        $this->typeCours = $typeCours;
 
         return $this;
     }

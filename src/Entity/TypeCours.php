@@ -15,10 +15,10 @@ class TypeCours
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 30)]
     private ?string $libelle = null;
 
-    #[ORM\OneToMany(mappedBy: 'type', targetEntity: Cours::class)]
+    #[ORM\OneToMany(mappedBy: 'typeCours', targetEntity: Cours::class)]
     private Collection $cours;
 
     public function __construct()
@@ -55,7 +55,7 @@ class TypeCours
     {
         if (!$this->cours->contains($cour)) {
             $this->cours->add($cour);
-            $cour->setType($this);
+            $cour->setTypeCours($this);
         }
 
         return $this;
@@ -65,8 +65,8 @@ class TypeCours
     {
         if ($this->cours->removeElement($cour)) {
             // set the owning side to null (unless already changed)
-            if ($cour->getType() === $this) {
-                $cour->setType(null);
+            if ($cour->getTypeCours() === $this) {
+                $cour->setTypeCours(null);
             }
         }
 
