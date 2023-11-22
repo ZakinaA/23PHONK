@@ -2,6 +2,35 @@ controllers:
     resource: ../src/Controller/
     type: attribute
 
+
+index:
+    path: /contrat
+    controller: App\Controller\ContratController::index
+
+contratLister:
+    path: /contrat/lister
+    controller: App\Controller\ContratController::contratLister
+
+consulterContrat:
+    path : /contrat/consulter/{id}
+    controller : App\Controller\ContratController::consulterContrat
+
+interventionLister:
+    path: /intervention/lister
+    controller: App\Controller\InterventionController::interventionLister
+
+consulterIntervention:
+    path: /intervention/consulter/{id}
+    controller: App\Controller\InterventionController::consulterIntervention
+
+ajouterContrat:
+    path: /contrat/ajouter
+    controller: App\Controller\ContratController::ajouterContrat
+
+ContratModifier:
+    path: /contrat/modifier/{id}
+    controller:  App\Controller\ContratController::ContratModifier
+
 coursLister:
     path: /cours/lister
     controller: App\Controller\CoursController::lister
@@ -38,3 +67,4 @@ ajouterInstrument:
 modiferInstrument:
     path: /instrument/modifier/{id}
     controller: App\Controller\InstrumentController::modifier
+

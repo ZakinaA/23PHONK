@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
+
+
+<style>
+    table {
+        border-width:1px;
+        border-style:solid;
+        border-color:black;
+        width:50%;
+    }
+    td {
+        border-width: 1px;
+        border-style: solid;
+        border-color: BLACK;
+        width: 50%;
+
+    }
+
+</style>
+LISTE DES CONTRATS</br>
+
+<table>
+    <tr>
+        <td>Date de début</td>
+        <td>Date de fin</td>
+        <td>Attestation d'assurance</td>
+        <td>Etat détaillé au début</td>
+        <td>Etat détaillé à la fin</td>
+        <td>Nom de l'élève</td>
+        <td>Prenom de l'élève</td>
+        <td>Numéro série instrument</td>
+        <td>Nom responsable</td>
+    </tr>
+    {% for c in pContrats %}
+
+
+        <tr>
+        <td><a href="{{ path('consulterContrat', { 'id': c.id }) }}">{{ c.datedebut|date('d/m/Y') }}</a></td>
+        <td>{{ c.datefin|date('d/m/Y') }}</a></td>
+        <td>{{ c.attestationassurance }}</td>
+        <td>{{ c.etatdetailledebut}}</td>
+        <td>{{ c.etatdetaillefin}}</td>
+        <td>{{ c.eleve.nom}}</td>
+        <td>{{ c.eleve.prenom}}</td>
+        <td>{{ c.instrument.numSene}}</td>
+
+
+    {% else %}
+        <tr>
+            <td>Aucun contrat n'a été trouvé.</td>
+        </tr>
+    {% endfor %}
+
+</table>
+
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+
+<body>
+<h5>PAGE DE CONSULTATION D'UN CONTRAT</h5>
+<p>
+
+    <style>
+        table {
+            border-width:1px;
+            border-style:solid;
+            border-color:black;
+            width:50%;
+        }
+        td {
+            border-width: 1px;
+            border-style: solid;
+            border-color: BLACK;
+            width: 50%;
+
+        }
+    </style>
+<table >
+    <tr><td>Id : </td><td>{{intervention.id}} </td></tr>
+    <tr><td>Date de début: </td><td>{{intervention.datedebut|date("d/m/Y")}}</td>
+
+    <tr><td>Date de fin : </td><td>{{intervention.datefin|date("d/m/Y")}}</td></tr></tr>
+
+    <tr><td>descriptif: </td><td>{{intervention.decriptif}}</td></tr>
+    <tr><td>prix: </td><td>{{intervention.prix}}</td></tr>
+
+
+
+
+
+</table>
+
+
+</body>
+</html>

@@ -16,11 +16,21 @@ class Instrument
     #[ORM\Column]
     private ?int $id = null;
 
+
     #[ORM\Column(length: 20)]
     private ?string $numSerie = null;
 
+
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateAchat = null;
+
+
+    #[ORM\OneToMany(mappedBy: 'instrument', targetEntity: Contrat::class)]
+    private Collection $contrats;
+
+  
+
+
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $prixAchat = null;
@@ -45,10 +55,13 @@ class Instrument
         $this->interventions = new ArrayCollection();
     }
 
+
     public function getId(): ?int
     {
         return $this->id;
     }
+
+
 
     public function getNumSerie(): ?string
     {
@@ -70,7 +83,7 @@ class Instrument
     public function setDateAchat(\DateTimeInterface $dateAchat): static
     {
         $this->dateAchat = $dateAchat;
-
+    
         return $this;
     }
 
@@ -98,6 +111,7 @@ class Instrument
         return $this;
     }
 
+
     public function getCheminImage(): ?string
     {
         return $this->cheminImage;
@@ -119,8 +133,19 @@ class Instrument
     {
         $this->type = $type;
 
+
         return $this;
     }
+
+
+    public function getContrat(): ?Contrat
+    {
+        return $this->Contrat;
+    }
+
+    public function setContrat(?Contrat $Contrat): static
+    {
+        $this->Contrat = $Contrat;
 
     public function getMarque(): ?Marque
     {
@@ -131,10 +156,24 @@ class Instrument
     {
         $this->marque = $marque;
 
+
         return $this;
     }
 
     /**
+     * @return Collection<int, Contrat>
+     */
+    public function getContrats(): Collection
+    {
+        return $this->contrats;
+    }
+
+    public function addContrat(Contrat $contrat): static
+    {
+        if (!$this->contrats->contains($contrat)) {
+            $this->contrats->add($contrat);
+            $contrat->setInstrument($this);
+
      * @return Collection<int, Intervention>
      */
     public function getInterventions(): Collection
@@ -147,10 +186,19 @@ class Instrument
         if (!$this->interventions->contains($intervention)) {
             $this->interventions->add($intervention);
             $intervention->setInstrument($this);
+
         }
 
         return $this;
     }
+
+
+    public function removeContrat(Contrat $contrat): static
+    {
+        if ($this->contrats->removeElement($contrat)) {
+            // set the owning side to null (unless already changed)
+            if ($contrat->getInstrument() === $this) {
+                $contrat->setInstrument(null);
 
     public function removeIntervention(Intervention $intervention): static
     {
@@ -158,6 +206,7 @@ class Instrument
             // set the owning side to null (unless already changed)
             if ($intervention->getInstrument() === $this) {
                 $intervention->setInstrument(null);
+
             }
         }
 

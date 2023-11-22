@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\EleveRepository;
+use App\Repository\ResponsableRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: EleveRepository::class)]
-class Eleve
+#[ORM\Entity(repositoryClass: ResponsableRepository::class)]
+class Responsable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -21,7 +21,7 @@ class Eleve
     #[ORM\Column(length: 255)]
     private ?string $prenom = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $numRue = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -33,35 +33,18 @@ class Eleve
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $ville = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column]
     private ?int $tel = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $mail = null;
 
-
-    #[ORM\ManyToMany(targetEntity: responsable::class, inversedBy: 'eleves')]
-    private Collection $Eleve;
-
-    #[ORM\OneToMany(mappedBy: 'eleve', targetEntity: Contrat::class)]
-    private Collection $contrats;
-
-
-
+    #[ORM\ManyToMany(targetEntity: Eleve::class, mappedBy: 'Eleve')]
+    private Collection $eleves;
 
     public function __construct()
     {
-        $this->Eleve = new ArrayCollection();
-        $this->contrats = new ArrayCollection();
-    }
-
-    #[ORM\OneToMany(mappedBy: 'eleve', targetEntity: Inscription::class)]
-    private Collection $inscriptions;
-
-    public function __construct()
-    {
-        $this->inscriptions = new ArrayCollection();
-
+        $this->eleves = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -98,7 +81,7 @@ class Eleve
         return $this->numRue;
     }
 
-    public function setNumRue(int $numRue): static
+    public function setNumRue(?int $numRue): static
     {
         $this->numRue = $numRue;
 
@@ -146,7 +129,7 @@ class Eleve
         return $this->tel;
     }
 
-    public function setTel(?int $tel): static
+    public function setTel(int $tel): static
     {
         $this->tel = $tel;
 
@@ -165,73 +148,28 @@ class Eleve
         return $this;
     }
 
-
-
-    public function getContrat(): ?Contrat
-    {
-        return $this->contrat;
-    }
-
-    public function setContrat(?Contrat $contrat): static
-    {
-        $this->contrat = $contrat;
-
-        return $this;
-    }
-
     /**
-     * @return Collection<int, Contrat>
+     * @return Collection<int, Eleve>
      */
-    public function getContrats(): Collection
+    public function getEleves(): Collection
     {
-        return $this->contrats;
+        return $this->eleves;
     }
 
-    public function addContrat(Contrat $contrat): static
+    public function addElefe(Eleve $elefe): static
     {
-        if (!$this->contrats->contains($contrat)) {
-            $this->contrats->add($contrat);
-            $contrat->setEleve($this);
-        }
-    }
-
-    /**
-     * @return Collection<int, Inscription>
-     */
-    public function getInscriptions(): Collection
-    {
-        return $this->inscriptions;
-    }
-
-    public function addInscription(Inscription $inscription): static
-    {
-        if (!$this->inscriptions->contains($inscription)) {
-            $this->inscriptions->add($inscription);
-            $inscription->setEleve($this);
-
+        if (!$this->eleves->contains($elefe)) {
+            $this->eleves->add($elefe);
+            $elefe->addEleve($this);
         }
 
         return $this;
     }
 
-
-    public function removeContrat(Contrat $contrat): static
+    public function removeElefe(Eleve $elefe): static
     {
-        if ($this->contrats->removeElement($contrat)) {
-            // set the owning side to null (unless already changed)
-            if ($contrat->getEleve() === $this) {
-                $contrat->setEleve(null);
-            }
-        }
-
-    public function removeInscription(Inscription $inscription): static
-    {
-        if ($this->inscriptions->removeElement($inscription)) {
-            // set the owning side to null (unless already changed)
-            if ($inscription->getEleve() === $this) {
-                $inscription->setEleve(null);
-          
-            }
+        if ($this->eleves->removeElement($elefe)) {
+            $elefe->removeEleve($this);
         }
 
         return $this;
