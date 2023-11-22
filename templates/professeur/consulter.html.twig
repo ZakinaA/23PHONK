@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+<h5>PAGE DE CONSULTATION D'UN PROFESSEUR</h5>
+<p>
+<table >
+    <tr><td>Id : </td><td>{{professeur.id}} </td></tr>
+    <tr><td>Nom : </td><td>{{professeur.nom}}</td>
+    <tr><td>Prénom : </td><td>{{professeur.prenom}}</td>
+
+</table>
+<h5>Liste des types d'instruments :</h5>
+<ul>
+    {% for typeInstrument in typeInstruments %}
+        <li>{{ typeInstrument.libelle }}</li>
+    {% endfor %}
+</ul>
+</body>
+</html>
