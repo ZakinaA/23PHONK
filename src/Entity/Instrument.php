@@ -28,10 +28,6 @@ class Instrument
     #[ORM\OneToMany(mappedBy: 'instrument', targetEntity: Contrat::class)]
     private Collection $contrats;
 
-  
-
-
-
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $prixAchat = null;
 
@@ -147,6 +143,10 @@ class Instrument
     {
         $this->Contrat = $Contrat;
 
+        return $this;
+        return $this;
+    }
+
     public function getMarque(): ?Marque
     {
         return $this->marque;
@@ -173,7 +173,11 @@ class Instrument
         if (!$this->contrats->contains($contrat)) {
             $this->contrats->add($contrat);
             $contrat->setInstrument($this);
+        }
+        return $this;
+    }
 
+    /*
      * @return Collection<int, Intervention>
      */
     public function getInterventions(): Collection
@@ -199,17 +203,25 @@ class Instrument
             // set the owning side to null (unless already changed)
             if ($contrat->getInstrument() === $this) {
                 $contrat->setInstrument(null);
-
-    public function removeIntervention(Intervention $intervention): static
-    {
-        if ($this->interventions->removeElement($intervention)) {
-            // set the owning side to null (unless already changed)
-            if ($intervention->getInstrument() === $this) {
-                $intervention->setInstrument(null);
-
             }
         }
-
         return $this;
     }
+
+                public
+                function removeIntervention(Intervention $intervention): static
+                {
+                    if ($this->interventions->removeElement($intervention)) {
+                        // set the owning side to null (unless already changed)
+                        if ($intervention->getInstrument() === $this) {
+                            $intervention->setInstrument(null);
+
+                        }
+                    }
+
+                    return $this;
+
+                }
 }
+
+
