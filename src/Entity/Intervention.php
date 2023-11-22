@@ -98,7 +98,6 @@ class Intervention
         return $this;
     }
 
-=
     public function getInstrument(): ?Instrument
     {
         return $this->instrument;
