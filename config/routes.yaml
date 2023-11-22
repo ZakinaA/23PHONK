@@ -25,3 +25,7 @@ consulterIntervention:
 ajouterContrat:
     path: /contrat/ajouter
     controller: App\Controller\ContratController::ajouterContrat
+
+ContratModifier:
+    path: /contrat/modifier/{id}
+    controller:  App\Controller\ContratController::ContratModifier
