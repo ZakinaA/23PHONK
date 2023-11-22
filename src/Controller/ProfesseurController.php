@@ -29,5 +29,21 @@ class ProfesseurController extends AbstractController
 
     }
 
+    public function consulter(ManagerRegistry $doctrine, int $id){
+
+        $professeur= $doctrine->getRepository(Professeur::class)->find($id);
+
+        if (!$professeur) {
+            throw $this->createNotFoundException(
+                'Aucun professeur trouvé avec le numéro '.$id
+            );
+        }
+
+        $typesInstruments = $professeur->getTypeInstruments();
+
+        return $this->render('professeur/consulter.html.twig', [
+            'professeur' => $professeur,
+            'typeInstruments' => $typesInstruments,]);
+    }
 
 }
