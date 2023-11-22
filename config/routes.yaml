@@ -18,3 +18,23 @@ coursAjouter:
 coursModifier:
     path: /cours/modifier/{id}
     controller: App\Controller\CoursController::modifierCours
+    
+instrument:
+    path: /instrument/
+    controller: App\Controller\InstrumentController::index
+
+listerInstrument:
+    path: /instrument/lister
+    controller: App\Controller\InstrumentController::lister
+
+consulterInstrument:
+    path: /instrument/consulter/{id}
+    controller: App\Controller\InstrumentController::consulter
+
+ajouterInstrument:
+    path: /instrument/ajouter
+    controller: App\Controller\InstrumentController::ajouter
+
+modiferInstrument:
+    path: /instrument/modifier/{id}
+    controller: App\Controller\InstrumentController::modifier

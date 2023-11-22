@@ -15,14 +15,21 @@ class TypeInstrument
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $libelle = null;
-
     #[ORM\OneToMany(mappedBy: 'typeInstrument', targetEntity: Cours::class)]
     private Collection $cours;
 
+    #[ORM\Column(length: 30)]
+    private ?string $libelle = null;
+
+    #[ORM\ManyToOne(inversedBy: 'typeInstruments')]
+    private ?ClasseInstrument $classe = null;
+
+    #[ORM\OneToMany(mappedBy: 'type', targetEntity: Instrument::class)]
+    private Collection $instruments;
+
     public function __construct()
     {
+        $this->instruments = new ArrayCollection();
         $this->cours = new ArrayCollection();
     }
 
@@ -56,6 +63,31 @@ class TypeInstrument
         if (!$this->cours->contains($cour)) {
             $this->cours->add($cour);
             $cour->setTypeInstrument($this);
+    public function getClasse(): ?ClasseInstrument
+    {
+        return $this->classe;
+    }
+
+    public function setClasse(?ClasseInstrument $classe): static
+    {
+        $this->classe = $classe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Instrument>
+     */
+    public function getInstruments(): Collection
+    {
+        return $this->instruments;
+    }
+
+    public function addInstrument(Instrument $instrument): static
+    {
+        if (!$this->instruments->contains($instrument)) {
+            $this->instruments->add($instrument);
+            $instrument->setType($this);
         }
 
         return $this;
@@ -67,6 +99,13 @@ class TypeInstrument
             // set the owning side to null (unless already changed)
             if ($cour->getTypeInstrument() === $this) {
                 $cour->setTypeInstrument(null);
+
+    public function removeInstrument(Instrument $instrument): static
+    {
+        if ($this->instruments->removeElement($instrument)) {
+            // set the owning side to null (unless already changed)
+            if ($instrument->getType() === $this) {
+                $instrument->setType(null);
             }
         }
 
