@@ -2,8 +2,19 @@ controllers:
     resource: ../src/Controller/
     type: attribute
 
-
 index:
+    path: /
+    controller: App\Controller\IndexController::index
+
+register:
+    path: /register
+    controller: App\Controller\IndexController::register
+
+panel:
+    path: /panel
+    controller: App\Controller\InstrumentController::lister
+
+contrat:
     path: /contrat
     controller: App\Controller\ContratController::index
 
