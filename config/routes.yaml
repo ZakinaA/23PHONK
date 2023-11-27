@@ -94,3 +94,7 @@ professeurAjouter:
 modifierProfesseur:
     path: /professeur/modifier/{id}
     controller: App\Controller\ProfesseurController::modifier
+
+ajouterIntervention:
+    path: /intervention/ajouter
+    controller: App\Controller\InterventionController::ajouterIntervention
