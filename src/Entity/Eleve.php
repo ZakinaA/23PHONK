@@ -39,12 +39,27 @@ class Eleve
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $mail = null;
 
-    #[ORM\OneToMany(mappedBy: 'eleve', targetEntity: Inscription::class)]
-    private Collection $inscriptions;
+
+    #[ORM\ManyToMany(targetEntity: Responsable::class, inversedBy: 'eleves')]
+    private Collection $Eleve;
+
+    #[ORM\OneToMany(mappedBy: 'eleve', targetEntity: Contrat::class)]
+    private Collection $contrats;
+
 
     public function __construct()
     {
+        $this->Eleve = new ArrayCollection();
+        $this->contrats = new ArrayCollection();
+    }
+
+    #[ORM\OneToMany(mappedBy: 'eleve', targetEntity: Inscription::class)]
+    private Collection $inscriptions;
+
+    public function construct()
+    {
         $this->inscriptions = new ArrayCollection();
+
     }
 
     public function getId(): ?int
@@ -148,6 +163,36 @@ class Eleve
         return $this;
     }
 
+
+    public function getContrat(): ?Contrat
+    {
+        return $this->contrat;
+    }
+
+    public function setContrat(?Contrat $contrat): static
+    {
+        $this->contrat = $contrat;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Contrat>
+     */
+    public function getContrats(): Collection
+    {
+        return $this->contrats;
+    }
+
+    public function addContrat(Contrat $contrat): static
+    {
+        if (!$this->contrats->contains($contrat)) {
+            $this->contrats->add($contrat);
+            $contrat->setEleve($this);
+        }
+        return $this;
+    }
+
     /**
      * @return Collection<int, Inscription>
      */
@@ -161,20 +206,36 @@ class Eleve
         if (!$this->inscriptions->contains($inscription)) {
             $this->inscriptions->add($inscription);
             $inscription->setEleve($this);
+
         }
 
         return $this;
     }
 
-    public function removeInscription(Inscription $inscription): static
+
+    public function removeContrat(Contrat $contrat): static
     {
-        if ($this->inscriptions->removeElement($inscription)) {
+        if ($this->contrats->removeElement($contrat)) {
             // set the owning side to null (unless already changed)
-            if ($inscription->getEleve() === $this) {
-                $inscription->setEleve(null);
+            if ($contrat->getEleve() === $this) {
+                $contrat->setEleve(null);
             }
         }
-
         return $this;
     }
-}
+
+        public
+        function removeInscription(Inscription $inscription): static
+        {
+            if ($this->inscriptions->removeElement($inscription)) {
+                // set the owning side to null (unless already changed)
+                if ($inscription->getEleve() === $this) {
+                    $inscription->setEleve(null);
+
+                }
+            }
+
+            return $this;
+        }
+    }
+

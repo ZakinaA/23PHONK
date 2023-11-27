@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Entity;
+namespace DoctrineMigrations\old;
 
+use App\Entity\Contrat;
 use App\Repository\InterventionRepository;
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -23,26 +23,19 @@ class Intervention
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $dateFin = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $decriptif = null;
 
+    #[ORM\Column(length: 20)]
+    private ?string $prix = null;
 
-    #[ORM\ManyToMany(targetEntity: Contrat::class, inversedBy: 'interventions')]
-    private Collection $intervention;
+    #[ORM\ManyToMany(targetEntity: Contrat::class, mappedBy: 'contrat')]
+    private Collection $contrats;
 
     public function __construct()
     {
         $this->contrats = new ArrayCollection();
-        $this->intervention = new ArrayCollection();
     }
-
-    #[ORM\Column(length: 100)]
-    private ?string $descriptif = null;
-
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?string $prix = null;
-
-    #[ORM\ManyToOne(inversedBy: 'interventions')]
-    private ?Instrument $instrument = null;
-
 
     public function getId(): ?int
     {
@@ -73,15 +66,14 @@ class Intervention
         return $this;
     }
 
-
-    public function getDescriptif(): ?string
+    public function getDecriptif(): ?string
     {
-        return $this->descriptif;
+        return $this->decriptif;
     }
 
-    public function setDescriptif(string $descriptif): static
+    public function setDecriptif(string $decriptif): static
     {
-        $this->descriptif = $descriptif;
+        $this->decriptif = $decriptif;
 
         return $this;
     }
@@ -98,16 +90,5 @@ class Intervention
         return $this;
     }
 
-    public function getInstrument(): ?Instrument
-    {
-        return $this->instrument;
-    }
-
-    public function setInstrument(?Instrument $instrument): static
-    {
-        $this->instrument = $instrument;
-
-        return $this;
-    }
-
+   
 }

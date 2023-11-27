@@ -17,17 +17,19 @@ class InstrumentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('numSerie', TextType::class)
+            ->add('numSerie', TextType::class, ['attr' => ['class' => 'form-control form-control-user'], 'label' => 'Numéro de série'])
             ->add('dateAchat', DateType::class, [
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd',
+                'attr' => ['class' => 'form-control form-control-user'],
+                'label' => 'Date d\'achat'
             ])
-            ->add('prixAchat', NumberType::class)
-            ->add('utilisation', TextType::class)
-            ->add('cheminImage', TextType::class)
-            ->add('type', EntityType::class, array('class' => 'App\Entity\TypeInstrument','choice_label' => 'libelle' ))
-            ->add('marque', EntityType::class, array('class' => 'App\Entity\Marque','choice_label' => 'libelle' ))
-            ->add('enregistrer', SubmitType::class, array('label' => 'Nouvel instrument'))
+            ->add('prixAchat', NumberType::class, ['attr' => ['class' => 'form-control form-control-user'], 'label' => 'Prix d\'achat'])
+            ->add('utilisation', TextType::class, ['attr' => ['class' => 'form-control form-control-user'], 'label' => 'Utilisation'])
+            ->add('cheminImage', TextType::class, ['attr' => ['class' => 'form-control form-control-user'], 'label' => 'Lien de l\'image'])
+            ->add('type', EntityType::class, array('class' => 'App\Entity\TypeInstrument','choice_label' => 'libelle', 'attr' => ['class' => 'form-control form-control-user']))
+            ->add('marque', EntityType::class, array('class' => 'App\Entity\Marque','choice_label' => 'libelle', 'attr' => ['class' => 'form-control form-control-user']))
+            ->add('enregistrer', SubmitType::class, array('label' => 'Nouvel instrument', 'attr' => ['class' => 'btn btn-primary btn-user btn-block']))
         ;
     }
 

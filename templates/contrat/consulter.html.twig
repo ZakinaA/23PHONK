@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+
+<body>
+<h5>PAGE DE CONSULTATION D'UN CONTRAT</h5>
+<p>
+
+    <style>
+        table {
+            border-width:1px;
+            border-style:solid;
+            border-color:black;
+            width:50%;
+            margin-top: 50px;
+        }
+        td {
+            border-width: 1px;
+            border-style: solid;
+            border-color: BLACK;
+            width: 50%;
+
+        }
+    </style>
+<table>
+    <tr><td>Id : </td><td>{{contrat.id}} </td></tr>
+    <tr><td>Date de début: </td><td>{{contrat.datedebut|date("d/m/Y")}}</td>
+
+    <tr><td>Date de fin : </td><td>{{contrat.datefin|date("d/m/Y")}}</td></tr></tr>
+
+    <tr><td>Attestation d'assurance: </td><td>{{contrat.attestationassurance}}</td></tr>
+    <tr><td>Etat au debut pret: </td><td>{{contrat.etatdetailledebut}}</td></tr>
+    <tr><td>Etat à la fin du pret  : </td><td>{{contrat.etatdetaillefin}}</td></tr>
+    <tr><td>Nom de l'élève: </td><td>{{contrat.eleve.nom}}</td></tr>
+    <tr><td>Prénom de l'élève: </td><td>{{contrat.eleve.prenom}}</td></tr>
+    <tr><td>Numéro de l'instrument: </td><td>{{contrat.instrument.numSerie}}</td></tr>
+</table>
+
+{% if interventions is not empty %}
+    <table>
+        {% for e in interventions %}
+            <tr>
+                <td><a href="{{ path('consulterIntervention', { 'id': e.id }) }}">{{ e.id }}</a></td>
+            </tr>
+            <tr><td>Descriptif</td><td>{{ e.descriptif }}</td></tr>
+            <tr><td>Date de début:</td><td>{{ e.datedebut|date("d/m/Y") }}</td></tr>
+            <tr><td>Date de fin :</td><td>{{ e.datefin|date("d/m/Y") }}</td></tr>
+            <tr><td>Prix:</td><td>{{ e.prix }}</td></tr>
+        {% else %}
+            <tr>
+                <td colspan="2">Aucune intervention n'a été trouvée.</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>Aucune intervention pour ce contrat.</p>
+{% endif %}
+</body>
+</html>
