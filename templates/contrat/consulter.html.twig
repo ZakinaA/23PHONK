@@ -1,30 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends 'base.html.twig' %}
 
-</head>
+{% block title %}Consultation d'un contrat{% endblock %}
 
-<body>
-<h5>PAGE DE CONSULTATION D'UN CONTRAT</h5>
-<p>
+{% block body %}
 
-    <style>
-        table {
-            border-width:1px;
-            border-style:solid;
-            border-color:black;
-            width:50%;
-            margin-top: 50px;
-        }
-        td {
-            border-width: 1px;
-            border-style: solid;
-            border-color: BLACK;
-            width: 50%;
+<div class="tab-lister-instrument">
 
-        }
-    </style>
-<table>
+    <H1>Information sur le contrat  {{ contrat.id }}</H1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary"><a href="/23PHONK/public/contrat/ajouter">Ajouter une contrat</a></h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+
     <tr><td>Id : </td><td>{{contrat.id}} </td></tr>
     <tr><td>Date de début: </td><td>{{contrat.datedebut|date("d/m/Y")}}</td>
 
@@ -36,26 +29,65 @@
     <tr><td>Nom de l'élève: </td><td>{{contrat.eleve.nom}}</td></tr>
     <tr><td>Prénom de l'élève: </td><td>{{contrat.eleve.prenom}}</td></tr>
     <tr><td>Numéro de l'instrument: </td><td>{{contrat.instrument.numSerie}}</td></tr>
+                    </thead>
+                    <tfoot>
 </table>
 
-{% if interventions is not empty %}
-    <table>
-        {% for e in interventions %}
-            <tr>
-                <td><a href="{{ path('consulterIntervention', { 'id': e.id }) }}">{{ e.id }}</a></td>
-            </tr>
-            <tr><td>Descriptif</td><td>{{ e.descriptif }}</td></tr>
-            <tr><td>Date de début:</td><td>{{ e.datedebut|date("d/m/Y") }}</td></tr>
-            <tr><td>Date de fin :</td><td>{{ e.datefin|date("d/m/Y") }}</td></tr>
-            <tr><td>Prix:</td><td>{{ e.prix }}</td></tr>
-        {% else %}
-            <tr>
-                <td colspan="2">Aucune intervention n'a été trouvée.</td>
-            </tr>
-        {% endfor %}
-    </table>
-{% else %}
-    <p>Aucune intervention pour ce contrat.</p>
-{% endif %}
-</body>
-</html>
+
+
+
+
+<h2>Toutes les interventions :</h2>
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"><a href="/23PHONK/public/intervention/ajouter">Ajouter une intervention</a></h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Date Debut</th>
+                    <th>Date Fin</th>
+                    <th>Prix</th>
+                    <th>Contrat de prêt</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>Date Debut</th>
+                    <th>Date Fin</th>
+                    <th>Prix</th>
+                    <th>Contrat de prêt</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                {% for i in interventions %}
+                    <tr>
+                    <td>{{ i.dateDebut|date('d/m/Y')}}</td>
+                    <td>{{ i.dateFin|date('d/m/Y')}}</td>
+                    <td>{{ i.prix}}</td>
+                    <td><a href="#">Voir le contrat</a></td>
+                    <td>{{ i.descriptif}}</td>
+                    <td>
+                        <a href="#">✏️</a>
+                        <a href="#">👁️</a>
+                        <a href="#">🗑️</a>
+                    </td>
+                {% else %}
+                    <tr>
+                        <th>Aucune intervention n'a été trouvée.</th>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

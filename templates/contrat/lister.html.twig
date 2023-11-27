@@ -38,7 +38,7 @@ LISTE DES CONTRATS</br>
         <td>Nom de l'élève</td>
         <td>Prenom de l'élève</td>
         <td>Numéro série instrument</td>
-        <td>Nom responsable</td>
+
     </tr>
     {% for c in pContrats %}
 
@@ -52,6 +52,8 @@ LISTE DES CONTRATS</br>
         <td>{{ c.eleve.nom}}</td>
         <td>{{ c.eleve.prenom}}</td>
         <td>{{ c.instrument.numSerie}}</td>
+
+
 
 
     {% else %}
