@@ -42,9 +42,13 @@ class Professeur
     #[ORM\OneToMany(mappedBy: 'professeur', targetEntity: Cours::class)]
     private Collection $cours;
 
+    #[ORM\ManyToMany(targetEntity: TypeInstrument::class, inversedBy: 'professeurs')]
+    private Collection $typeInstruments;
+
     public function __construct()
     {
         $this->cours = new ArrayCollection();
+        $this->typeInstruments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -174,6 +178,30 @@ class Professeur
                 $cour->setProfesseur(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TypeInstrument>
+     */
+    public function getTypeInstruments(): Collection
+    {
+        return $this->typeInstruments;
+    }
+
+    public function addTypeInstrument(TypeInstrument $typeInstrument): static
+    {
+        if (!$this->typeInstruments->contains($typeInstrument)) {
+            $this->typeInstruments->add($typeInstrument);
+        }
+
+        return $this;
+    }
+
+    public function removeTypeInstrument(TypeInstrument $typeInstrument): static
+    {
+        $this->typeInstruments->removeElement($typeInstrument);
 
         return $this;
     }
