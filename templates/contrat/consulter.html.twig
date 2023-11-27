@@ -31,6 +31,17 @@
     <tr><td>Numéro de l'instrument: </td><td>{{contrat.instrument.numSerie}}</td></tr>
                     </thead>
                     <tfoot>
+
+                    {% if eleve.responsables is not empty %}
+                        <tr><td>Responsables de l'élève :</td>
+
+                        {% for responsable in eleve.responsables %}
+                    <td>{{ responsable.nom }} {{ responsable.prenom }}</tr></td>
+                        {% endfor %}
+
+                    {% else %}
+                        <p>Cet élève n'a pas de responsables.</p>
+                    {% endif %}
 </table>
 
 
@@ -64,9 +75,14 @@
                     <th>Contrat de prêt</th>
                     <th>Description</th>
                     <th>Action</th>
+
                 </tr>
                 </tfoot>
                 <tbody>
+
+
+
+
                 {% for i in interventions %}
                     <tr>
                     <td>{{ i.dateDebut|date('d/m/Y')}}</td>
