@@ -37,43 +37,66 @@
 
     </style>
 
-    <div class="tab-lister-instrument">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Tous les instruments</h1>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Type</th>
-                    <th>Classe</th>
-                    <th>N°Serie</th>
-                    <th>Achat</th>
-                    <th>Utilisation</th>
-                    <th>Contrat de prêt</th>
-                    <th>Intervention</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            {% for i in pInstruments %}
-                <tr>
-                    <td>{{ i.type.libelle }}</a></td>
-                    <td>{{ i.type.classe.libelle }}</td>
-                    <td>{{ i.numSerie}}</td>
-                    <td>{{ i.dateAchat|date('d/m/Y')}}</td>
-                    <td>{{ i.utilisation}}</td>
-                    <td><a href="#">Voir l'historique</a></td>
-                    <td><a href="#">Voir l'historique</a></td>
-                    <td>
-                        <a href="#">✏️</a>
-                        <a href="consulter/{{ i.id }}">👁️</a>
-                        <a href="#">🗑️</a>
-                    </td>
-            {% else %}
-                <tr>
-                    <th>Aucun instrument n'a été trouvé.</th>
-                </tr>
-            {% endfor %}
-
-        </table>
-
-        <a href="ajouter">➕</a>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary"><a href="ajouter">Ajouter un instrument</a></h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Classe</th>
+                        <th>N°Serie</th>
+                        <th>Achat</th>
+                        <th>Utilisation</th>
+                        <th>Contrat de prêt</th>
+                        <th>Intervention</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>Type</th>
+                        <th>Classe</th>
+                        <th>N°Serie</th>
+                        <th>Achat</th>
+                        <th>Utilisation</th>
+                        <th>Contrat de prêt</th>
+                        <th>Intervention</th>
+                        <th>Action</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {% for i in pInstruments %}
+                        <tr>
+                        <td>{{ i.type.libelle }}</a></td>
+                        <td>{{ i.type.classe.libelle }}</td>
+                        <td>{{ i.numSerie}}</td>
+                        <td>{{ i.dateAchat|date('d/m/Y')}}</td>
+                        <td>{{ i.utilisation}}</td>
+                        <td><a href="#">Voir l'historique</a></td>
+                        <td><a href="#">Voir l'historique</a></td>
+                        <td>
+                            <a href="modifier/{{ i.id }}">✏️</a>
+                            <a href="consulter/{{ i.id }}">👁️</a>
+                            <a href="#">🗑️</a>
+                        </td>
+                    {% else %}
+                        <tr>
+                            <th>Aucun instrument n'a été trouvé.</th>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+
+
 {% endblock %}
