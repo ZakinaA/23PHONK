@@ -40,7 +40,7 @@ class Eleve
     private ?string $mail = null;
 
 
-    #[ORM\ManyToMany(targetEntity: responsable::class, inversedBy: 'eleves')]
+    #[ORM\ManyToMany(targetEntity: Responsable::class, inversedBy: 'eleves')]
     private Collection $Eleve;
 
     #[ORM\OneToMany(mappedBy: 'eleve', targetEntity: Contrat::class)]
