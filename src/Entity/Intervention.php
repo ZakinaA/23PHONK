@@ -26,7 +26,7 @@ class Intervention
 
 
     #[ORM\ManyToMany(targetEntity: Contrat::class, inversedBy: 'interventions')]
-    private Collection $intervention;
+    private Collection $Intervention;
 
     public function __construct()
     {
