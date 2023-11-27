@@ -15,4 +15,10 @@ class IndexController extends AbstractController
             'controller_name' => 'IndexController',
         ]);
     }
+    public function register(): Response
+    {
+        return $this->render('index/register.html.twig', [
+            'controller_name' => 'IndexController',
+        ]);
+    }
 }
