@@ -49,9 +49,13 @@ class Instrument
     #[ORM\Column(length: 10)]
     private ?string $name = null;
 
+    #[ORM\OneToMany(mappedBy: 'instrument', targetEntity: Accessoire::class)]
+    private Collection $accessoires;
+
     public function __construct()
     {
         $this->interventions = new ArrayCollection();
+        $this->accessoires = new ArrayCollection();
     }
 
 
@@ -234,6 +238,36 @@ class Instrument
                 public function setName(string $name): static
                 {
                     $this->name = $name;
+
+                    return $this;
+                }
+
+                /**
+                 * @return Collection<int, Accessoire>
+                 */
+                public function getAccessoires(): Collection
+                {
+                    return $this->accessoires;
+                }
+
+                public function addAccessoire(Accessoire $accessoire): static
+                {
+                    if (!$this->accessoires->contains($accessoire)) {
+                        $this->accessoires->add($accessoire);
+                        $accessoire->setInstrument($this);
+                    }
+
+                    return $this;
+                }
+
+                public function removeAccessoire(Accessoire $accessoire): static
+                {
+                    if ($this->accessoires->removeElement($accessoire)) {
+                        // set the owning side to null (unless already changed)
+                        if ($accessoire->getInstrument() === $this) {
+                            $accessoire->setInstrument(null);
+                        }
+                    }
 
                     return $this;
                 }
