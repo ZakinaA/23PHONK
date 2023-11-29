@@ -17,45 +17,49 @@
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
-
-    <tr>
-        <td>Date de début</td>
-        <td>Date de fin</td>
-        <td>Attestation d'assurance</td>
-        <td>Etat détaillé au début</td>
-        <td>Etat détaillé à la fin</td>
-        <td>Nom de l'élève</td>
-        <td>Prenom de l'élève</td>
-        <td>Numéro série instrument</td>
-
-    </tr>
+                    <tr>
+                        <td>Date de début</td>
+                        <td>Date de fin</td>
+                        <td>Attestation d'assurance</td>
+                        <td>Etat détaillé au début</td>
+                        <td>Etat détaillé à la fin</td>
+                        <td>Nom de l'élève</td>
+                        <td>Prenom de l'élève</td>
+                        <td>Nom de l'instrument</td>
+                        <td>Responsable de l'élève</td>
+                        <td>Action</td>
+                    </tr>
                 </thead>
-                <tfoot>
-    {% for c in pContrats %}
+                  <tfoot>
+                        {% for c in pContrats %}
+                            <tr>
+                            <td><a href="{{ path('consulterContrat', { 'id': c.id }) }}">{{ c.datedebut|date('d/m/Y') }}</a></td>
+                            <td>{{ c.datefin|date('d/m/Y') }}</a></td>
+                            <td>{{ c.attestationassurance }}</td>
+                            <td>{{ c.etatdetailledebut}}</td>
+                            <td>{{ c.etatdetaillefin}}</td>
+                            <td>{{ c.eleve.nom}}</td>
+                            <td>{{ c.eleve.prenom}}</td>
+                            <td>{{ c.instrument.name}}</td>
+                                <td>
+                                    {% for responsable in c.eleve.responsables %}
+                                        {{ responsable.nom|upper }} {{ responsable.prenom }}
+                                    {% endfor %}
+                                </td>
+
+                                <td>
+                                    <a href="/23PHONK/public/contrat/modifier/{{ c.id }}">✏️</a>
+                                    <a href="/23PHONK/public/contrat/consulter/{{ c.id }}">👁️</a>
+                                    <a href="#">🗑️</a>
+                                </td>
+                            </tr>
 
 
-        <tr>
-        <td><a href="{{ path('consulterContrat', { 'id': c.id }) }}">{{ c.datedebut|date('d/m/Y') }}</a></td>
-        <td>{{ c.datefin|date('d/m/Y') }}</a></td>
-        <td>{{ c.attestationassurance }}</td>
-        <td>{{ c.etatdetailledebut}}</td>
-        <td>{{ c.etatdetaillefin}}</td>
-        <td>{{ c.eleve.nom}}</td>
-        <td>{{ c.eleve.prenom}}</td>
-        <td>{{ c.instrument.numSerie}}</td>
-        <td>
-            <a href="/23PHONK/public/contrat/modifier/{{ c.id }}">✏️</a>
-            <a href="/23PHONK/public/contrat/consulter/{{ c.id }}">👁️</a>
-            <a href="#">🗑️</a>
-        </td>
-
-
-
-    {% else %}
-        <tr>
-            <td>Aucun contrat n'a été trouvé.</td>
-        </tr>
-    {% endfor %}
+                        {% else %}
+                                    <tr>
+                                        <td>Aucun contrat n'a été trouvé.</td>
+                                    </tr>
+                        {% endfor %}
 
 </table>
             </tbody>

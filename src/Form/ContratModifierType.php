@@ -19,23 +19,32 @@ class ContratModifierType extends AbstractType
             ->add('dateDebut', DateType::class, [
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd',
+                'attr' => ['class' => 'form-control form-control-user']
             ])
             ->add('dateFin', DateType::class, [
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd',
+                'attr' => ['class' => 'form-control form-control-user']
             ])
-            ->add('attestationAssurance')
-            ->add('etatDetailleDebut')
-            ->add('etatDetailleFin')
-            ->add('eleve', EntityType::class, array('class' => 'App\Entity\Eleve','choice_label' => 'nom'))
-            ->add('instrument', EntityType::class, array('class' => 'App\Entity\Instrument','choice_label' => 'numSerie'))
+            ->add('attestationAssurance', null, ['attr' => ['class' => 'form-control form-control-user']])
+            ->add('etatDetailleDebut', null, ['attr' => ['class' => 'form-control form-control-user']])
+            ->add('etatDetailleFin', null, ['attr' => ['class' => 'form-control form-control-user']])
+            ->add('eleve', EntityType::class, [
+                'class' => 'App\Entity\Eleve',
+                'choice_label' => 'nom',
+                'attr' => ['class' => 'form-control form-control-user']
+            ])
+            ->add('instrument', EntityType::class, ['class' => 'App\Entity\Instrument', 'choice_label' => 'name', 'attr' => ['class' => 'form-control form-control-user']
+            ])
             ->add('interventions', EntityType::class, [
                 'class' => 'App\Entity\Intervention',
                 'choice_label' => 'descriptif',
                 'multiple' => true,
-                'expanded' => true,])
+                'expanded' => true,
+                'attr' => ['class' => 'form-control form-control-user']
+            ])
 
-            ->add('enregistrer', SubmitType::class, array('label' => 'Modifier contrat'))
+            ->add('enregistrer', SubmitType::class, array('label' => 'Modifier contrat', 'attr' => ['class' => 'btn btn-primary btn-user btn-block']))
         ;
         ;
 
