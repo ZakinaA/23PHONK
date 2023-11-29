@@ -31,9 +31,7 @@ class ContratType extends AbstractType
             ->add('etatDetailleDebut')
             ->add('etatDetailleFin')
             ->add('eleve', EntityType::class, array('class' => 'App\Entity\Eleve','choice_label' => 'nom'))
-          ->add('instrument', EntityType::class, array('class' => 'App\Entity\Instrument','choice_label' => 'numSerie'))
-
-
+            ->add('instrument', EntityType::class, array('class' => 'App\Entity\Instrument','choice_label' => 'numSerie'))
 
             ->add('enregistrer', SubmitType::class, array('label' => 'Nouveau contrat'))
         ;
