@@ -46,6 +46,9 @@ class Instrument
     #[ORM\OneToMany(mappedBy: 'instrument', targetEntity: Intervention::class)]
     private Collection $interventions;
 
+    #[ORM\Column(length: 10)]
+    private ?string $name = null;
+
     public function __construct()
     {
         $this->interventions = new ArrayCollection();
@@ -221,6 +224,18 @@ class Instrument
 
                     return $this;
 
+                }
+
+                public function getName(): ?string
+                {
+                    return $this->name;
+                }
+
+                public function setName(string $name): static
+                {
+                    $this->name = $name;
+
+                    return $this;
                 }
 }
 
