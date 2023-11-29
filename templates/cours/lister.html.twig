@@ -11,14 +11,14 @@
     {% if pCours %}
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <tr>
-                <th>Type d'Instrument</th>
-                <th>Jour</th>
-                <th>Heure de début</th>
-                <th>Heure de fin</th>
-                <th>Âge minimum</th>
-                <th>Âge maximum</th>
-                <th>Nombre de places max</th>
-                <th>Action</th>
+                <th class="text-center">Type d'Instrument</th>
+                <th class="text-center">Jour</th>
+                <th class="text-center">Heure de début</th>
+                <th class="text-center">Heure de fin</th>
+                <th class="text-center">Âge minimum</th>
+                <th class="text-center">Âge maximum</th>
+                <th class="text-center">Nombre de places max</th>
+                <th class="text-center">Action</th>
             </tr>
 
             {% set groupedCours = {} %}
@@ -43,15 +43,15 @@
                 {% for c in sortedCoursList %}
                     <tr>
                         {% if loop.first %}
-                            <td rowspan="{{ sortedCoursList|length }}">{{ typeInstrument }}</td>
+                            <td class="text-center" rowspan="{{ sortedCoursList|length }}">{{ typeInstrument }}</td>
                         {% endif %}
-                        <td>{{ c.jour.libelle }}</td>
-                        <td>{{ c.heureDebut|date('H:i') }}</td>
-                        <td>{{ c.heureFin|date('H:i') }}</td>
-                        <td>{{ c.ageMini }}</td>
-                        <td>{{ c.ageMaxi }}</td>
-                        <td>{{ c.nbPlaces }}</td>
-                        <td>
+                        <td class="text-center">{{ c.jour.libelle }}</td>
+                        <td class="text-center">{{ c.heureDebut|date('H:i') }}</td>
+                        <td class="text-center">{{ c.heureFin|date('H:i') }}</td>
+                        <td class="text-center">{{ c.ageMini }}</td>
+                        <td class="text-center">{{ c.ageMaxi }}</td>
+                        <td class="text-center">{{ c.nbPlaces }}</td>
+                        <td class="text-center">
                             <a href="/23PHONK/public/cours/modifier/{{ c.id }}">✏️</a>
                             <a href="/23PHONK/public/cours/consulter/{{ c.id }}">👁️</a>
                             <a href="#">🗑️</a>
