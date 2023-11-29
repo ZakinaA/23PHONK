@@ -1,5 +1,14 @@
-{# templates/intervention/ajouter.html.twig #}
-{{ form_start(form) }}
+{% extends 'base.html.twig' %}
 
-{{ form_widget(form) }}
-{{ form_end(form) }}
+{% block title %}Instrument Lister !{% endblock %}
+
+{% block body %}
+
+    <h1>Ajout/Modification instrument</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+
+{% endblock %}

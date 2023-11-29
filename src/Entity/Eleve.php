@@ -41,7 +41,7 @@ class Eleve
 
 
     #[ORM\ManyToMany(targetEntity: Responsable::class, inversedBy: 'eleves')]
-    private Collection $Eleve;
+    private Collection $responsables;
 
     #[ORM\OneToMany(mappedBy: 'eleve', targetEntity: Contrat::class)]
     private Collection $contrats;
@@ -49,7 +49,7 @@ class Eleve
 
     public function __construct()
     {
-        $this->Eleve = new ArrayCollection();
+        $this->responsables = new ArrayCollection();
         $this->contrats = new ArrayCollection();
     }
 
@@ -191,6 +191,7 @@ class Eleve
             $contrat->setEleve($this);
         }
         return $this;
+
     }
 
     /**
@@ -237,5 +238,25 @@ class Eleve
 
             return $this;
         }
+
+    /**
+     * @return Collection<int, Responsable>
+     */
+    public function getResponsables(): Collection
+    {
+        return $this->responsables;
+    }
+
+    public function addResponsable(Responsable $responsable): static
+    {
+        if (!$this->responsables->contains($responsable)) {
+            $this->responsables->add($responsable);
+        }
+
+        return $this;
+    }
+
+
+
     }
 
