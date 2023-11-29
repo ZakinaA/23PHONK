@@ -52,6 +52,23 @@ class InterventionController extends AbstractController
             ['intervention' => $intervention,]);
     }
 
+    public function listerByInstrument(ManagerRegistry $doctrine, int $id)
+    {
+
+        $interventions = $doctrine->getRepository(Intervention::class)->findBy(['instrument' => $id]);
+
+
+        if (!$interventions) {
+            throw $this->createNotFoundException(
+                'Aucun contrat trouvé avec le numéro ' . $id
+            );
+        }
+
+        //return new Response('Intervention : '.$intevention->getNom());
+        return $this->render('intervention/consulterByInstrument.html.twig',
+            ['pIntervention' => $interventions,]);
+    }
+
     public function ajouterIntervention(Request $request, PersistenceManagerRegistry $doctrine):Response
     {
         $intervention = new intervention();
