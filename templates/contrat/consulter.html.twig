@@ -30,10 +30,12 @@
     <tr><td>Etat à la fin du pret  : </td><td>{{contrat.etatdetaillefin}}</td></tr>
     <tr><td>Nom de l'élève: </td><td>{{contrat.eleve.nom}}</td></tr>
     <tr><td>Prénom de l'élève: </td><td>{{contrat.eleve.prenom}}</td></tr>
-    <tr><td>Nom de l'instrument: </td><td>{{contrat.instrument.name}}</td></tr>
+    <tr><td>Nom de l'instrument: </td><td> {{contrat.instrument.name}}</td></tr>
+
                     </thead>
                     <tfoot>
 
+                    {% if eleve is defined %}
                     {% if eleve.responsables is not empty %}
                         <tr><td>Responsables de l'élève :</td>
                         <td>
@@ -46,6 +48,8 @@
                     {% else %}
                         <p>Cet élève n'a pas de responsables.</p>
                     {% endif %}
+                    {% endif %}
+
 </table>
 
 

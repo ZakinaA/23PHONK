@@ -36,13 +36,8 @@ class ContratModifierType extends AbstractType
             ])
             ->add('instrument', EntityType::class, ['class' => 'App\Entity\Instrument', 'choice_label' => 'name', 'attr' => ['class' => 'form-control form-control-user']
             ])
-            ->add('interventions', EntityType::class, [
-                'class' => 'App\Entity\Intervention',
-                'choice_label' => 'descriptif',
-                'multiple' => true,
-                'expanded' => true,
-                'attr' => ['class' => 'form-control form-control-user']
-            ])
+
+
 
             ->add('enregistrer', SubmitType::class, array('label' => 'Modifier contrat', 'attr' => ['class' => 'btn btn-primary btn-user btn-block']))
         ;
