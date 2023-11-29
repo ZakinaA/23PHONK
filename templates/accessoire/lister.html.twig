@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Instrument Lister !{% endblock %}
+
+{% block body %}
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Tous les accessoires</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary"><a href="/23PHONK/public/accessoire/ajouter">Ajouter un accessoire</a></h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>Libelle</th>
+                        <th>Affecter à</th>
+                        <th>Contrat de prêt</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>Libelle</th>
+                        <th>Affecter à</th>
+                        <th>Contrat de prêt</th>
+                        <th>Action</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {% for i in pAccessoires %}
+                        <tr>
+                        <td>{{ i.libelle }}</a></td>
+                        <td>{{ i.instrument.name }}</td>
+                        <td><a href="/23PHONK/public/contrat/lister/{{ i.instrument.id }}">Voir l'historique</a></td>
+                        <td>
+                            <a href="/23PHONK/public/instrument/modifier/{{ i.id }}">✏️</a>
+                            <a href="/23PHONK/public/instrument/consulter/{{ i.id }}">👁️</a>
+                            <a href="#">🗑️</a>
+                        </td>
+                    {% else %}
+                        <tr>
+                            <th>Aucun accessoire n'a été trouvé.</th>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
