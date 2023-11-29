@@ -1,34 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
-    {% block stylesheets %}{% endblock %}
-</head>
-<body>
-{% block body %}{% endblock %}
-{% block javascripts %}{% endblock %}
+{% extends 'base.html.twig' %}
+
+{% block title %}Lister les contrats{% endblock %}
+
+{% block body %}
 
 
-<style>
-    table {
-        border-width:1px;
-        border-style:solid;
-        border-color:black;
-        width:50%;
-    }
-    td {
-        border-width: 1px;
-        border-style: solid;
-        border-color: BLACK;
-        width: 50%;
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Tous les contrats</h1>
 
-    }
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"><a href="/23PHONK/public/contrat/ajouter">Ajouter un contrat</a></h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
 
-</style>
-LISTE DES CONTRATS</br>
-
-<table>
     <tr>
         <td>Date de début</td>
         <td>Date de fin</td>
@@ -40,6 +29,8 @@ LISTE DES CONTRATS</br>
         <td>Numéro série instrument</td>
 
     </tr>
+                </thead>
+                <tfoot>
     {% for c in pContrats %}
 
 
@@ -52,7 +43,11 @@ LISTE DES CONTRATS</br>
         <td>{{ c.eleve.nom}}</td>
         <td>{{ c.eleve.prenom}}</td>
         <td>{{ c.instrument.numSerie}}</td>
-
+        <td>
+            <a href="/23PHONK/public/contrat/modifier/{{ c.id }}">✏️</a>
+            <a href="/23PHONK/public/contrat/consulter/{{ c.id }}">👁️</a>
+            <a href="#">🗑️</a>
+        </td>
 
 
 
@@ -63,7 +58,10 @@ LISTE DES CONTRATS</br>
     {% endfor %}
 
 </table>
+            </tbody>
+        </div>
+    </div>
+</div>
 
 
-</body>
-</html>
+{% endblock %}
