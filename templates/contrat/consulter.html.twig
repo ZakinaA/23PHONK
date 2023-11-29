@@ -11,12 +11,14 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary"><a href="/23PHONK/public/contrat/ajouter">Ajouter une contrat</a></h6>
+
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
+
+
 
     <tr><td>Id : </td><td>{{contrat.id}} </td></tr>
     <tr><td>Date de début: </td><td>{{contrat.datedebut|date("d/m/Y")}}</td>
@@ -28,17 +30,19 @@
     <tr><td>Etat à la fin du pret  : </td><td>{{contrat.etatdetaillefin}}</td></tr>
     <tr><td>Nom de l'élève: </td><td>{{contrat.eleve.nom}}</td></tr>
     <tr><td>Prénom de l'élève: </td><td>{{contrat.eleve.prenom}}</td></tr>
-    <tr><td>Numéro de l'instrument: </td><td>{{contrat.instrument.numSerie}}</td></tr>
+    <tr><td>Nom de l'instrument: </td><td>{{contrat.instrument.name}}</td></tr>
                     </thead>
                     <tfoot>
 
                     {% if eleve.responsables is not empty %}
                         <tr><td>Responsables de l'élève :</td>
-
+                        <td>
                         {% for responsable in eleve.responsables %}
-                    <td>{{ responsable.nom }} {{ responsable.prenom }}</tr></td>
-                        {% endfor %}
+                           {{ responsable.nom|upper }} {{ responsable.prenom }}
 
+                        {% endfor %}
+                        </td>
+                        </tr>
                     {% else %}
                         <p>Cet élève n'a pas de responsables.</p>
                     {% endif %}
