@@ -58,9 +58,9 @@ coursModifier:
     path: /cours/modifier/{id}
     controller: App\Controller\CoursController::modifier
     
-instrument:
-    path: /instrument/
-    controller: App\Controller\InstrumentController::index
+listerAccessoire:
+    path: /accessoire/lister
+    controller: App\Controller\AccessoireController::lister
 
 listerInstrument:
     path: /instrument/lister
