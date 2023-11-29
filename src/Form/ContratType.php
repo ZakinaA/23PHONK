@@ -19,21 +19,25 @@ class ContratType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('dateDebut', DateType::class, [
-                'widget' => 'single_text',
-                'format' => 'yyyy-MM-dd',
+            ->add('dateDebut', DateType::class, ['widget' => 'single_text', 'format' => 'yyyy-MM-dd', 'attr' => ['class' => 'form-control form-control-user']
             ])
-            ->add('dateFin', DateType::class, [
-                'widget' => 'single_text',
-                'format' => 'yyyy-MM-dd',
+            ->add('dateFin', DateType::class, ['widget' => 'single_text', 'format' => 'yyyy-MM-dd', 'attr' => ['class' => 'form-control form-control-user']
             ])
-            ->add('attestationAssurance')
-            ->add('etatDetailleDebut')
-            ->add('etatDetailleFin')
-            ->add('eleve', EntityType::class, array('class' => 'App\Entity\Eleve','choice_label' => 'nom'))
-            ->add('instrument', EntityType::class, array('class' => 'App\Entity\Instrument','choice_label' => 'name'))
+            ->add('attestationAssurance', null, ['attr' => ['class' => 'form-control form-control-user']])
+            ->add('etatDetailleDebut', null, ['attr' => ['class' => 'form-control form-control-user']])
+            ->add('etatDetailleFin', null, ['attr' => ['class' => 'form-control form-control-user']])
+            ->add('eleve', EntityType::class, ['class' => 'App\Entity\Eleve', 'choice_label' => 'nom', 'attr' => ['class' => 'form-control form-control-user']
+            ])
+            ->add('instrument', EntityType::class, ['class' => 'App\Entity\Instrument', 'choice_label' => 'name', 'attr' => ['class' => 'form-control form-control-user']
+            ])
+           /* ->add('responsable', EntityType::class, [
+                'class' => Responsable::class,
+                'choice_label' => 'nom',
+                'placeholder' => 'Sélectionnez un responsable',
+                'attr' => ['class' => 'form-control form-control-user']
+            ])*/
 
-            ->add('enregistrer', SubmitType::class, array('label' => 'Nouveau contrat'))
+           ->add('enregistrer', SubmitType::class, array('label' => 'Nouveau contrat', 'attr' => ['class' => 'btn btn-primary btn-user btn-block']))
         ;
     }
 
