@@ -59,14 +59,16 @@
                             <td>{{ c.eleve.prenom}}</td>
                             <td>{{ c.instrument.type.libelle}} {{ c.instrument.name}}</td>
 
-
-
                                 <td>
-                                    {% for responsable in c.eleve.responsables %}
-                                        {{ responsable.nom|upper }} {{ responsable.prenom }}
-
-                                    {% endfor %}
+                                    {% if c.eleve.responsables is not empty %}
+                                        {% for responsable in c.eleve.responsables %}
+                                            {{ responsable.nom|upper }} {{ responsable.prenom }}
+                                        {% endfor %}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
                                 </td>
+
 
                                 <td>
                                     <a href="/23PHONK/public/contrat/modifier/{{ c.id }}">✏️</a>
