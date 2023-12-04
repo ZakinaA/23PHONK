@@ -3,11 +3,9 @@
 namespace App\Controller;
 
 
-use App\Entity\Etudiant;
 use App\Entity\Intervention;
 use App\Form\ContratModifierType;
 use App\Form\ContratType;
-use App\Form\EtudiantModifierType;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Contrat;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
