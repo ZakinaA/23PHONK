@@ -19,41 +19,51 @@ class ContratType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('dateDebut', DateType::class, [
-                'widget' => 'single_text',
-                'format' => 'yyyy-MM-dd',
-                'attr' => ['class' => 'form-control form-control-user'],
-
-            ])
-            ->add('dateFin', TextType::class, [
-                'attr' => ['class' => 'form-control form-control-user'],
-                'required' => false,
-
-            ])
-            ->add('attestationAssurance', null, [
-                'attr' => ['class' => 'form-control form-control-user'],
-                'required' => false,
-            ])
-            ->add('etatDetailleDebut', null, [
-                'attr' => ['class' => 'form-control form-control-user'],
-
-            ])
-            ->add('etatDetailleFin', null, [
-                'attr' => ['class' => 'form-control form-control-user'],
-                'required' => false,
-            ])
             ->add('eleve', EntityType::class, [
+                'label' => 'Nom de l\'élève',
                 'class' => 'App\Entity\Eleve',
                 'choice_label' => 'nom',
                 'attr' => ['class' => 'form-control form-control-user'],
 
             ])
             ->add('instrument', EntityType::class, [
+                'label' => 'L\'instrument du prêt',
                 'class' => 'App\Entity\Instrument',
                 'choice_label' => 'name',
                 'attr' => ['class' => 'form-control form-control-user'],
 
             ])
+            ->add('dateDebut', DateType::class, [
+                'label' => 'Date au début du prêt',
+                'widget' => 'single_text',
+                'format' => 'yyyy-MM-dd',
+                'attr' => ['class' => 'form-control form-control-user'],
+
+            ])
+            ->add('dateFin', DateType::class, [
+                'label' => 'Date de la fin du prêt',
+                'widget' => 'single_text',
+                'format' => 'yyyy-MM-dd',
+                'attr' => ['class' => 'form-control form-control-user'],
+                'required' => false,
+
+            ])
+            ->add('attestationAssurance', null, [
+                'label' => 'Attestation d\'assurance de l\'élève',
+                'attr' => ['class' => 'form-control form-control-user'],
+                'required' => false,
+            ])
+            ->add('etatDetailleDebut', null, [
+                'label' => 'Etat détaillé de l\'instrument au début du prêt',
+                'attr' => ['class' => 'form-control form-control-user'],
+
+            ])
+            ->add('etatDetailleFin', null, [
+                'label' => 'Etat détaillé de l\'instrument à la fin du prêt',
+                'attr' => ['class' => 'form-control form-control-user'],
+                'required' => false,
+            ])
+
 
            /* ->add('responsable', EntityType::class, [
                 'class' => Responsable::class,
