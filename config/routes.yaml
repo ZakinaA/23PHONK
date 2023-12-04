@@ -99,6 +99,6 @@ modifierProfesseur:
     path: /professeur/modifier/{id}
     controller: App\Controller\ProfesseurController::modifier
 
-ajouterIntervention:
-    path: /intervention/ajouter
+app_intervention_ajouter:
+    path: /intervention/ajouter/{instrumentId}
     controller: App\Controller\InterventionController::ajouterIntervention
