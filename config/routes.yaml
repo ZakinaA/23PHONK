@@ -22,6 +22,10 @@ contratLister:
     path: /contrat/lister
     controller: App\Controller\ContratController::contratLister
 
+contratListerParInstrument:
+    path: /contrat/lister/{id}
+    controller: App\Controller\ContratController::contratListerParInstrument
+
 consulterContrat:
     path : /contrat/consulter/{id}
     controller : App\Controller\ContratController::consulterContrat
