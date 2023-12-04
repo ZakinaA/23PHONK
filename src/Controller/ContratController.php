@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+
 use DateTime;
 use App\Entity\Intervention;
 use App\Form\ContratModifierType;
@@ -29,6 +30,16 @@ class ContratController extends AbstractController
         $repository = $doctrine->getRepository(Contrat::class);
 
         $contrats= $repository->findAll();
+        return $this->render('contrat/lister.html.twig', [
+            'pContrats' => $contrats,]);
+
+    }
+
+    public function contratListerParInstrument(ManagerRegistry $doctrine, int $id){
+
+        $repository = $doctrine->getRepository(Contrat::class);
+
+        $contrats= $repository->findBy(['instrument' => $id]);
         return $this->render('contrat/lister.html.twig', [
             'pContrats' => $contrats,]);
 

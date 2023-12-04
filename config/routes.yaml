@@ -22,13 +22,17 @@ contratLister:
     path: /contrat/lister
     controller: App\Controller\ContratController::contratLister
 
+contratListerParInstrument:
+    path: /contrat/lister/{id}
+    controller: App\Controller\ContratController::contratListerParInstrument
+
 consulterContrat:
     path : /contrat/consulter/{id}
     controller : App\Controller\ContratController::consulterContrat
 
 interventionLister:
-    path: /intervention/lister
-    controller: App\Controller\InterventionController::interventionLister
+    path: /intervention/lister/{id}
+    controller: App\Controller\InterventionController::listerByInstrument
 
 consulterIntervention:
     path: /intervention/consulter/{id}
@@ -58,9 +62,9 @@ coursModifier:
     path: /cours/modifier/{id}
     controller: App\Controller\CoursController::modifier
     
-instrument:
-    path: /instrument/
-    controller: App\Controller\InstrumentController::index
+listerAccessoire:
+    path: /accessoire/lister
+    controller: App\Controller\AccessoireController::lister
 
 listerInstrument:
     path: /instrument/lister

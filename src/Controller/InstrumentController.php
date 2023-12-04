@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Accessoire;
 use App\Entity\Instrument;
 use App\Entity\Intervention;
 use App\Entity\TypeInstrument;
@@ -36,6 +37,7 @@ class InstrumentController extends AbstractController
         $instrument= $doctrine->getRepository(Instrument::class)->find($id);
 
         $intervention= $doctrine->getRepository(Intervention::class)->findBy(['instrument' => $id]);
+        $accessoires= $doctrine->getRepository(Accessoire::class)->findBy(['instrument' => $id]);
 
         if (!$instrument) {
             throw $this->createNotFoundException(
@@ -45,7 +47,7 @@ class InstrumentController extends AbstractController
 
         //return new Response('Etudiant : '.$etudiant->getNom());
         return $this->render('instrument/consulter.html.twig',
-            ['instrument' => $instrument, 'pIntervention' => $intervention]);
+            ['instrument' => $instrument, 'pIntervention' => $intervention, 'pAccessoires' => $accessoires]);
     }
 
     public function ajouter(Request $request, PersistenceManagerRegistry $doctrine):Response
