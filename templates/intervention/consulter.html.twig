@@ -1,43 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends 'base.html.twig' %}
 
-</head>
+{% block title %}Consultation d'un contrat{% endblock %}
 
-<body>
-<h5>PAGE DE CONSULTATION D'UN CONTRAT</h5>
-<p>
+{% block body %}
 
-    <style>
-        table {
-            border-width:1px;
-            border-style:solid;
-            border-color:black;
-            width:50%;
-        }
-        td {
-            border-width: 1px;
-            border-style: solid;
-            border-color: BLACK;
-            width: 50%;
+<div class="tab-lister-instrument">
 
-        }
-    </style>
-<table >
-    <tr><td>Id : </td><td>{{intervention.id}} </td></tr>
-    <tr><td>Date de début: </td><td>{{intervention.datedebut|date("d/m/Y")}}</td>
+    <H1>Information sur l'intervention  {{ intervention.id }}</H1>
 
-    <tr><td>Date de fin : </td><td>{{intervention.datefin|date("d/m/Y")}}</td></tr></tr>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
 
-    <tr><td>descriptif: </td><td>{{intervention.descriptif}}</td></tr>
-    <tr><td>prix: </td><td>{{intervention.prix}}</td></tr>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                             <tr><td>L'id de l'intervention : </td><td>{{intervention.id}} </td></tr>
+                             <tr><td>La date de début de l'intervention : </td><td>{{intervention.datedebut|date("d/m/Y")}}</td>
+                             <tr><td>La date de fin de l'intervention : </td><td>{{intervention.datefin|date("d/m/Y")}}</td></tr></tr>
+                             <tr><td>Le descriptif de l'intervention : </td><td>{{intervention.descriptif}}</td></tr>
+                             <tr><td>Le prix : </td><td>{{intervention.prix}}</td></tr>
+                    </thead>
+                    <tfoot>
+                </table>
 
-
-
-
-
-</table>
-
-
-</body>
-</html>
+{% endblock %}
