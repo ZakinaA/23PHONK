@@ -59,9 +59,8 @@ class InterventionController extends AbstractController
 
 
         if (!$interventions) {
-            throw $this->createNotFoundException(
-                'Aucun contrat trouvé avec le numéro ' . $id
-            );
+            return $this->render('intervention/consulterByInstrument.html.twig',
+                ['message' => 'false']);
         }
 
         //return new Response('Intervention : '.$intevention->getNom());
