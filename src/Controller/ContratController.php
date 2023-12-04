@@ -3,11 +3,9 @@
 namespace App\Controller;
 
 
-use App\Entity\Etudiant;
 use App\Entity\Intervention;
 use App\Form\ContratModifierType;
 use App\Form\ContratType;
-use App\Form\EtudiantModifierType;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Contrat;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,6 +29,16 @@ class ContratController extends AbstractController
         $repository = $doctrine->getRepository(Contrat::class);
 
         $contrats= $repository->findAll();
+        return $this->render('contrat/lister.html.twig', [
+            'pContrats' => $contrats,]);
+
+    }
+
+    public function contratListerParInstrument(ManagerRegistry $doctrine, int $id){
+
+        $repository = $doctrine->getRepository(Contrat::class);
+
+        $contrats= $repository->findBy(['instrument' => $id]);
         return $this->render('contrat/lister.html.twig', [
             'pContrats' => $contrats,]);
 
