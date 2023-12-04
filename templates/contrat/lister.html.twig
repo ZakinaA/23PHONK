@@ -34,10 +34,27 @@
                         {% for c in pContrats %}
                             <tr>
                             <td><a href="{{ path('consulterContrat', { 'id': c.id }) }}">{{ c.datedebut|date('d/m/Y') }}</a></td>
-                            <td>{{ c.datefin|date('d/m/Y') }}</a></td>
-                            <td>{{ c.attestationassurance }}</td>
+                            <td>
+                                {% if c.dateFin is not null %}
+                                {{ c.dateFin|date('d/m/Y') }}
+                                {% else %}
+                                N/a
+                                {% endif %}
+                                </td>
+                            <td>{% if c.attestationassurance is not null %}
+                                    {{ c.attestationassurance }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                                </td>
+
                             <td>{{ c.etatdetailledebut}}</td>
-                            <td>{{ c.etatdetaillefin}}</td>
+                                <td>{% if c.etatdetaillefin is not null %}
+                                        {{ c.etatdetaillefin }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
                             <td>{{ c.eleve.nom}}</td>
                             <td>{{ c.eleve.prenom}}</td>
                             <td>{{ c.instrument.type.libelle}} {{ c.instrument.name}}</td>
@@ -47,6 +64,7 @@
                                 <td>
                                     {% for responsable in c.eleve.responsables %}
                                         {{ responsable.nom|upper }} {{ responsable.prenom }}
+
                                     {% endfor %}
                                 </td>
 

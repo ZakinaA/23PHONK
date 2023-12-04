@@ -2,12 +2,10 @@
 
 namespace App\Controller;
 
-
-use App\Entity\Etudiant;
+use DateTime;
 use App\Entity\Intervention;
 use App\Form\ContratModifierType;
 use App\Form\ContratType;
-use App\Form\EtudiantModifierType;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Contrat;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -56,13 +54,17 @@ class ContratController extends AbstractController
             'eleve' => $eleve,
         ]);
     }
-    public function ajouterContrat(ManagerRegistry $doctrine,Request $request){
-        $contrat = new contrat();
+    public function ajouterContrat(ManagerRegistry $doctrine, Request $request)
+    {
+        $contrat = new Contrat();
+
+        // Définir la date de fin par défaut (par exemple, aujourd'hui)
+        $contrat->setDateFin(new DateTime('2024-06-30'));
+
         $form = $this->createForm(ContratType::class, $contrat);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $contrat = $form->getData();
 
             $entityManager = $doctrine->getManager();
@@ -70,13 +72,15 @@ class ContratController extends AbstractController
             $entityManager->flush();
 
             $interventions = $contrat->getInterventions();
-            return $this->render('contrat/consulter.html.twig', ['contrat' => $contrat,'interventions' => $interventions,]);
 
-        }
-        else
-        {
-
-            return $this->render('contrat/ajouter.html.twig', array('form' => $form->createView(),));
+            return $this->render('contrat/consulter.html.twig', [
+                'contrat' => $contrat,
+                'interventions' => $interventions,
+            ]);
+        } else {
+            return $this->render('contrat/ajouter.html.twig', [
+                'form' => $form->createView(),
+            ]);
         }
     }
 
