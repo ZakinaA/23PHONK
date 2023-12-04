@@ -138,58 +138,7 @@
 
         </div>
 
-        <h2>Toutes les interventions :</h2>
-        <!-- DataTales Example -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary"><a href="/intervention/ajouter">Ajouter une intervention</a></h6>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                        <tr>
-                            <th>Date Debut</th>
-                            <th>Date Fin</th>
-                            <th>Prix</th>
-                            <th>Contrat de prêt</th>
-                            <th>Description</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        <tr>
-                            <th>Date Debut</th>
-                            <th>Date Fin</th>
-                            <th>Prix</th>
-                            <th>Contrat de prêt</th>
-                            <th>Description</th>
-                            <th>Action</th>
-                        </tr>
-                        </tfoot>
-                        <tbody>
-                        {% for i in pIntervention %}
-                            <tr>
-                            <td>{{ i.dateDebut|date('d/m/Y')}}</td>
-                            <td>{{ i.dateFin|date('d/m/Y')}}</td>
-                            <td>{{ i.prix}}</td>
-                            <td><a href="#">Voir le contrat</a></td>
-                            <td>{{ i.descriptif}}</td>
-                            <td>
-                                <a href="#">✏️</a>
-                                <a href="#">👁️</a>
-                                <a href="#">🗑️</a>
-                            </td>
-                        {% else %}
-                            <tr>
-                                <th>Aucune intervention n'a été trouvée.</th>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+
     </div>
 {% endblock %}
 

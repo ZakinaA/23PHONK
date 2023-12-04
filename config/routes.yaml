@@ -27,8 +27,8 @@ consulterContrat:
     controller : App\Controller\ContratController::consulterContrat
 
 interventionLister:
-    path: /intervention/lister
-    controller: App\Controller\InterventionController::interventionLister
+    path: /intervention/lister/{id}
+    controller: App\Controller\InterventionController::listerByInstrument
 
 consulterIntervention:
     path: /intervention/consulter/{id}
