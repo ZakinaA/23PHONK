@@ -105,6 +105,10 @@ class ContratController extends AbstractController
 
                 $entityManager->flush();
             }
+            else
+            {
+                //$contrat->setAttestationAssurance(null);
+            }
 
             $interventions = $contrat->getInterventions();
 
