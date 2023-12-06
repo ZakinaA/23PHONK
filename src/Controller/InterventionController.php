@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Contrat;
 use App\Entity\Instrument;
 use App\Entity\Intervention;
+use App\Form\ContratModifierType;
 use App\Form\ContratType;
 use App\Form\InstrumentType;
+use App\Form\InterventionModifierType;
 use App\Form\InterventionType;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
@@ -104,8 +106,33 @@ class InterventionController extends AbstractController
             'instruments' => $instruments,
         ]);
     }
+    public function modifierIntervention(ManagerRegistry $doctrine, $id, Request $request)
+    {
 
 
+        $intervention = $doctrine->getRepository(Intervention::class)->find($id);
 
+        if (!$intervention) {
+            throw $this->createNotFoundException('Aucune intervention trouvé avec le numéro ' . $id);
+        } else {
+            $form = $this->createForm(InterventionModifierType::class, $intervention);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $intervention = $form->getData();
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($intervention);
+                $entityManager->flush();
+
+
+                return $this->render('intervention/consulter.html.twig', ['intervention' => $intervention,]);
+            } else {
+                return $this->render('intervention/ajouter.html.twig', array('form' => $form->createView(),));
+            }
+        }
+
+
+    }
 
 }
