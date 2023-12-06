@@ -39,13 +39,13 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
-        - { path: ^/panel, roles: ROLE_USER }
-        - { path: ^/panel/admin, roles: ROLE_ADMIN }
-        - { path: ^/panel/gestionnaire, roles: ROLE_GEST }
+        - { path: ^/eleve, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/gestionnaire, roles: ROLE_GEST }
 
     role_hierarchy:
-        ROLE_ADMIN: [ ROLE_GEST ]
         ROLE_GEST: [ ROLE_USER ]
+        ROLE_ADMIN: [ ROLE_GEST ]
 services:
     App\Controller\SecurityController:
         arguments:
