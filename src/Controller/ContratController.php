@@ -61,10 +61,12 @@ class ContratController extends AbstractController
 
         $interventions = $contrat->getInterventions();
 
+
         return $this->render('contrat/consulter.html.twig', [
             'interventions' => $interventions,
             'contrat' => $contrat,
             'eleve' => $eleve,
+
         ]);
     }
     public function ajouterContrat(ManagerRegistry $doctrine, Request $request, KernelInterface $kernel)
