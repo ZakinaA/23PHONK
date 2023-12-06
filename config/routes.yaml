@@ -6,103 +6,112 @@ index:
     path: /
     controller: App\Controller\IndexController::index
 
+login:
+    path : /login
+    controller: App\Controller\SecurityController::login
+
+logout:
+    path : /logout
+    methods: GET
+
 register:
     path: /register
-    controller: App\Controller\IndexController::register
+    controller: App\Controller\RegistrationController::register
 
 panel:
     path: /panel
     controller: App\Controller\InstrumentController::lister
 
-contrat:
-    path: /contrat
-    controller: App\Controller\ContratController::index
-
 contratLister:
-    path: /contrat/lister
+    path: /gestionnaire/contrat/lister
     controller: App\Controller\ContratController::contratLister
 
 contratListerParInstrument:
-    path: /contrat/lister/{id}
+    path: /gestionnaire/contrat/lister/{id}
     controller: App\Controller\ContratController::contratListerParInstrument
 
 consulterContrat:
-    path : /contrat/consulter/{id}
+    path : /eleve/contrat/consulter/{id}
     controller : App\Controller\ContratController::consulterContrat
 
 interventionLister:
-    path: /intervention/lister/{id}
+    path: /gestionnaire/intervention/lister/{id}
     controller: App\Controller\InterventionController::listerByInstrument
 
 consulterIntervention:
-    path: /intervention/consulter/{id}
+    path: /eleve/intervention/consulter/{id}
     controller: App\Controller\InterventionController::consulterIntervention
 
 ajouterContrat:
-    path: /contrat/ajouter
+    path: /gestionnaire/contrat/ajouter
     controller: App\Controller\ContratController::ajouterContrat
 
 ContratModifier:
-    path: /contrat/modifier/{id}
+    path: /gestionnaire/contrat/modifier/{id}
     controller:  App\Controller\ContratController::ContratModifier
 
 coursLister:
-    path: /cours/lister
+    path: /eleve/cours/lister
     controller: App\Controller\CoursController::lister
 
 coursConsulter:
-    path: /cours/consulter/{id}
+    path: /eleve/cours/consulter/{id}
     controller: App\Controller\CoursController::consulter
 
 coursAjouter:
-    path: /cours/ajouter
+    path: /gestionnaire/cours/ajouter
     controller: App\Controller\CoursController::ajouter
 
 coursModifier:
-    path: /cours/modifier/{id}
+    path: /gestionnaire/cours/modifier/{id}
     controller: App\Controller\CoursController::modifier
     
 listerAccessoire:
-    path: /accessoire/lister
+    path: /gestionnaire/accessoire/lister
     controller: App\Controller\AccessoireController::lister
 
 listerInstrument:
-    path: /instrument/lister
+    path: /gestionnaire/instrument/lister
     controller: App\Controller\InstrumentController::lister
 
 consulterInstrument:
-    path: /instrument/consulter/{id}
+    path: /eleve/instrument/consulter/{id}
     controller: App\Controller\InstrumentController::consulter
 
 ajouterInstrument:
-    path: /instrument/ajouter
+    path: /gestionnaire/instrument/ajouter
     controller: App\Controller\InstrumentController::ajouter
 
 modiferInstrument:
-    path: /instrument/modifier/{id}
+    path: /gestionnaire/instrument/modifier/{id}
     controller: App\Controller\InstrumentController::modifier
 
 
 professeurLister:
-    path: /professeur/lister
+    path: /gestionnaire/professeur/lister
     controller: App\Controller\ProfesseurController::lister
 
 professeurConsulter:
-    path: /professeur/consulter/{id}
+    path: /gestionnaire/professeur/consulter/{id}
     controller: App\Controller\ProfesseurController::consulter
 
 professeurAjouter:
-    path: /professeur/ajouter
+    path: /gestionnaire/professeur/ajouter
     controller: App\Controller\ProfesseurController::ajouter
 
 modifierProfesseur:
-    path: /professeur/modifier/{id}
+    path: /gestionnaire/professeur/modifier/{id}
     controller: App\Controller\ProfesseurController::modifier
 
+ajouterIntervention:
+    path: /gestionnaire/intervention/ajouter
+    controller: App\Controller\InterventionController::ajouterIntervention
+    
 app_intervention_ajouter:
-    path: /intervention/ajouter/{instrumentId}
+    path: /gestionnaire/intervention/ajouter/{instrumentId}
     controller: App\Controller\InterventionController::ajouterIntervention
 
 modifierIntervention:
-    path: /intervention/modifier/{id}
+    path: /gestionnaire/intervention/modifier/{id}
     controller: App\Controller\InterventionController::modifierIntervention
+
