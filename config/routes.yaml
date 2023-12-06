@@ -106,3 +106,12 @@ modifierProfesseur:
 ajouterIntervention:
     path: /gestionnaire/intervention/ajouter
     controller: App\Controller\InterventionController::ajouterIntervention
+    
+app_intervention_ajouter:
+    path: /gestionnaire/intervention/ajouter/{instrumentId}
+    controller: App\Controller\InterventionController::ajouterIntervention
+
+modifierIntervention:
+    path: /gestionnaire/intervention/modifier/{id}
+    controller: App\Controller\InterventionController::modifierIntervention
+

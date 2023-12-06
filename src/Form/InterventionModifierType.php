@@ -3,14 +3,13 @@
 namespace App\Form;
 
 use App\Entity\Intervention;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class InterventionType extends AbstractType
+class InterventionModifierType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -42,14 +41,9 @@ class InterventionType extends AbstractType
                 'attr' => ['class' => 'form-control form-control-user'],
 
             ])
-           /* ->add('instrument', EntityType::class, [
-                'label' => 'L\'instrument : ',
-                'class' => 'App\Entity\Instrument',
-                'choice_label' => 'name',
-                'attr' => ['class' => 'form-control form-control-user'],
-            ])*/
 
-            ->add('enregistrer', SubmitType::class, array('label' => 'Nouvelle intervention', 'attr' => ['class' => 'btn btn-primary btn-user btn-block']))
+
+            ->add('enregistrer', SubmitType::class, array('label' => 'Modifier intervention', 'attr' => ['class' => 'btn btn-primary btn-user btn-block']))
         ;
     }
 
@@ -59,5 +53,4 @@ class InterventionType extends AbstractType
             'data_class' => Intervention::class,
         ]);
     }
-
 }

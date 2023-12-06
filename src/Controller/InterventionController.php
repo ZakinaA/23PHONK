@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Contrat;
 use App\Entity\Instrument;
 use App\Entity\Intervention;
+use App\Form\ContratModifierType;
 use App\Form\ContratType;
 use App\Form\InstrumentType;
+use App\Form\InterventionModifierType;
 use App\Form\InterventionType;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
@@ -55,8 +57,9 @@ class InterventionController extends AbstractController
     public function listerByInstrument(ManagerRegistry $doctrine, int $id)
     {
 
-        $interventions = $doctrine->getRepository(Intervention::class)->findBy(['instrument' => $id]);
-
+        //$interventions = $doctrine->getRepository(Intervention::class)->findBy(['instrument' => $id]);
+        $instrument = $doctrine->getRepository(Instrument::class)->find($id);
+        $interventions = $instrument->getInterventions();
 
         if (!$interventions) {
             return $this->render('intervention/consulterByInstrument.html.twig',
@@ -65,12 +68,21 @@ class InterventionController extends AbstractController
 
         //return new Response('Intervention : '.$intevention->getNom());
         return $this->render('intervention/consulterByInstrument.html.twig',
-            ['pIntervention' => $interventions,]);
+            ['pIntervention' => $interventions,'pInstrument' => $instrument]);
     }
 
-    public function ajouterIntervention(Request $request, PersistenceManagerRegistry $doctrine):Response
+    public function ajouterIntervention(Request $request, ManagerRegistry $doctrine, $instrumentId): Response
     {
-        $intervention = new intervention();
+
+        $instrument = $doctrine->getRepository(Instrument::class)->find($instrumentId);
+
+        if (!$instrument) {
+            throw $this->createNotFoundException('Instrument non trouvé');
+        }
+
+        $intervention = new Intervention();
+        $intervention->setInstrument($instrument);
+
         $form = $this->createForm(InterventionType::class, $intervention);
 
         $form->handleRequest($request);
@@ -80,16 +92,47 @@ class InterventionController extends AbstractController
             $entityManager->persist($intervention);
             $entityManager->flush();
 
-            $this->addFlash('success', 'intervention created successfully!'); // Change the flash message
-            return $this->redirectToRoute('interventionLister');
+            $this->addFlash('success', 'Intervention créée avec succès!');
+
+            return $this->redirectToRoute('consulterInstrument', ['id' => $instrument->getId()]);
         }
 
-        return $this->render('intervention/ajouter.html.twig', [ // Change the template path
+
+        $instruments = $doctrine->getRepository(Instrument::class)->findAll();
+
+        return $this->render('intervention/ajouter.html.twig', [
             'form' => $form->createView(),
+            'instrument' => $instrument,
+            'instruments' => $instruments,
         ]);
     }
+    public function modifierIntervention(ManagerRegistry $doctrine, $id, Request $request)
+    {
 
 
+        $intervention = $doctrine->getRepository(Intervention::class)->find($id);
 
+        if (!$intervention) {
+            throw $this->createNotFoundException('Aucune intervention trouvé avec le numéro ' . $id);
+        } else {
+            $form = $this->createForm(InterventionModifierType::class, $intervention);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $intervention = $form->getData();
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($intervention);
+                $entityManager->flush();
+
+
+                return $this->render('intervention/consulter.html.twig', ['intervention' => $intervention,]);
+            } else {
+                return $this->render('intervention/ajouter.html.twig', array('form' => $form->createView(),));
+            }
+        }
+
+
+    }
 
 }

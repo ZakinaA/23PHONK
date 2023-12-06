@@ -1,17 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Ajouter un cours</title>
-</head>
-<body>
+{% extends 'base.html.twig' %}
 
-<form method="post" action="{{ path('coursAjouter') }}">
+{% block title %}Instrument Lister !{% endblock %}
+
+{% block body %}
+
+<h1>Ajout/Modification cours</h1>
     {{ form_start(form) }}
 
     {{ form_widget(form) }}
 
     {{ form_end(form) }}
-</form>
 
-</body>
-</html>
+{% endblock %}

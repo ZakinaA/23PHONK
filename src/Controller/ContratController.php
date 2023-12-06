@@ -5,11 +5,13 @@ namespace App\Controller;
 
 use DateTime;
 use App\Entity\Intervention;
+use Symfony\Component\HttpKernel\KernelInterface;
 use App\Form\ContratModifierType;
 use App\Form\ContratType;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Contrat;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -59,28 +61,50 @@ class ContratController extends AbstractController
 
         $interventions = $contrat->getInterventions();
 
+
         return $this->render('contrat/consulter.html.twig', [
             'interventions' => $interventions,
             'contrat' => $contrat,
             'eleve' => $eleve,
+
         ]);
     }
-    public function ajouterContrat(ManagerRegistry $doctrine, Request $request)
+    public function ajouterContrat(ManagerRegistry $doctrine, Request $request, KernelInterface $kernel)
     {
         $contrat = new Contrat();
 
-        // Définir la date de fin par défaut (par exemple, aujourd'hui)
         $contrat->setDateFin(new DateTime('2024-06-30'));
 
         $form = $this->createForm(ContratType::class, $contrat);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $contrat = $form->getData();
+            // Récupérez le fichier téléchargé
+            $file = $form->get('attestationAssurance')->getData();
 
-            $entityManager = $doctrine->getManager();
-            $entityManager->persist($contrat);
-            $entityManager->flush();
+            if ($file instanceof UploadedFile) {
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($contrat);
+                $entityManager->flush();
+
+                $contratId = $contrat->getId();
+
+                $fileName = $contratId . '.' . $file->guessExtension();
+
+                $publicDirectory = $kernel->getProjectDir() . '/public';
+
+                $uploadDirectory = $publicDirectory . '/ressources/by/AttestationAssurance';
+
+                $file->move(
+                    $uploadDirectory,
+                    $fileName
+                );
+                $contrat->setAttestationAssurance($fileName);
+
+                $entityManager->persist($contrat);
+
+                $entityManager->flush();
+            }
 
             $interventions = $contrat->getInterventions();
 
@@ -94,6 +118,7 @@ class ContratController extends AbstractController
             ]);
         }
     }
+
 
     public function ContratModifier(ManagerRegistry $doctrine, $id, Request $request){
 
