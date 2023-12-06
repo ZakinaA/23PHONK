@@ -39,7 +39,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="/23PHONK/public/panel">
+                <a class="nav-link" href="{{ path('panel') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -54,21 +54,22 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="/23PHONK/public/instrument/lister">
+                <a class="nav-link" href="{{ path('listerInstrument') }}">
                     <i class="fas fa-fw"></i>
-                    <span>Instruments</span></a>
+                    <span>Les instruments</span>
+                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/23PHONK/public/contrat/lister">
+                <a class="nav-link" href="{{ path('contratLister') }}">
                     <i class="fas fa-fw"></i>
-                    <span>Contrat Pret</span></a>
+                    <span>Les contrats</span>
+                </a>
             </li>
-
-
             <li class="nav-item">
-                <a class="nav-link" href="/23PHONK/public/cours/lister">
+                <a class="nav-link" href="{{ path('coursLister') }}">
                     <i class="fas fa-fw"></i>
-                    <span>Les Cours</span></a>
+                    <span>Les cours</span>
+                </a>
             </li>
 
 {#            <!-- Divider -->#}
