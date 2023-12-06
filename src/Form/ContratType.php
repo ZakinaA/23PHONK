@@ -5,6 +5,7 @@ namespace App\Form;
 
 use App\Entity\Contrat;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -33,6 +34,7 @@ class ContratType extends AbstractType
                 'attr' => ['class' => 'form-control form-control-user'],
 
             ])
+
             ->add('dateDebut', DateType::class, [
                 'label' => 'Date au début du prêt',
                 'widget' => 'single_text',
@@ -48,9 +50,10 @@ class ContratType extends AbstractType
                 'required' => false,
 
             ])
-            ->add('attestationAssurance', null, [
+            ->add('attestationAssurance', FileType::class, [
                 'label' => 'Attestation d\'assurance de l\'élève',
                 'attr' => ['class' => 'form-control form-control-user'],
+                'mapped' => false,
                 'required' => false,
             ])
             ->add('etatDetailleDebut', null, [
