@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CoursRepository::class)]
 class Cours
@@ -16,19 +17,32 @@ class Cours
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $libelle = null;
-
     #[ORM\Column(nullable: true)]
+    #[Assert\NotBlank()]
+    #[Assert\Expression("this.getAgeMini() < this.getAgeMaxi()",
+        message : "L'Age minimum ne peut pas être supèrieure à l'age maximum")]
+    #[Assert\Range(
+        notInRangeMessage: "L'âge minimum doit être compris entre {{ min }} et {{ max }}.",
+        min: 3,
+        max: 99,
+    )]
     private ?int $ageMini = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Range(
+        notInRangeMessage: "L'âge maximum doit être compris entre {{ min }} et {{ max }}.",
+        min: 3,
+        max: 99,
+    )]
     private ?int $ageMaxi = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $nbPlaces = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    #[Assert\NotBlank()]
+    #[Assert\Expression("this.getHeureDebut() < this.getHeureFin()",
+        message : "L'heure de début ne peut pas être supèrieure à l'heure de fin")]
     private ?\DateTimeInterface $heureDebut = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
@@ -57,18 +71,6 @@ class Cours
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getLibelle(): ?string
-    {
-        return $this->libelle;
-    }
-
-    public function setLibelle(string $libelle): static
-    {
-        $this->libelle = $libelle;
-
-        return $this;
     }
 
     public function getAgeMini(): ?int

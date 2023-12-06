@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use MongoDB\Driver\Manager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,6 +11,8 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\CoursType;
 use App\Form\CoursModifierType;
+use Twig\Environment;
+
 
 
 class CoursController extends AbstractController
@@ -22,14 +25,57 @@ class CoursController extends AbstractController
         ]);
     }
 
-    public function lister(ManagerRegistry $doctrine){
+    private $twig;
 
+    public function __construct(Environment $twig)
+    {
+        $this->twig = $twig;
+
+        $this->twig->addGlobal('jourToNumber', new \Twig\TwigFunction('jourToNumber', [$this, 'jourToNumber']));
+
+    }
+
+    public function lister(ManagerRegistry $doctrine): Response
+    {
         $repository = $doctrine->getRepository(Cours::class);
+        $cours = $repository->findAll();
 
-        $cours= $repository->findAll();
+        $orderOfDays = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+
+        // Fonction personnalisée pour rechercher l'index d'un élément dans un tableau
+        $arraySearch = function ($needle, array $haystack) {
+            foreach ($haystack as $index => $value) {
+                if ($value === $needle) {
+                    return $index;
+                }
+            }
+            return false;
+        };
+
+        // Tri des cours par type d'instrument, jour et heure
+        usort($cours, function ($a, $b) use ($orderOfDays, $arraySearch) {
+            $dayComparison = $arraySearch($a->getJour()->getLibelle(), $orderOfDays) - $arraySearch($b->getJour()->getLibelle(), $orderOfDays);
+
+            if ($dayComparison === 0) {
+                $heureDebutA = $a->getHeureDebut()->getTimestamp();
+                $heureDebutB = $b->getHeureDebut()->getTimestamp();
+                return $heureDebutA - $heureDebutB;
+            }
+
+            return $dayComparison;
+        });
+
+        // Calcul du nombre de cours par type d'instrument
+        $countByTypeInstrument = [];
+        foreach ($cours as $c) {
+            $typeInstrument = $c->getTypeInstrument()->getLibelle();
+            $countByTypeInstrument[$typeInstrument] = ($countByTypeInstrument[$typeInstrument] ?? 0) + 1;
+        }
+
         return $this->render('cours/lister.html.twig', [
-            'pCours' => $cours,]);
-
+            'pCours' => $cours,
+            'countByTypeInstrument' => $countByTypeInstrument,
+        ]);
     }
 
     public function consulter(ManagerRegistry $doctrine, int $id){
@@ -63,7 +109,7 @@ class CoursController extends AbstractController
             $entityManager->persist($cours);
             $entityManager->flush();
 
-            return $this->render('cours/consulter.html.twig', ['cours' => $cours,]);
+            return $this->redirectToRoute('coursLister');
         }
         else
         {
@@ -71,14 +117,16 @@ class CoursController extends AbstractController
         }
     }
 
-    public function modifier(ManagerRegistry $doctrine, $id, Request $request)
-    {
+    public function modifier(ManagerRegistry $doctrine, $id, Request $request){
 
         $cours = $doctrine->getRepository(Cours::class)->find($id);
+        $elevesInscrits = $cours->getInscriptions();
 
         if (!$cours) {
-            throw $this->createNotFoundException('Aucun cours trouvé avec le numéro ' . $id);
-        } else {
+            throw $this->createNotFoundException('Aucun instrument trouvé avec le numéro '.$id);
+        }
+        else
+        {
             $form = $this->createForm(CoursModifierType::class, $cours);
             $form->handleRequest($request);
 
@@ -88,10 +136,24 @@ class CoursController extends AbstractController
                 $entityManager = $doctrine->getManager();
                 $entityManager->persist($cours);
                 $entityManager->flush();
-                return $this->render('cours/consulter.html.twig', ['cours' => $cours,]);
-            } else {
+                return $this->render('cours/consulter.html.twig', ['cours' => $cours,'elevesInscrits' => $elevesInscrits,]);
+            }
+            else{
                 return $this->render('cours/ajouter.html.twig', array('form' => $form->createView(),));
             }
         }
+    }
+
+    private function getIndex($needle, $haystack)
+    {
+        return array_search($needle, $haystack);
+    }
+
+    public function jourToNumber($jour)
+    {
+        // Assurez-vous que les noms de jours correspondent exactement à ceux de votre base de données
+        $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+
+        return array_search($jour, $jours) + 1; // Ajoutez 1 car les numéros de jour de la semaine commencent à 1
     }
 }
