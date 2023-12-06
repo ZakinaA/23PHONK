@@ -102,3 +102,7 @@ modifierProfesseur:
 app_intervention_ajouter:
     path: /intervention/ajouter/{instrumentId}
     controller: App\Controller\InterventionController::ajouterIntervention
+
+modifierIntervention:
+    path: /intervention/modifier/{id}
+    controller: App\Controller\InterventionController::modifierIntervention
