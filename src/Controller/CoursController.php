@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use MongoDB\Driver\Manager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -108,7 +109,7 @@ class CoursController extends AbstractController
             $entityManager->persist($cours);
             $entityManager->flush();
 
-            return $this->render('cours/consulter.html.twig', ['cours' => $cours,]);
+            return $this->redirectToRoute('coursLister');
         }
         else
         {
@@ -116,14 +117,16 @@ class CoursController extends AbstractController
         }
     }
 
-    public function modifier(ManagerRegistry $doctrine, $id, Request $request)
-    {
+    public function modifier(ManagerRegistry $doctrine, $id, Request $request){
 
         $cours = $doctrine->getRepository(Cours::class)->find($id);
+        $elevesInscrits = $cours->getInscriptions();
 
         if (!$cours) {
-            throw $this->createNotFoundException('Aucun cours trouvé avec le numéro ' . $id);
-        } else {
+            throw $this->createNotFoundException('Aucun instrument trouvé avec le numéro '.$id);
+        }
+        else
+        {
             $form = $this->createForm(CoursModifierType::class, $cours);
             $form->handleRequest($request);
 
@@ -133,8 +136,9 @@ class CoursController extends AbstractController
                 $entityManager = $doctrine->getManager();
                 $entityManager->persist($cours);
                 $entityManager->flush();
-                return $this->render('cours/consulter.html.twig', ['cours' => $cours,]);
-            } else {
+                return $this->render('cours/consulter.html.twig', ['cours' => $cours,'elevesInscrits' => $elevesInscrits,]);
+            }
+            else{
                 return $this->render('cours/ajouter.html.twig', array('form' => $form->createView(),));
             }
         }
