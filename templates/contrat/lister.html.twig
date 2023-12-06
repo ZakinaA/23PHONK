@@ -71,8 +71,8 @@
 
 
                                 <td>
-                                    <a href="/23PHONK/public/contrat/modifier/{{ c.id }}">✏️</a>
-                                    <a href="/23PHONK/public/contrat/consulter/{{ c.id }}">👁️</a>
+                                    <a href="{{ path('ContratModifier', {'id': c.id}) }}">✏️</a>
+                                    <a href="{{ path('consulterContrat', {'id': c.id}) }}">👁️</a>
                                     <a href="#">🗑️</a>
                                 </td>
                             </tr>
