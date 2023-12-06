@@ -18,6 +18,7 @@ class InstrumentType extends AbstractType
     {
         $builder
             ->add('numSerie', TextType::class, ['attr' => ['class' => 'form-control form-control-user'], 'label' => 'Numéro de série'])
+            ->add('name', TextType::class, ['attr' => ['class' => 'form-control form-control-user'], 'label' => 'Nom (ex : org-01)'])
             ->add('dateAchat', DateType::class, [
                 'widget' => 'single_text',
                 'format' => 'yyyy-MM-dd',
