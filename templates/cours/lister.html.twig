@@ -4,7 +4,7 @@
     <h1 class="h3 mb-2 text-gray-800">Tous les cours</h1>
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><a href="/23PHONK/public/cours/ajouter">Ajouter un cours</a></h6>
+        <h6 class="m-0 font-weight-bold text-primary"><a href="{{ path('coursAjouter') }}">Ajouter un cours</a></h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -52,8 +52,8 @@
                         <td class="text-center">{{ c.ageMaxi }}</td>
                         <td class="text-center">{{ c.nbPlaces }}</td>
                         <td class="text-center">
-                            <a href="/23PHONK/public/cours/modifier/{{ c.id }}">✏️</a>
-                            <a href="/23PHONK/public/cours/consulter/{{ c.id }}">👁️</a>
+                            <a href="{{ path('coursModifier', {'id': c.id}) }}">✏️</a>
+                            <a href="{{ path('coursConsulter', {'id': c.id}) }}">👁️</a>
                             <a href="#">🗑️</a>
                         </td>
                     </tr>

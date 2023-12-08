@@ -10,7 +10,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary"><a href="/23PHONK/public/instrument/ajouter">Ajouter un instrument</a></h6>
+            <h6 class="m-0 font-weight-bold text-primary"><a href="{{ path('ajouterInstrument') }}">Ajouter un instrument</a></h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -47,11 +47,11 @@
                         <td>{{ i.numSerie}}</td>
                         <td>{{ i.dateAchat|date('d/m/Y')}}</td>
                         <td>{{ i.utilisation}}</td>
-                        <td><a href="/23PHONK/public/contrat/lister/{{ i.id }}">Voir l'historique</a></td>
-                        <td><a href="/23PHONK/public/intervention/lister/{{ i.id }}">Voir l'historique</a></td>
+                        <td><a href="{{ path('contratListerParInstrument', {'id': i.id}) }}">Voir l'historique</a></td>
+                        <td><a href="{{ path('interventionLister', {'id': i.id}) }}">Voir l'historique</a></td>
                         <td>
-                            <a href="/23PHONK/public/instrument/modifier/{{ i.id }}">✏️</a>
-                            <a href="/23PHONK/public/instrument/consulter/{{ i.id }}">👁️</a>
+                            <a href="{{ path('modifierInstrument', {'id': i.id}) }}">✏️</a>
+                            <a href="{{ path('consulterInstrument', {'id': i.id}) }}">👁️</a>
                             <a href="#">🗑️</a>
                         </td>
                     {% else %}
