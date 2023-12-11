@@ -11,7 +11,7 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><a href="/23PHONK/public/contrat/ajouter">Ajouter un contrat</a></h6>
+        <h6 class="m-0 font-weight-bold text-primary"><a href="{{ path('ajouterContrat') }}">Ajouter un contrat</a></h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -71,8 +71,8 @@
 
 
                                 <td>
-                                    <a href="/23PHONK/public/contrat/modifier/{{ c.id }}">✏️</a>
-                                    <a href="/23PHONK/public/contrat/consulter/{{ c.id }}">👁️</a>
+                                    <a href="{{ path('ContratModifier', {'id': c.id}) }}">✏️</a>
+                                    <a href="{{ path('consulterContrat', {'id': c.id}) }}">👁️</a>
                                     <a href="#">🗑️</a>
                                 </td>
                             </tr>
