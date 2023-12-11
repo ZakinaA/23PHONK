@@ -77,6 +77,8 @@ class InstrumentController extends AbstractController
         $instrument = $doctrine->getRepository(Instrument::class)->find($id);
         $intervention= $doctrine->getRepository(Intervention::class)->findBy(['instrument' => $id]);
 
+        $accessoires= $doctrine->getRepository(Accessoire::class)->findBy(['instrument' => $id]);
+
         if (!$instrument) {
             throw $this->createNotFoundException('Aucun instrument trouvé avec le numéro '.$id);
         }
@@ -91,7 +93,7 @@ class InstrumentController extends AbstractController
                 $entityManager = $doctrine->getManager();
                 $entityManager->persist($instrument);
                 $entityManager->flush();
-                return $this->render('instrument/consulter.html.twig', ['instrument' => $instrument, 'pIntervention' => $intervention]);
+                return $this->render('instrument/consulter.html.twig', ['instrument' => $instrument, 'pIntervention' => $intervention, 'pAccessoires' => $accessoires]);
             }
             else{
                 return $this->render('instrument/ajouter.html.twig', array('form' => $form->createView(),));
