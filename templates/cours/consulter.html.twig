@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Consultation Cours !{% endblock %}
+{% block title %}Consulter Cours !{% endblock %}
 
 {% block body %}
 <div class="tab-lister-instrument">
 
-    <H1>Information sur le Cours</H1>
+    <H1>Information sur le Cours {{cours.typeCours.libelle}} de {{cours.typeInstrument.libelle}} du professeur {{cours.professeur.prenom}} {{cours.professeur.nom}}</H1>
 
     <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -19,11 +19,10 @@
     <tr><td>Jour : </td><td>{{cours.jour.libelle}}</td>
     <tr><td>Heure de début : </td><td>{{cours.heureDebut|date('H:i')}}</td>
     <tr><td>Heure de Fin : </td><td>{{cours.heureFin|date('H:i')}}</td>
-    <tr><td>Instrument : </td><td>{{cours.typeInstrument.libelle}}</td>
     <tr><td>Âge Minimum : </td><td>{{cours.ageMini}}</td>
     <tr><td>Âge Maximum : </td><td>{{cours.ageMaxi}}</td>
     <tr><td>Nombre de places Max : </td><td>{{cours.nbPlaces}}</td>
-    <tr><td>Professeur : </td><td>{{cours.professeur.prenom}} {{cours.professeur.nom}}</td></tr></tr>
+
 
 
 </table>
