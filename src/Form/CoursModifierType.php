@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Cours;
+use App\Entity\TypeCours;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -12,6 +13,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\FormInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 
 class CoursModifierType extends AbstractType
@@ -45,13 +48,6 @@ class CoursModifierType extends AbstractType
                 'widget' => 'single_text',
                 'attr' => ['class' => 'form-control form-control-user']
             ])
-            ->add('typeCours', EntityType::class, [
-                'class' => 'App\Entity\TypeCours',
-                'choice_label' => 'libelle',
-                'constraints' => [
-                    new Assert\Callback(['callback' => [$this, 'validateNbPlacesAndTypeCours']]),
-                ], 'attr' => ['class' => 'form-control form-control-user']
-            ])
             ->add('jour', EntityType::class, array('class' => 'App\Entity\Jour','choice_label' => 'libelle' , 'attr' => ['class' => 'form-control form-control-user']))
             ->add('professeur', EntityType::class, array('class' => 'App\Entity\Professeur','choice_label' => 'nom' , 'attr' => ['class' => 'form-control form-control-user']))
             ->add('typeInstrument', EntityType::class, array('class' => 'App\Entity\TypeInstrument','choice_label' => 'libelle' , 'attr' => ['class' => 'form-control form-control-user']))
@@ -68,28 +64,5 @@ class CoursModifierType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Cours::class,
         ]);
-    }
-
-    public function validateNbPlacesAndTypeCours($value, ExecutionContextInterface $context)
-    {
-        $nbPlaces = $context->getRoot()->get('nbPlaces')->getData();
-        $typeCours = $value;
-
-        // Check if typeCours is not null
-        if ($typeCours !== null) {
-            // If the number of places is 1, typeCours must be "Individuel"
-            if ($nbPlaces === 1 && $typeCours->getLibelle() !== 'Individuel') {
-                $context->buildViolation('Si le nombre de place est de 1 le type de cours doit être Individuel.')
-                    ->atPath('typeCours')
-                    ->addViolation();
-            }
-
-            // If the number of places is greater than 1, typeCours must be "Collectif"
-            if ($nbPlaces > 1 && $typeCours->getLibelle() !== 'Collectif') {
-                $context->buildViolation('Si le nombre de place est superieure à 1 le type de cours doit être Collectif.')
-                    ->atPath('typeCours')
-                    ->addViolation();
-            }
-        }
     }
 }
