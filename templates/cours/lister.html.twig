@@ -8,59 +8,57 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
-    {% if pCours %}
-        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-            <tr>
-                <th class="text-center">Type d'Instrument</th>
-                <th class="text-center">Jour</th>
-                <th class="text-center">Heure de début</th>
-                <th class="text-center">Heure de fin</th>
-                <th class="text-center">Âge minimum</th>
-                <th class="text-center">Âge maximum</th>
-                <th class="text-center">Nombre de places max</th>
-                <th class="text-center">Action</th>
-            </tr>
-
-            {% set groupedCours = {} %}
-
-            {% for c in pCours %}
-                {% set typeInstrument = c.typeInstrument.libelle %}
-
-                {# Initialize groupedCours[typeInstrument] if not set #}
-                {% if groupedCours[typeInstrument] is not defined %}
-                    {% set groupedCours = groupedCours|merge({(typeInstrument): []}) %}
-                {% endif %}
-
-                {# Add the current course to the corresponding typeInstrument in groupedCours #}
-                {% set groupedCours = groupedCours|merge({(typeInstrument): groupedCours[typeInstrument]|merge([c])}) %}
-            {% endfor %}
-
-            {# Render the table based on the prepared data #}
-            {% for typeInstrument, coursList in groupedCours %}
-                {# Sort the coursList by day of the week and then by time #}
-                {% set sortedCoursList = coursList|sort((a, b) => (a.jour.libelle > b.jour.libelle) ? 1 : (a.jour.libelle < b.jour.libelle) ? -1 : (a.heureDebut > b.heureDebut) ? 1 : -1) %}
-
-                {% for c in sortedCoursList %}
+            {% if pCours %}
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <tr>
-                        {% if loop.first %}
-                            <td class="text-center" rowspan="{{ sortedCoursList|length }}">{{ typeInstrument }}</td>
-                        {% endif %}
-                        <td class="text-center">{{ c.jour.libelle }}</td>
-                        <td class="text-center">{{ c.heureDebut|date('H:i') }}</td>
-                        <td class="text-center">{{ c.heureFin|date('H:i') }}</td>
-                        <td class="text-center">{{ c.ageMini }}</td>
-                        <td class="text-center">{{ c.ageMaxi }}</td>
-                        <td class="text-center">{{ c.nbPlaces }}</td>
-                        <td class="text-center">
-                            <a href="{{ path('coursModifier', {'id': c.id}) }}">✏️</a>
-                            <a href="{{ path('coursConsulter', {'id': c.id}) }}">👁️</a>
-                            <a href="#">🗑️</a>
-                        </td>
+                        <th class="text-center">Type d'Instrument</th>
+                        <th class="text-center">Jour</th>
+                        <th class="text-center">Heure de début</th>
+                        <th class="text-center">Heure de fin</th>
+                        <th class="text-center">Âge minimum</th>
+                        <th class="text-center">Âge maximum</th>
+                        <th class="text-center">Nombre de places max</th>
+                        <th class="text-center">Action</th>
                     </tr>
-                {% endfor %}
-            {% endfor %}
-        </table>
-    {% else %}
+
+                    {% set groupedCours = {} %}
+
+                    {% for c in pCours %}
+                        {% set typeInstrument = c.typeInstrument.libelle %}
+
+                        {# Initialize groupedCours[typeInstrument] if not set #}
+                        {% if groupedCours[typeInstrument] is not defined %}
+                            {% set groupedCours = groupedCours|merge({(typeInstrument): []}) %}
+                        {% endif %}
+
+                        {# Add the current course to the corresponding typeInstrument in groupedCours #}
+                        {% set groupedCours = groupedCours|merge({(typeInstrument): groupedCours[typeInstrument]|merge([c])}) %}
+                    {% endfor %}
+
+                    {# Render the table based on the prepared data #}
+                    {% for typeInstrument, coursList in groupedCours %}
+                        {% for c in coursList %}
+                            <tr>
+                                {% if loop.first %}
+                                    <td style="text-align: center; vertical-align: middle;" rowspan="{{ coursList|length }}">{{ typeInstrument }}</td>
+                                {% endif %}
+                                <td style="text-align: center; vertical-align: middle;">{{ c.jour.libelle }}</td>
+                                <td style="text-align: center; vertical-align: middle;">{{ c.heureDebut|date('H:i') }}</td>
+                                <td style="text-align: center; vertical-align: middle;">{{ c.heureFin|date('H:i') }}</td>
+                                <td style="text-align: center; vertical-align: middle;">{{ c.ageMini }}</td>
+                                <td style="text-align: center; vertical-align: middle;">{{ c.ageMaxi }}</td>
+                                <td style="text-align: center; vertical-align: middle;">{{ c.nbPlaces }}</td>
+                                <td style="text-align: center; vertical-align: middle;">
+                                    <a href="/23PHONK/public/cours/modifier/{{ c.id }}">✏️</a>
+                                    <a href="/23PHONK/public/cours/consulter/{{ c.id }}">👁️</a>
+                                    <a href="#">🗑️</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </table>
+            {% else %}
+
         <p>Aucun cours n'a été trouvé.</p>
     {% endif %}
         </div>

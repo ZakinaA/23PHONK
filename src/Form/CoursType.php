@@ -52,13 +52,6 @@ class CoursType extends AbstractType
                 'widget' => 'single_text',
                 'attr' => ['class' => 'form-control form-control-user']
             ])
-            ->add('typeCours', EntityType::class, [
-                'class' => 'App\Entity\TypeCours',
-                'choice_label' => 'libelle',
-                'constraints' => [
-                    new Assert\Callback(['callback' => [$this, 'validateNbPlacesAndTypeCours']]),
-                ], 'attr' => ['class' => 'form-control form-control-user']
-            ])
             ->add('jour', EntityType::class, array('class' => 'App\Entity\Jour','choice_label' => 'libelle' , 'attr' => ['class' => 'form-control form-control-user']))
             ->add('professeur', EntityType::class, array('class' => 'App\Entity\Professeur','choice_label' => 'nom' , 'attr' => ['class' => 'form-control form-control-user']))
             ->add('typeInstrument', EntityType::class, array('class' => 'App\Entity\TypeInstrument','choice_label' => 'libelle' , 'attr' => ['class' => 'form-control form-control-user']))

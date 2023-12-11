@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\TypeCours;
 use MongoDB\Driver\Manager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,42 +28,23 @@ class CoursController extends AbstractController
 
     private $twig;
 
-    public function __construct(Environment $twig)
-    {
-        $this->twig = $twig;
-
-        $this->twig->addGlobal('jourToNumber', new \Twig\TwigFunction('jourToNumber', [$this, 'jourToNumber']));
-
-    }
-
     public function lister(ManagerRegistry $doctrine): Response
     {
         $repository = $doctrine->getRepository(Cours::class);
         $cours = $repository->findAll();
 
-        $orderOfDays = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+        // Tri des cours par type d'instrument, jour (trié par ID) et heure
+        usort($cours, function ($a, $b) {
+            $dayIdA = $a->getJour()->getId();
+            $dayIdB = $b->getJour()->getId();
 
-        // Fonction personnalisée pour rechercher l'index d'un élément dans un tableau
-        $arraySearch = function ($needle, array $haystack) {
-            foreach ($haystack as $index => $value) {
-                if ($value === $needle) {
-                    return $index;
-                }
-            }
-            return false;
-        };
-
-        // Tri des cours par type d'instrument, jour et heure
-        usort($cours, function ($a, $b) use ($orderOfDays, $arraySearch) {
-            $dayComparison = $arraySearch($a->getJour()->getLibelle(), $orderOfDays) - $arraySearch($b->getJour()->getLibelle(), $orderOfDays);
-
-            if ($dayComparison === 0) {
+            if ($dayIdA === $dayIdB) {
                 $heureDebutA = $a->getHeureDebut()->getTimestamp();
                 $heureDebutB = $b->getHeureDebut()->getTimestamp();
                 return $heureDebutA - $heureDebutB;
             }
 
-            return $dayComparison;
+            return $dayIdA - $dayIdB;
         });
 
         // Calcul du nombre de cours par type d'instrument
@@ -102,13 +84,19 @@ class CoursController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $nbPlaces = $cours->getNbPlaces();
 
-            $cours = $form->getData();
+            $typeCours = ($nbPlaces > 1) ? $doctrine->getRepository(TypeCours::class)->findOneBy(['libelle' => 'Collectif']) : $doctrine->getRepository(TypeCours::class)->findOneBy(['libelle' => 'Individuel']);
+
+            if ($typeCours instanceof TypeCours) {
+                $cours->setTypeCours($typeCours);
+            }
 
             $entityManager = $doctrine->getManager();
             $entityManager->persist($cours);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Cours created successfully!'); // Change the flash message
             return $this->redirectToRoute('coursLister');
         }
         else
@@ -123,7 +111,7 @@ class CoursController extends AbstractController
         $elevesInscrits = $cours->getInscriptions();
 
         if (!$cours) {
-            throw $this->createNotFoundException('Aucun instrument trouvé avec le numéro '.$id);
+            throw $this->createNotFoundException('Aucun cours trouvé avec le numéro '.$id);
         }
         else
         {
@@ -131,10 +119,15 @@ class CoursController extends AbstractController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
+                $nbPlaces = $cours->getNbPlaces();
 
-                $cours = $form->getData();
+                $typeCours = ($nbPlaces > 1) ? $doctrine->getRepository(TypeCours::class)->findOneBy(['libelle' => 'Collectif']) : $doctrine->getRepository(TypeCours::class)->findOneBy(['libelle' => 'Individuel']);
+
+                if ($typeCours instanceof TypeCours) {
+                    $cours->setTypeCours($typeCours);
+                }
+
                 $entityManager = $doctrine->getManager();
-                $entityManager->persist($cours);
                 $entityManager->flush();
                 return $this->render('cours/consulter.html.twig', ['cours' => $cours,'elevesInscrits' => $elevesInscrits,]);
             }
@@ -144,16 +137,5 @@ class CoursController extends AbstractController
         }
     }
 
-    private function getIndex($needle, $haystack)
-    {
-        return array_search($needle, $haystack);
-    }
 
-    public function jourToNumber($jour)
-    {
-        // Assurez-vous que les noms de jours correspondent exactement à ceux de votre base de données
-        $jours = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-
-        return array_search($jour, $jours) + 1; // Ajoutez 1 car les numéros de jour de la semaine commencent à 1
-    }
 }
