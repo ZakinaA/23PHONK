@@ -37,6 +37,11 @@ class Cours
     private ?int $ageMaxi = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Range(
+        notInRangeMessage: "le nombre de places doit être compris entre {{ min }} et {{ max }}.",
+        min: 1,
+        max: 30,
+    )]
     private ?int $nbPlaces = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
