@@ -91,8 +91,8 @@
                     <td>{{ i.prix}}</td>
                     <td>{{ i.descriptif}}</td>
                     <td>
-                        <a href="#">✏️</a>
-                        <a href="#">👁️</a>
+                        <a href={{ path('modifierIntervention', {'id': contrat.instrument.id}) }}>✏️</a>
+                        <a href={{ path('consulterIntervention', {'id': contrat.instrument.id}) }}>👁️</a>
                         <a href="#">🗑️</a>
                     </td>
                 {% else %}
