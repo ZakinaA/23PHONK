@@ -41,16 +41,17 @@ class InterventionType extends AbstractType
                 'label' => 'Prix de l\'intervention',
                 'attr' => ['class' => 'form-control form-control-user'],
 
-
-
+            ])
+            ->add('professionnel', EntityType::class, [
+                'class' => 'App\Entity\Professionnel',
+                'label' => 'Professionnel',
+                'choice_label' => 'nom',
+                'placeholder' => 'Sélectionner un professionnel',
+                'required' => false, // Si le choix est facultatif
+                'attr' => ['class' => 'form-control form-control-user'],
             ])
 
-           /* ->add('instrument', EntityType::class, [
-                'label' => 'L\'instrument : ',
-                'class' => 'App\Entity\Instrument',
-                'choice_label' => 'name',
-                'attr' => ['class' => 'form-control form-control-user'],
-            ])*/
+
 
             ->add('enregistrer', SubmitType::class, array('label' => 'Nouvelle intervention', 'attr' => ['class' => 'btn btn-primary btn-user btn-block']))
         ;
