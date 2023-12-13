@@ -18,23 +18,38 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <td>Nom de l'élève</td>
+                        <td>Prenom de l'élève</td>
+                        <td>Nom de l'instrument</td>
+                        <td>Responsable de l'élève</td>
                         <td>Date de début du prêt</td>
                         <td>Date de fin du prêt</td>
                         <td>Attestation d'assurance</td>
                         <td>Etat détaillé de l'instrument au début du prêt</td>
                         <td>Etat détaillé de l'instrument à la fin du prêt</td>
-                        <td>Nom de l'élève</td>
-                        <td>Prenom de l'élève</td>
-                        <td>Nom de l'instrument</td>
-                        <td>Responsable de l'élève</td>
+
                         <td>Action</td>
                     </tr>
                 </thead>
                   <tfoot>
                         {% for c in pContrats %}
                             <tr>
-                            <td><a href="{{ path('consulterContrat', { 'id': c.id }) }}">{{ c.datedebut|date('d/m/Y') }}</a></td>
+                                <td><a href="{{ path('consulterContrat', { 'id': c.id }) }}">{{ c.eleve.nom}}</a></td>
+                                <td>{{ c.eleve.prenom}}</td>
+                                <td>{{ c.instrument.type.libelle}} {{ c.instrument.name}}</td>
+
+                                <td>
+                                    {% if c.eleve.responsables is not empty %}
+                                        {% for responsable in c.eleve.responsables %}
+                                            {{ responsable.nom|upper }} {{ responsable.prenom }}
+                                        {% endfor %}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                            <td>{{ c.datedebut|date('d/m/Y') }}</td>
                             <td>
+
                                 {% if c.dateFin is not null %}
                                 {{ c.dateFin|date('d/m/Y') }}
                                 {% else %}
@@ -55,19 +70,7 @@
                                         N/A
                                     {% endif %}
                                 </td>
-                            <td>{{ c.eleve.nom}}</td>
-                            <td>{{ c.eleve.prenom}}</td>
-                            <td>{{ c.instrument.type.libelle}} {{ c.instrument.name}}</td>
 
-                                <td>
-                                    {% if c.eleve.responsables is not empty %}
-                                        {% for responsable in c.eleve.responsables %}
-                                            {{ responsable.nom|upper }} {{ responsable.prenom }}
-                                        {% endfor %}
-                                    {% else %}
-                                        N/A
-                                    {% endif %}
-                                </td>
 
 
                                 <td>
