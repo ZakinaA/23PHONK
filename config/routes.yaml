@@ -115,3 +115,18 @@ modifierIntervention:
     path: /gestionnaire/intervention/modifier/{id}
     controller: App\Controller\InterventionController::modifierIntervention
 
+eleveLister:
+    path: /admin/eleve/lister
+    controller: App\Controller\EleveController::lister
+
+eleveConsulter:
+    path: /admin/eleve/consulter/{id}
+    controller: App\Controller\EleveController::consulter
+
+eleveAjouter:
+    path: /admin/eleve/ajouter
+    controller: App\Controller\EleveController::ajouter
+
+eleveModifier:
+    path: /admin/eleve/modifier/{id}
+    controller: App\Controller\EleveController::modifier
