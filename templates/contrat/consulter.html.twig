@@ -4,106 +4,113 @@
 
 {% block body %}
 
-<div class="tab-lister-instrument">
+    <div class="tab-lister-instrument">
 
-    <H1>Information sur le contrat  {{ contrat.id }}</H1>
+        <H1>Information sur le contrat  {{ contrat.id }}</H1>
 
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3">
-
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-
-
-
-    <tr><td>Id : </td><td>{{contrat.id}} </td></tr>
-    <tr><td>Nom de l'élève : </td><td>{{contrat.eleve.nom}}</td></tr>
-    <tr><td>Prénom de l'élève : </td><td>{{contrat.eleve.prenom}}</td></tr>
-    <tr><td>Nom de l'instrument : </td><td> {{contrat.instrument.name}}</td></tr>
-    <tr><td>Date de début du prêt : </td><td>{{contrat.datedebut|date("d/m/Y")}}</td>
-
-    <tr><td>Date de fin du prêt : </td><td>{{contrat.datefin|date("d/m/Y")}}</td></tr></tr>
-
-    <tr><td>Attestation d'assurance : </td><td>{{contrat.attestationassurance}}</td></tr>
-    <tr><td>Etat de l'instrument au debut prêt : </td><td>{{contrat.etatdetailledebut}}</td></tr>
-    <tr><td>Etat de l'instrument à la fin du prêt : </td><td>{{contrat.etatdetaillefin}}</td></tr>
-
-
-
-                    </thead>
-                    <tfoot>
-
-                    {% if eleve is defined %}
-                    {% if eleve.responsables is not empty %}
-                        <tr><td>Responsables de l'élève :</td>
-                        <td>
-                        {% for responsable in eleve.responsables %}
-                           {{ responsable.nom|upper }} {{ responsable.prenom }}
-
-                        {% endfor %}
-                        </td>
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <td>Id : </td><td>{{ contrat.id }} </td>
                         </tr>
-                    {% else %}
-                        <p>Cet élève n'a pas de responsables.</p>
-                    {% endif %}
-                    {% endif %}
-
-</table>
-
-
-
-
-
-<h2>Toutes les interventions :</h2>
-<!-- DataTales Example -->
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <a href="{{ path('app_intervention_ajouter', {'instrumentId': contrat.instrument.id}) }}">Ajouter une intervention</a>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                <tr>
-                    <th>Date Debut</th>
-                    <th>Date Fin</th>
-                    <th>Prix</th>
-                    <th>Description</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tfoot>
-
-                </tfoot>
-                <tbody>
-
-
-
-
-                {% for i in interventions %}
-                    <tr>
-                    <td>{{ i.dateDebut|date('d/m/Y')}}</td>
-                    <td>{{ i.dateFin|date('d/m/Y')}}</td>
-                    <td>{{ i.prix}}</td>
-                    <td>{{ i.descriptif}}</td>
-                    <td>
-                        <a href="#">✏️</a>
-                        <a href="#">👁️</a>
-                        <a href="#">🗑️</a>
-                    </td>
-                {% else %}
-                    <tr>
-                        <th>Aucune intervention n'a été trouvée.</th>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                        <tr>
+                            <td>Nom de l'élève : </td><td>{{ contrat.eleve.nom }}</td>
+                        </tr>
+                        <tr>
+                            <td>Prénom de l'élève : </td><td>{{ contrat.eleve.prenom }}</td>
+                        </tr>
+                        <tr>
+                            <td>Nom de l'instrument : </td><td>{{ contrat.instrument.name }}</td>
+                        </tr>
+                        <tr>
+                            <td>Date de début du prêt : </td><td>{{ contrat.datedebut|date("d/m/Y") }}</td>
+                        </tr>
+                        <tr>
+                            <td>Date de fin du prêt : </td><td>{{ contrat.datefin|date("d/m/Y") }}</td>
+                        </tr>
+                        <tr>
+                            <td>Attestation d'assurance : </td><td>{{ contrat.attestationassurance }}</td>
+                        </tr>
+                        <tr>
+                            <td>Etat de l'instrument au début prêt : </td><td>{{ contrat.etatdetailledebut }}</td>
+                        </tr>
+                        <tr>
+                            <td>Etat de l'instrument à la fin du prêt : </td><td>{{ contrat.etatdetaillefin }}</td>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        {% if eleve is defined %}
+                            {% if eleve.responsables is not empty %}
+                                <tr>
+                                    <td>Responsables de l'élève :</td>
+                                    <td>
+                                        {% for responsable in eleve.responsables %}
+                                            {{ responsable.nom|upper }} {{ responsable.prenom }}
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="2">Cet élève n'a pas de responsables.</td>
+                                </tr>
+                            {% endif %}
+                        {% endif %}
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
         </div>
+
+        <h2>Toutes les interventions :</h2>
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <a href="{{ path('ajouterInterventionByContrat', {'id': contrat.instrument.id}) }}">Ajouter une intervention</a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>Date Debut</th>
+                            <th>Date Fin</th>
+                            <th>Prix</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        </tfoot>
+                        <tbody>
+                        {% for intervention in interventions %}
+                            <tr>
+                                <td>{{ intervention.dateDebut|date('d/m/Y') }}</td>
+                                <td>{{ intervention.dateFin|date('d/m/Y') }}</td>
+                                <td>{{ intervention.prix }}</td>
+                                <td>{{ intervention.descriptif }}</td>
+                                <td>
+                                    <a href="#">✏️</a>
+                                    <a href="#">👁️</a>
+                                    <a href="#">🗑️</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5">Aucune intervention n'a été trouvée.</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </div>
-</div>
 
 {% endblock %}
