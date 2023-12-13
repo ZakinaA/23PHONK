@@ -49,8 +49,8 @@
                                 <td style="text-align: center; vertical-align: middle;">{{ c.ageMaxi }}</td>
                                 <td style="text-align: center; vertical-align: middle;">{{ c.nbPlaces }}</td>
                                 <td style="text-align: center; vertical-align: middle;">
-                                    <a href="/23PHONK/public/cours/modifier/{{ c.id }}">✏️</a>
-                                    <a href="/23PHONK/public/cours/consulter/{{ c.id }}">👁️</a>
+                                    <a href="{{ path('coursModifier', {'id': c.id}) }}">✏️</a>
+                                    <a href="{{ path('coursConsulter', {'id': c.id}) }}">👁️</a>
                                     <a href="#">🗑️</a>
                                 </td>
                             </tr>
