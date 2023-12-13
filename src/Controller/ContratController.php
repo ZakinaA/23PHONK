@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+
 use DateTime;
 use App\Entity\Intervention;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -66,6 +67,7 @@ class ContratController extends AbstractController
             'interventions' => $interventions,
             'contrat' => $contrat,
             'eleve' => $eleve,
+
 
         ]);
     }
@@ -151,6 +153,7 @@ class ContratController extends AbstractController
                 return $this->render('contrat/ajouter.html.twig', array('form' => $form->createView(),));
             }
         }
+
     }
 
 

@@ -41,7 +41,10 @@ class InterventionType extends AbstractType
                 'label' => 'Prix de l\'intervention',
                 'attr' => ['class' => 'form-control form-control-user'],
 
+
+
             ])
+
            /* ->add('instrument', EntityType::class, [
                 'label' => 'L\'instrument : ',
                 'class' => 'App\Entity\Instrument',
