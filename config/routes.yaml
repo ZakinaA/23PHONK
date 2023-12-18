@@ -146,3 +146,19 @@ responsableAjouter:
 responsableModifier:
     path: /gestionnaire/responsable/modifier/{id}
     controller: App\Controller\ResponsableController::modifier
+
+inscriptionLister:
+    path: /admin/inscription/lister
+    controller: App\Controller\InscriptionController::lister
+
+inscriptionConsulter:
+    path: /admin/inscription/consulter/{id}
+    controller: App\Controller\InscriptionController::consulter
+
+inscriptionAjouter:
+    path: /admin/inscription/ajouter
+    controller: App\Controller\InscriptionController::ajouter
+
+inscriptionModifier:
+    path: /admin/inscription/modifier/{id}
+    controller: App\Controller\InscriptionController::modifier
