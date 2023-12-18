@@ -39,7 +39,7 @@ class Responsable
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $mail = null;
 
-    #[ORM\ManyToMany(targetEntity: Eleve::class, mappedBy: 'Eleve')]
+    #[ORM\ManyToMany(targetEntity: Eleve::class, inversedBy: 'eleves')]
     private Collection $eleves;
 
     public function __construct()
