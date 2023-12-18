@@ -130,3 +130,19 @@ eleveAjouter:
 eleveModifier:
     path: /admin/eleve/modifier/{id}
     controller: App\Controller\EleveController::modifier
+
+responsableLister:
+    path: /gestionnaire/responsable/lister
+    controller: App\Controller\ResponsableController::lister
+
+responsableConsulter:
+    path: /gestionnaire/responsable/consulter/{id}
+    controller: App\Controller\ResponsableController::consulter
+
+responsableAjouter:
+    path: /gestionnaire/responsable/ajouter
+    controller: App\Controller\ResponsableController::ajouter
+
+responsableModifier:
+    path: /gestionnaire/responsable/modifier/{id}
+    controller: App\Controller\ResponsableController::modifier
