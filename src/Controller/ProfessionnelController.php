@@ -6,6 +6,7 @@ use App\Entity\Contrat;
 use App\Entity\Professeur;
 use App\Entity\Professionnel;
 use App\Form\ProfesseurType;
+use App\Form\ProfessionnelModifierType;
 use App\Form\ProfessionnelType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -60,7 +61,44 @@ class ProfessionnelController extends AbstractController
             return $this->render('professionnel/ajouter.html.twig', array('form' => $form->createView(),));
         }
     }
+    public function professionnelLister(ManagerRegistry $doctrine){
 
+        $repository = $doctrine->getRepository(Professionnel::class);
+
+        $professionnels= $repository->findAll();
+        return $this->render('professionnel/lister.html.twig', [
+            'pProfessionnels' => $professionnels,]);
+
+    }
+
+    public function professionnelModifier(ManagerRegistry $doctrine, $id, Request $request){
+
+
+        $professionnel = $doctrine->getRepository(Professionnel::class)->find($id);
+
+        if (!$professionnel) {
+            throw $this->createNotFoundException('Aucun professionnel trouvé avec le numéro '.$id);
+        }
+        else
+        {
+            $form = $this->createForm(ProfessionnelModifierType::class, $professionnel);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $professionnel = $form->getData();
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($professionnel);
+                $entityManager->flush();
+
+                return $this->render('professionnel/consulter.html.twig', ['professionnel' => $professionnel,]);
+            }
+            else{
+                return $this->render('professionnel/ajouter.html.twig', array('form' => $form->createView(),));
+            }
+        }
+
+    }
 
 
 
