@@ -65,7 +65,7 @@ coursAjouter:
 coursModifier:
     path: /gestionnaire/cours/modifier/{id}
     controller: App\Controller\CoursController::modifier
-    
+
 listerAccessoire:
     path: /gestionnaire/accessoire/lister
     controller: App\Controller\AccessoireController::lister
@@ -82,7 +82,7 @@ ajouterInstrument:
     path: /gestionnaire/instrument/ajouter
     controller: App\Controller\InstrumentController::ajouter
 
-modiferInstrument:
+modifierInstrument:
     path: /gestionnaire/instrument/modifier/{id}
     controller: App\Controller\InstrumentController::modifier
 
@@ -106,7 +106,7 @@ modifierProfesseur:
 ajouterIntervention:
     path: /gestionnaire/intervention/ajouter
     controller: App\Controller\InterventionController::ajouterIntervention
-    
+
 app_intervention_ajouter:
     path: /gestionnaire/intervention/ajouter/{instrumentId}
     controller: App\Controller\InterventionController::ajouterIntervention
@@ -114,6 +114,26 @@ app_intervention_ajouter:
 modifierIntervention:
     path: /gestionnaire/intervention/modifier/{id}
     controller: App\Controller\InterventionController::modifierIntervention
+
+ajouterInterventionByContrat:
+    path: /gestionnaire/intervention/ajouter/{id}
+    controller: App\Controller\InterventionController::ajouterInterventionByContrat
+
+consulterProfessionnel:
+    path: /gestionnaire/professionnel/consulter/{id}
+    controller: App\Controller\ProfessionnelController::consulterProfessionnel
+
+ajouterProfessionel:
+    path: /gestionnaire/professionnel/ajouter
+    controller: App\Controller\ProfessionnelController::ajouterProfessionnel
+
+professionnelLister:
+    path: /gestionnaire/professionnel/lister
+    controller: App\Controller\ProfessionnelController::professionnelLister
+
+professionnelModifier:
+    path : /gestionnaire/professionnel/modifier/{id}
+    controller: App\Controller\ProfessionnelController::professionnelModifier
 
 eleveLister:
     path: /admin/eleve/lister
