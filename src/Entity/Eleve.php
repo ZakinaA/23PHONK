@@ -33,9 +33,6 @@ class Eleve
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $ville = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $tel = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $mail = null;
 
@@ -58,6 +55,9 @@ class Eleve
 
     #[ORM\OneToOne(mappedBy: 'eleve', cascade: ['persist', 'remove'])]
     private ?User $user = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $tel = null;
 
     public function construct()
     {
@@ -142,17 +142,6 @@ class Eleve
         return $this;
     }
 
-    public function getTel(): ?int
-    {
-        return $this->tel;
-    }
-
-    public function setTel(?int $tel): static
-    {
-        $this->tel = $tel;
-
-        return $this;
-    }
 
     public function getMail(): ?string
     {
@@ -277,6 +266,18 @@ class Eleve
         }
 
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getTel(): ?string
+    {
+        return $this->tel;
+    }
+
+    public function setTel(?string $tel): static
+    {
+        $this->tel = $tel;
 
         return $this;
     }

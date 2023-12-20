@@ -48,7 +48,7 @@ class ResponsableModifierType extends AbstractType
                 ],
             ])
             ->add('ville', TextType::class, ['attr' => ['class' => 'form-control form-control-user'], 'label' => 'Ville'])
-            ->add('tel', NumberType::class, [
+            ->add('tel', TextType::class, [
                 'attr' => ['class' => 'form-control form-control-user'],
                 'label' => 'Numéro de téléphone',
                 'constraints' => [

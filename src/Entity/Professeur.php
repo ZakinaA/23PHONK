@@ -33,8 +33,6 @@ class Professeur
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $ville = null;
 
-    #[ORM\Column(nullable: true)]
-    private ?int $tel = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $mail = null;
@@ -44,6 +42,9 @@ class Professeur
 
     #[ORM\ManyToMany(targetEntity: TypeInstrument::class, inversedBy: 'professeurs')]
     private Collection $typeInstruments;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $tel = null;
 
     public function __construct()
     {
@@ -128,17 +129,6 @@ class Professeur
         return $this;
     }
 
-    public function getTel(): ?int
-    {
-        return $this->tel;
-    }
-
-    public function setTel(?int $tel): static
-    {
-        $this->tel = $tel;
-
-        return $this;
-    }
 
     public function getMail(): ?string
     {
@@ -202,6 +192,18 @@ class Professeur
     public function removeTypeInstrument(TypeInstrument $typeInstrument): static
     {
         $this->typeInstruments->removeElement($typeInstrument);
+
+        return $this;
+    }
+
+    public function getTel(): ?string
+    {
+        return $this->tel;
+    }
+
+    public function setTel(?string $tel): static
+    {
+        $this->tel = $tel;
 
         return $this;
     }
