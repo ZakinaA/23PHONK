@@ -115,3 +115,12 @@ modifierIntervention:
     path: /gestionnaire/intervention/modifier/{id}
     controller: App\Controller\InterventionController::modifierIntervention
 
+ajax_add_accessory:
+    path: /ajax/add-accessory
+    methods: post
+    controller: App\Controller\AccessoireController::ajaxAddAccessory
+
+ajax_del_accessory:
+    path: /ajax/del-accessory
+    methods: post
+    controller: App\Controller\AccessoireController::ajaxDelAccessory
