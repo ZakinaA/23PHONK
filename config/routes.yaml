@@ -58,6 +58,10 @@ coursLister:
     path: /eleve/cours/lister
     controller: App\Controller\CoursController::lister
 
+coursListerByEleve:
+    path: /eleve/cours/listerByEleve
+    controller: App\Controller\CoursController::listerByEleve
+
 coursConsulter:
     path: /eleve/cours/consulter/{id}
     controller: App\Controller\CoursController::consulter
@@ -107,7 +111,7 @@ professeurAjouter:
     path: /gestionnaire/professeur/ajouter
     controller: App\Controller\ProfesseurController::ajouter
 
-modifierProfesseur:
+professeurModifier:
     path: /gestionnaire/professeur/modifier/{id}
     controller: App\Controller\ProfesseurController::modifier
 
@@ -148,3 +152,35 @@ eleveAjouter:
 eleveModifier:
     path: /admin/eleve/modifier/{id}
     controller: App\Controller\EleveController::modifier
+
+responsableLister:
+    path: /gestionnaire/responsable/lister
+    controller: App\Controller\ResponsableController::lister
+
+responsableConsulter:
+    path: /gestionnaire/responsable/consulter/{id}
+    controller: App\Controller\ResponsableController::consulter
+
+responsableAjouter:
+    path: /gestionnaire/responsable/ajouter
+    controller: App\Controller\ResponsableController::ajouter
+
+responsableModifier:
+    path: /gestionnaire/responsable/modifier/{id}
+    controller: App\Controller\ResponsableController::modifier
+
+inscriptionLister:
+    path: /admin/inscription/lister
+    controller: App\Controller\InscriptionController::lister
+
+inscriptionConsulter:
+    path: /admin/inscription/consulter/{id}
+    controller: App\Controller\InscriptionController::consulter
+
+inscriptionAjouter:
+    path: /admin/inscription/ajouter
+    controller: App\Controller\InscriptionController::ajouter
+
+inscriptionModifier:
+    path: /admin/inscription/modifier/{id}
+    controller: App\Controller\InscriptionController::modifier
