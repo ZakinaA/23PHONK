@@ -99,7 +99,7 @@ professeurAjouter:
     path: /gestionnaire/professeur/ajouter
     controller: App\Controller\ProfesseurController::ajouter
 
-modifierProfesseur:
+professeurModifier:
     path: /gestionnaire/professeur/modifier/{id}
     controller: App\Controller\ProfesseurController::modifier
 
