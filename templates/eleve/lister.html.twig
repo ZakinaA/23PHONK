@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+{% block title %}Eleve Lister !{% endblock %}
+{% block body %}
+    <h1 class="h3 mb-2 text-gray-800">Tous les cours</h1>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"><a href="{{ path('eleveAjouter') }}">Ajouter un élève</a></h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <tr>
+                        <th class="text-center">Nom</th>
+                        <th class="text-center">Prénom</th>
+                        <th class="text-center">Rue</th>
+                        <th class="text-center">Copos</th>
+                        <th class="text-center">Ville</th>
+                        <th class="text-center">tel</th>
+                        <th class="text-center">mail</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                        {% for e in pEleves %}
+                            <tr>
+                                <td style="text-align: center; vertical-align: middle;">{{ e.nom }}</td>
+                                <td style="text-align: center; vertical-align: middle;">{{ e.prenom }}</td>
+                                <td style="text-align: center; vertical-align: middle;">{{ e.numRue }} {{ e.rue }}</td>
+                                <td style="text-align: center; vertical-align: middle;">{{ e.copos }}</td>
+                                <td style="text-align: center; vertical-align: middle;">{{ e.ville }}</td>
+                                <td style="text-align: center; vertical-align: middle;">{{ e.tel }}</td>
+                                <td style="text-align: center; vertical-align: middle;">{{ e.mail }}</td>
+                                <td style="text-align: center; vertical-align: middle;">
+                                    <a href="{{ path('eleveModifier', {'id': e.id}) }}">✏️</a>
+                                    <a href="{{ path('eleveConsulter', {'id': e.id}) }}">👁️</a>
+                                    <a href="#">🗑️</a>
+                                </td>
+                        {% else %}
+                            <tr>
+                                <th>Aucun élève n'a été trouvé.</th>
+                            </tr>
+                        {% endfor %}
+                </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

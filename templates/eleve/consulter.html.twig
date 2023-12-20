@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consulter Elève !{% endblock %}
+
+{% block body %}
+<div class="tab-lister-instrument">
+
+    <H1>Information sur l'élève</H1>
+
+    <div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"><a href="{{ path('eleveAjouter') }}">Ajouter un cours</a></h6>
+    </div>
+    <div class="card-body">
+    <div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+        <tr><td>Nom : </td><td>{{eleve.nom}}</td>
+        <tr><td>Prenom : </td><td>{{eleve.prenom}}</td>
+        <tr><td>Rue : </td><td>{{eleve.numRue}} {{eleve.rue}}</td>
+        <tr><td>Copos : </td><td>{{eleve.copos}}</td>
+        <tr><td>Ville : </td><td>{{eleve.ville}}</td>
+        <tr><td>Tel : </td><td>{{eleve.tel}}</td>
+        <tr><td>Mail : </td><td>{{eleve.mail}}</td>
+        <tr><td>Responsables : </td><td>{% for responsable in responsables %}
+                <li>{{ responsable.nom }}  {{ responsable.prenom }}</li>
+                {% endfor %}</td>
+
+
+    </table>
+    </div>
+    </div>
+    </div>
+</div>
+{% endblock %}
