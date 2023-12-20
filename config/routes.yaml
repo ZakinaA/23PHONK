@@ -66,10 +66,6 @@ coursAjouter:
     path: /gestionnaire/cours/ajouter
     controller: App\Controller\CoursController::ajouter
 
-app_cours_ajouter:
-    path: /gestionnaire/cours/ajouter/{eleveId}
-    controller: App\Controller\CoursController::ajouter
-
 coursModifier:
     path: /gestionnaire/cours/modifier/{id}
     controller: App\Controller\CoursController::modifier
