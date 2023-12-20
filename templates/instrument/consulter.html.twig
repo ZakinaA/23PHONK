@@ -90,6 +90,7 @@
                             </div>
                         </div>
                     </div>
+                    <input type="text" id="instrumentId" hidden="hidden" disabled value="{{ instrument.id }}">
                 </div>
 
             </div>
@@ -101,17 +102,20 @@
                     <!-- Card Header - Dropdown -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                         <h6 class="m-0 font-weight-bold text-primary">Accessoires</h6>
+                        {% if 'ROLE_ADMIN' in app.user.roles or 'ROLE_GEST' in app.user.roles %}
+
                         <div class="dropdown no-arrow">
                             <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400">⚙</i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink" style="">
                                 <div class="dropdown-header">Action :</div>
-                                <a class="dropdown-item" href="#">Ajouter</a>
+                                <a class="dropdown-item" href="#" id="addAccessoryBtn">Ajouter</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Tout supprimmer</a>
                             </div>
                         </div>
+                        {% endif %}
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
@@ -119,11 +123,14 @@
                             <tbody>
                             {% for i in pAccessoires %}
                                 <tr>
-                                <td>{{ i.libelle }}</a></td>
-                                <td>
-                                    <a href="#">✏️</a>
-                                    <a href="#">🗑️</a>
-                                </td>
+                                    <td>{{ i.libelle }}</a></td>
+
+                                    {% if 'ROLE_ADMIN' in app.user.roles or 'ROLE_GEST' in app.user.roles %}
+                                    <td>
+                                        <a href="#" class="accDelBTN" data="{{ i.id }}">🗑️</a>
+                                    </td>
+                                    {% endif %}
+                                </tr>
                             {% else %}
                                 <tr>
                                     <th>Aucun accessoire n'a été trouvé.</th>
@@ -140,5 +147,103 @@
 
 
     </div>
+{% endblock %}
+{% block javascripts %}
+    {% if 'ROLE_ADMIN' in app.user.roles or 'ROLE_GEST' in app.user.roles %}
+    <script>
+
+        $(document).ready(function () {
+
+            $('#addAccessoryBtn').click(function () {
+                const instrumentId = $('#instrumentId').val();
+                const newRow = createAccessoryRow(instrumentId);
+
+
+                $('#dataTable tbody').append(newRow);
+            });
+
+            $('.accDelBTN').click(function () {
+                deleteAccessory(this.attributes.data.value);
+            });
+
+            // Function to create a new accessory row
+            function createAccessoryRow(instrumentId) {
+                const newRow = $('<tr id="createAccessoryRow">');
+                newRow.append('<td><input type="text" class="accessory-input" id="accessory-input" placeholder="Nom de l\'accessoire"></td>');
+                newRow.append('<td><button class="btn btn-primary" onclick="addAccessory(\'' + instrumentId + '\')">Valider</button></td>');
+                return newRow;
+            }
+
+            // Function to add a new accessory row dynamically
+            function addAccessoryRow(libelleAccessoire) {
+                const newRow = $('<tr>');
+                newRow.append('<td>' + libelleAccessoire + '</td>');
+                newRow.append('<td><a href="#">🗑️</a></td>');
+                return newRow;
+
+            }
+
+
+            window.deleteAccessory = function (accid) {
+                console.log(accid);
+                var settings = {
+                    "url": "{{ path("ajax_del_accessory") }}",
+                    "method": "POST",
+                    "timeout": 0,
+                    "headers": {
+                        "Content-Type": "application/json"
+                    },
+                    "data": JSON.stringify({
+                        "accid": accid,
+                    }),
+                };
+                $.ajax(settings).done(function (response) {
+                    if (response.success !== undefined) {
+                        if (!response.success) {
+                            alert('Delete : Failed');
+                            console.log(response.e);
+                        }else{
+                            alert('Delete : Success');
+                        }
+                    } else {
+                        alert('Format de réponse invalide. Clé "success" manquante.');
+                    }
+                });
+            };
+
+            // Function to add an accessory with AJAX
+            window.addAccessory = function (instrumentId) {
+                const accLibelle = $('#accessory-input').val();
+                var settings = {
+                    "url": "{{ path("ajax_add_accessory") }}",
+                    "method": "POST",
+                    "timeout": 0,
+                    "headers": {
+                        "Content-Type": "application/json"
+                    },
+                    "data": JSON.stringify({
+                        "libelle": accLibelle,
+                        "instrumentId": instrumentId
+                    }),
+                };
+                $.ajax(settings).done(function (response) {
+                    if (response.success !== undefined) {
+                        if (!response.success) {
+                            alert('Échec de l\'ajout de l\'accessoire.');
+                        }else{
+                            const newRow = addAccessoryRow(accLibelle);
+                            $('#createAccessoryRow').remove();
+                            $('#dataTable tbody').append(newRow);
+                        }
+                    } else {
+                        alert('Format de réponse invalide. Clé "success" manquante.');
+                    }
+                });
+            }
+        });
+
+    </script>
+    {% endif %}
+
 {% endblock %}
 
