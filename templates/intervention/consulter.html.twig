@@ -22,6 +22,7 @@
                              <tr><td>La date de fin de l'intervention : </td><td>{{intervention.datefin|date("d/m/Y")}}</td></tr></tr>
                              <tr><td>Le descriptif de l'intervention : </td><td>{{intervention.descriptif}}</td></tr>
                              <tr><td>Le prix : </td><td>{{intervention.prix}}</td></tr>
+                             <tr><td>Le professionnel : </td><td> {{ intervention.professionnel ? intervention.professionnel.nom : 'N/A' }}</td></tr>
                     </thead>
                     <tfoot>
                 </table>

@@ -26,6 +26,10 @@ contratLister:
     path: /gestionnaire/contrat/lister
     controller: App\Controller\ContratController::contratLister
 
+listerContratByUser:
+    path: /eleve/contrat/listerByUser
+    controller: App\Controller\ContratController::listerByUser
+
 contratListerParInstrument:
     path: /gestionnaire/contrat/lister/{id}
     controller: App\Controller\ContratController::contratListerParInstrument
@@ -78,6 +82,10 @@ listerInstrument:
     path: /gestionnaire/instrument/lister
     controller: App\Controller\InstrumentController::lister
 
+listerInstrumentByUser:
+    path: /eleve/instrument/listerByUser
+    controller: App\Controller\InstrumentController::listerByUser
+
 consulterInstrument:
     path: /eleve/instrument/consulter/{id}
     controller: App\Controller\InstrumentController::consulter
@@ -86,7 +94,7 @@ ajouterInstrument:
     path: /gestionnaire/instrument/ajouter
     controller: App\Controller\InstrumentController::ajouter
 
-modiferInstrument:
+modifierInstrument:
     path: /gestionnaire/instrument/modifier/{id}
     controller: App\Controller\InstrumentController::modifier
 
@@ -119,6 +127,16 @@ modifierIntervention:
     path: /gestionnaire/intervention/modifier/{id}
     controller: App\Controller\InterventionController::modifierIntervention
 
+ajax_add_accessory:
+    path: /ajax/add-accessory
+    methods: post
+    controller: App\Controller\AccessoireController::ajaxAddAccessory
+
+ajax_del_accessory:
+    path: /ajax/del-accessory
+    methods: post
+    controller: App\Controller\AccessoireController::ajaxDelAccessory
+    
 eleveLister:
     path: /admin/eleve/lister
     controller: App\Controller\EleveController::lister

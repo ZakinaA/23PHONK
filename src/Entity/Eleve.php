@@ -58,7 +58,7 @@ class Eleve
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $tel = null;
-
+  
     public function construct()
     {
         $this->inscriptions = new ArrayCollection();
@@ -281,7 +281,6 @@ class Eleve
 
         return $this;
     }
-
 
 
     }

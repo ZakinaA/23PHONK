@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 
+
 use DateTime;
 use App\Entity\Intervention;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
 use App\Form\ContratModifierType;
 use App\Form\ContratType;
@@ -66,6 +68,7 @@ class ContratController extends AbstractController
             'interventions' => $interventions,
             'contrat' => $contrat,
             'eleve' => $eleve,
+
 
         ]);
     }
@@ -153,13 +156,10 @@ class ContratController extends AbstractController
         }
     }
 
-
-
-
-
-
-
-
-
-
+    public function listerByUser()
+    {
+//        var_dump($this->getUser()->getEleve());
+//        return  new Response("yyy");
+        return $this->render('contrat/lister.html.twig', ['user' => true]);
+    }
 }

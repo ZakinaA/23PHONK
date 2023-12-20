@@ -24,6 +24,7 @@
                         <th>Date Fin</th>
                         <th>Prix</th>
                         <th>Description</th>
+                        <th>Professionnel</th>
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -33,6 +34,7 @@
                         <th>Date Fin</th>
                         <th>Prix</th>
                         <th>Description</th>
+                        <th>Professionnel</th>
                         <th>Action</th>
                     </tr>
                     </tfoot>
@@ -43,6 +45,7 @@
                         <td>{{ i.dateFin|date('d/m/Y')}}</td>
                         <td>{{ i.prix}}</td>
                         <td>{{ i.descriptif}}</td>
+                        <td>{{ i.professionnel ? i.professionnel.nom : 'N/A' }}</td>
                         <td>
                             <a href="{{ path('modifierIntervention', {'id': i.id}) }}">✏️</a>
                             <a href="{{ path('consulterIntervention', {'id': i.id}) }}">👁️</a>
