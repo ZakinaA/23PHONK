@@ -40,25 +40,47 @@
                     </tr>
                     </tfoot>
                     <tbody>
-                    {% for i in pInstruments %}
-                        <tr>
-                        <td>{{ i.type.libelle }}</a></td>
-                        <td>{{ i.type.classe.libelle }}</td>
-                        <td>{{ i.numSerie}}</td>
-                        <td>{{ i.dateAchat|date('d/m/Y')}}</td>
-                        <td>{{ i.utilisation}}</td>
-                        <td><a href="{{ path('contratListerParInstrument', {'id': i.id}) }}">Voir l'historique</a></td>
-                        <td><a href="{{ path('interventionLister', {'id': i.id}) }}">Voir l'historique</a></td>
-                        <td>
-                            <a href="{{ path('modifierInstrument', {'id': i.id}) }}">✏️</a>
-                            <a href="{{ path('consulterInstrument', {'id': i.id}) }}">👁️</a>
-                            <a href="#">🗑️</a>
-                        </td>
+                    {% if user is defined %}
+                        {% for i in app.user.eleve.contrats %}
+                            <tr>
+                            <td>{{ i.instrument.type.libelle }}</a></td>
+                            <td>{{ i.instrument.type.classe.libelle }}</td>
+                            <td>{{ i.instrument.numSerie}}</td>
+                            <td>{{ i.instrument.dateAchat|date('d/m/Y')}}</td>
+                            <td>{{ i.instrument.utilisation}}</td>
+                            <td><a href="{{ path('contratListerParInstrument', {'id': i.instrument.id}) }}">Voir l'historique</a></td>
+                            <td><a href="{{ path('interventionLister', {'id': i.instrument.id}) }}">Voir l'historique</a></td>
+                            <td>
+                                <a href="{{ path('modifierInstrument', {'id': i.instrument.id}) }}">✏️</a>
+                                <a href="{{ path('consulterInstrument', {'id': i.instrument.id}) }}">👁️</a>
+                                <a href="#">🗑️</a>
+                            </td>
+                        {% else %}
+                            <tr>
+                                <th>Aucun instrument n'a été trouvé.</th>
+                            </tr>
+                        {% endfor %}
                     {% else %}
-                        <tr>
-                            <th>Aucun instrument n'a été trouvé.</th>
-                        </tr>
-                    {% endfor %}
+                        {% for i in pInstruments %}
+                            <tr>
+                            <td>{{ i.type.libelle }}</a></td>
+                            <td>{{ i.type.classe.libelle }}</td>
+                            <td>{{ i.numSerie}}</td>
+                            <td>{{ i.dateAchat|date('d/m/Y')}}</td>
+                            <td>{{ i.utilisation}}</td>
+                            <td><a href="{{ path('contratListerParInstrument', {'id': i.id}) }}">Voir l'historique</a></td>
+                            <td><a href="{{ path('interventionLister', {'id': i.id}) }}">Voir l'historique</a></td>
+                            <td>
+                                <a href="{{ path('modifierInstrument', {'id': i.id}) }}">✏️</a>
+                                <a href="{{ path('consulterInstrument', {'id': i.id}) }}">👁️</a>
+                                <a href="#">🗑️</a>
+                            </td>
+                        {% else %}
+                            <tr>
+                                <th>Aucun instrument n'a été trouvé.</th>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
                     </tbody>
                 </table>
             </div>
