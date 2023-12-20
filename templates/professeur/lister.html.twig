@@ -1,31 +1,47 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
-    {% block stylesheets %}{% endblock %}
-</head>
-<body>
-{% block body %}{% endblock %}
-{% block javascripts %}{% endblock %}
+{% extends 'base.html.twig' %}
+{% block title %}Professeur Lister !{% endblock %}
+{% block body %}
+    <h1 class="h3 mb-2 text-gray-800">Tous les professeurs</h1>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary"><a href="{{ path('professeurAjouter') }}">Ajouter un professeur</a></h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <tr>
+                        <th class="text-center">Nom</th>
+                        <th class="text-center">Prénom</th>
+                        <th class="text-center">Rue</th>
+                        <th class="text-center">Copos</th>
+                        <th class="text-center">Ville</th>
+                        <th class="text-center">tel</th>
+                        <th class="text-center">mail</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                    {% for p in pProfesseurs %}
+                        <tr>
+                        <td style="text-align: center; vertical-align: middle;">{{ p.nom }}</td>
+                        <td style="text-align: center; vertical-align: middle;">{{ p.prenom }}</td>
+                        <td style="text-align: center; vertical-align: middle;">{{ p.numRue }} {{ p.rue }}</td>
+                        <td style="text-align: center; vertical-align: middle;">{{ p.copos }}</td>
+                        <td style="text-align: center; vertical-align: middle;">{{ p.ville }}</td>
+                        <td style="text-align: center; vertical-align: middle;">{{ p.tel }}</td>
+                        <td style="text-align: center; vertical-align: middle;">{{ p.mail }}</td>
+                        <td style="text-align: center; vertical-align: middle;">
+                            <a href="{{ path('professeurModifier', {'id': p.id}) }}">✏️</a>
+                            <a href="{{ path('professeurConsulter', {'id': p.id}) }}">👁️</a>
+                            <a href="#">🗑️</a>
+                        </td>
+                    {% else %}
+                        <tr>
+                            <th>Aucun Professeur n'a été trouvé.</th>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
 
-LISTE DES PROFESSEURS</br>
-<table>
-    <tr>
-        <th>Nom</th>
-        <th>Prénom</th>
-    </tr>
-    {% for p in pProfesseurs %}
-        <tr>
-        <td>{{ p.nom }}</a></td>
-        <td>{{ p.prenom}}</a></td>
-    {% else %}
-        <tr>
-            <td>Aucun professeur n'a été trouvé.</td>
-        </tr>
-    {% endfor %}
-</table>
 
-
-</body>
-</html>
+{% endblock %}
