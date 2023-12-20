@@ -74,6 +74,10 @@ listerInstrument:
     path: /gestionnaire/instrument/lister
     controller: App\Controller\InstrumentController::lister
 
+listerInstrumentByUser:
+    path: /eleve/instrument/listerByUser
+    controller: App\Controller\InstrumentController::listerByUser
+
 consulterInstrument:
     path: /eleve/instrument/consulter/{id}
     controller: App\Controller\InstrumentController::consulter
