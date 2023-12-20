@@ -54,12 +54,20 @@ coursLister:
     path: /eleve/cours/lister
     controller: App\Controller\CoursController::lister
 
+coursListerByEleve:
+    path: /eleve/cours/listerByEleve
+    controller: App\Controller\CoursController::listerByEleve
+
 coursConsulter:
     path: /eleve/cours/consulter/{id}
     controller: App\Controller\CoursController::consulter
 
 coursAjouter:
     path: /gestionnaire/cours/ajouter
+    controller: App\Controller\CoursController::ajouter
+
+app_cours_ajouter:
+    path: /gestionnaire/cours/ajouter/{eleveId}
     controller: App\Controller\CoursController::ajouter
 
 coursModifier:
