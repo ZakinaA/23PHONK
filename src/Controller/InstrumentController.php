@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Accessoire;
+use App\Entity\Eleve;
 use App\Entity\Instrument;
 use App\Entity\Intervention;
 use App\Entity\TypeInstrument;
@@ -99,6 +100,12 @@ class InstrumentController extends AbstractController
                 return $this->render('instrument/ajouter.html.twig', array('form' => $form->createView(),));
             }
         }
+    }
+
+    public function listerByUser(ManagerRegistry $doctrine)
+    {
+        return $this->render('instrument/lister.html.twig',
+            ['user' => 'true']);
     }
 
 }
