@@ -56,6 +56,9 @@ class Eleve
     #[ORM\OneToMany(mappedBy: 'eleve', targetEntity: Inscription::class)]
     private Collection $inscriptions;
 
+    #[ORM\OneToOne(mappedBy: 'eleve', cascade: ['persist', 'remove'])]
+    private ?User $user = null;
+
     public function construct()
     {
         $this->inscriptions = new ArrayCollection();
@@ -252,6 +255,28 @@ class Eleve
         if (!$this->responsables->contains($responsable)) {
             $this->responsables->add($responsable);
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($user === null && $this->user !== null) {
+            $this->user->setEleve(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($user !== null && $user->getEleve() !== $this) {
+            $user->setEleve($this);
+        }
+
+        $this->user = $user;
 
         return $this;
     }
