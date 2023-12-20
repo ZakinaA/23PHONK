@@ -62,9 +62,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('contratLister') }}">
+                <a class="nav-link" href="{% if 'ROLE_ADMIN' in app.user.roles or 'ROLE_GEST' in app.user.roles %}{{ path('contratLister') }}{% else %}{{ path('listerContratByUser') }}{% endif %}">
                     <i class="fas fa-fw"></i>
-                    <span>Les contrats</span>
+                    <span>Contrats</span>
                 </a>
             </li>
             <li class="nav-item">
