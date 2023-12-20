@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html>
-<body>
+{% extends 'base.html.twig' %}
 
-<form method="post" action="{{ path('professeurAjouter') }}">
+{% block title %}Professeur Ajouter/Modifier !{% endblock %}
+
+{% block body %}
+
+    <h1>Ajout/Modification Professeur</h1>
     {{ form_start(form) }}
 
     {{ form_widget(form) }}
 
     {{ form_end(form) }}
-</form>
 
-</body>
-</html>
+{% endblock %}
