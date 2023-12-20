@@ -11,7 +11,11 @@
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary"><a href="{{ path('ajouterContrat') }}">Ajouter un contrat</a></h6>
+        {% if 'ROLE_ADMIN' in app.user.roles or 'ROLE_GEST' in app.user.roles %}
+            <h6 class="m-0 font-weight-bold text-primary"><a href="{{ path('ajouterContrat') }}">Ajouter un contrat</a></h6>
+        {% else %}
+            <h6>Liste de vos contrats</h6>
+        {% endif %}
     </div>
     <div class="card-body">
         <div class="table-responsive">
@@ -31,13 +35,64 @@
                         <td>Action</td>
                     </tr>
                 </thead>
-                  <tfoot>
+                <tfoot>
+
+                    {% if user is defined %}
+                        {% for c in app.user.eleve.contrats %}
+                            <tr>
+                                <td><a href="{{ path('consulterContrat', { 'id': c.id }) }}">{{ c.eleve.nom}}</a></td>
+                                <td>{{ c.eleve.prenom}}</td>
+                                <td>{{ c.instrument.type.libelle}} {{ c.instrument.name}}</td>
+                                <td>
+                                    {% if c.eleve.responsables is not empty %}
+                                        {% for responsable in c.eleve.responsables %}
+                                            {{ responsable.nom|upper }} {{ responsable.prenom }}
+                                        {% endfor %}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                                <td>{{ c.datedebut|date('d/m/Y') }}</td>
+                                <td>
+
+                                    {% if c.dateFin is not null %}
+                                        {{ c.dateFin|date('d/m/Y') }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                                <td>{% if c.attestationassurance is not null %}
+                                        {{ c.attestationassurance }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+
+                                <td>{{ c.etatdetailledebut}}</td>
+                                <td>{% if c.etatdetaillefin is not null %}
+                                        {{ c.etatdetaillefin }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{{ path('ContratModifier', {'id': c.id}) }}">✏️</a>
+                                    <a href="{{ path('consulterContrat', {'id': c.id}) }}">👁️</a>
+                                    <a href="#">🗑️</a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td>Aucun contrat n'a été trouvé.</td>
+                            </tr>
+                        {% endfor %}
+
+                    {% else %}
                         {% for c in pContrats %}
                             <tr>
                                 <td><a href="{{ path('consulterContrat', { 'id': c.id }) }}">{{ c.eleve.nom}}</a></td>
                                 <td>{{ c.eleve.prenom}}</td>
                                 <td>{{ c.instrument.type.libelle}} {{ c.instrument.name}}</td>
-
                                 <td>
                                     {% if c.eleve.responsables is not empty %}
                                         {% for responsable in c.eleve.responsables %}
@@ -70,25 +125,20 @@
                                         N/A
                                     {% endif %}
                                 </td>
-
-
-
                                 <td>
                                     <a href="{{ path('ContratModifier', {'id': c.id}) }}">✏️</a>
                                     <a href="{{ path('consulterContrat', {'id': c.id}) }}">👁️</a>
                                     <a href="#">🗑️</a>
                                 </td>
                             </tr>
-
-
                         {% else %}
                                     <tr>
                                         <td>Aucun contrat n'a été trouvé.</td>
                                     </tr>
                         {% endfor %}
-
-</table>
-            </tbody>
+                    {% endif %}
+                </tfoot>
+            </table>
         </div>
     </div>
 </div>
