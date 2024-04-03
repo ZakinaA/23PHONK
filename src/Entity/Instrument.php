@@ -271,6 +271,16 @@ class Instrument
 
                     return $this;
                 }
+    public function addInterventionToContracts(Intervention $intervention): void
+    {
+        $dateDebut = $intervention->getDateDebut();
+
+        foreach ($this->contrats as $contrat) {
+            if ($contrat->getDateDebut() == $dateDebut) {
+                $contrat->addIntervention($intervention);
+            }
+        }
+    }
 }
 
 

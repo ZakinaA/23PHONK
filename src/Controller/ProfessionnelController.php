@@ -30,6 +30,7 @@ class ProfessionnelController extends AbstractController
 
         $professionnel= $doctrine->getRepository(Professionnel::class)->find($id);
 
+        $metiers = $professionnel->getMetiers();
 
         if (!$professionnel) {
             throw $this->createNotFoundException(
@@ -37,7 +38,7 @@ class ProfessionnelController extends AbstractController
             );
         }
 
-        return $this->render('professionnel/consulter.html.twig', ['professionnel' => $professionnel,
+        return $this->render('professionnel/consulter.html.twig', ['professionnel' => $professionnel,'metiers' => $metiers
 
         ]);
     }

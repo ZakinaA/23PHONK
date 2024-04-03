@@ -235,15 +235,6 @@ class Contrat
         return $this->interventions;
     }
 
-    public function addIntervention(Intervention $intervention): static
-    {
-        if (!$this->interventions->contains($intervention)) {
-            $this->interventions->add($intervention);
-            $intervention->addIntervention($this);
-        }
-
-        return $this;
-    }
 
     public function removeIntervention(Intervention $intervention): static
     {
