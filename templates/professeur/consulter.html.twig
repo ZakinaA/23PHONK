@@ -1,21 +1,38 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends 'base.html.twig' %}
 
-</head>
-<body>
-<h5>PAGE DE CONSULTATION D'UN PROFESSEUR</h5>
-<p>
-<table >
-    <tr><td>Nom : </td><td>{{professeur.nom}}</td>
-    <tr><td>Prénom : </td><td>{{professeur.prenom}}</td>
+{% block title %}Consulter Professeur !{% endblock %}
 
-</table>
-<h5>Liste des types d'instruments :</h5>
-<ul>
-    {% for typeInstrument in typeInstruments %}
-        <li>{{ typeInstrument.libelle }}</li>
-    {% endfor %}
-</ul>
-</body>
-</html>
+{% block body %}
+    <div class="tab-lister-instrument">
+
+        <H1>Information sur le professeur</H1>
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary"><a href="{{ path('professeurAjouter') }}">Ajouter un professeur</a></h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+                        <tr><td>Nom : </td><td>{{professeur.nom}}</td>
+                        <tr><td>Prenom : </td><td>{{professeur.prenom}}</td>
+                        <tr><td>Rue : </td><td>{{professeur.numRue}} {{professeur.rue}}</td>
+                        <tr><td>Copos : </td><td>{{professeur.copos}}</td>
+                        <tr><td>Ville : </td><td>{{professeur.ville}}</td>
+                        <tr><td>Tel : </td><td>{{professeur.tel}}</td>
+                        <tr><td>Mail : </td><td>{{professeur.mail}}</td>
+                        <tr><td>Listes des types d'instrument : </td><td><ul>
+                                    {% for typeInstrument in typeInstruments %}
+                                        <li>{{ typeInstrument.libelle }}</li>
+                                    {% endfor %}
+                                </ul>
+                                </td>
+
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consulter Inscription !{% endblock %}
+
+{% block body %}
+<div class="tab-lister-instrument">
+
+    <H1>Information sur l'inscription</H1>
+
+    <div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"><a href="{{ path('inscriptionAjouter') }}">Ajouter une inscription</a></h6>
+    </div>
+    <div class="card-body">
+    <div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+        <tr><td>Date : </td><td>{{inscription.dateInscription|date('d/m/Y')}}</td>
+        <tr><td>Eleve : </td><td>{{inscription.eleve.nom}} {{inscription.eleve.prenom}}</td>
+        <tr><td>Instrument : </td><td>{{inscription.cours.typeInstrument.libelle}}</td>
+        <tr><td>Professeur : </td><td>{{inscription.cours.professeur.nom}} {{inscription.cours.professeur.prenom}}</td>
+        <tr><td>Jour : </td><td>{{inscription.cours.jour.libelle}}</td>
+        <tr><td>Heure : </td><td>{{inscription.cours.heureDebut|date('H:i')}} - {{inscription.cours.heureFin|date('H:i')}}</td>
+    </table>
+    </div>
+    </div>
+    </div>
+</div>
+{% endblock %}

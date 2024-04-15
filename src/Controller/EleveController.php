@@ -57,6 +57,8 @@ class EleveController extends AbstractController
         $form = $this->createForm(EleveType::class, $eleve);
         $form->handleRequest($request);
 
+        $responsables = $eleve->getResponsables();
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $eleve = $form->getData();
@@ -65,7 +67,9 @@ class EleveController extends AbstractController
             $entityManager->persist($eleve);
             $entityManager->flush();
 
-            return $this->render('eleve/consulter.html.twig', ['eleve' => $eleve,]);
+            return $this->render('eleve/consulter.html.twig', [
+                'eleve' => $eleve,
+                'responsables' => $responsables,]);
         }
         else
         {
