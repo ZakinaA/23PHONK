@@ -35,6 +35,22 @@
                         <tr>
                             <td>Email : </td><td>{{ professionnel.mail }}</td>
                         </tr>
+                        <tr>
+                            <td> Métiers : </td>
+                            <td>
+                                {% if metiers is defined %}
+                                  {% for m in metiers %}
+                                    {{ m.libelle|upper }}
+                                      {{ '/' }}
+                                {% else %}
+
+                            </td>
+                            <tr>
+                                <th>Aucun métier n'a été trouvé.</th>
+                            </tr>
+                        {% endfor %}
+                        {% endif %}
+                        </tr>
                         </thead>
                         <tfoot>
                         </tfoot>

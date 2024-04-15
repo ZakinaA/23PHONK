@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des professionnelles{% endblock %}
+
+{% block body %}
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Tous les professionnels</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary"><a href="{{ path('ajouterProfessionel') }}">Ajouter un professionnel</a></h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>Nom du professionnel : </th>
+                        <th>Numéro de la rue : </th>
+                        <th>Rue : </th>
+                        <th>Code Postal : </th>
+                        <th>Ville : </th>
+                        <th>Email : </th>
+                        <th>Action :</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    </tfoot>
+                    <tbody>
+                    {% for p in pProfessionnels %}
+                        <tr>
+                        <td>{{ p.nom }}</a></td>
+                        <td>{{ p.numrue}}</td>
+                        <td>{{ p.rue}}</td>
+                        <td>{{ p.copos}}</td>
+                        <td>{{ p.ville}}</td>
+                        <td>{{ p.mail}}</td>
+
+
+
+                        <td>
+                            <a href="{{ path('professionnelModifier', {'id': p.id}) }}">✏️</a>
+                            <a href="{{ path('consulterProfessionnel', {'id': p.id}) }}">👁️</a>
+                            <a href="#">🗑️</a>
+                        </td>
+                    {% else %}
+                        <tr>
+                            <th>Aucun instrument n'a été trouvé.</th>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

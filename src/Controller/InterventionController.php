@@ -15,6 +15,7 @@ use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class InterventionController extends AbstractController
@@ -73,7 +74,6 @@ class InterventionController extends AbstractController
 
     public function ajouterIntervention(Request $request, ManagerRegistry $doctrine, $instrumentId): Response
     {
-
         $instrument = $doctrine->getRepository(Instrument::class)->find($instrumentId);
 
         if (!$instrument) {
@@ -97,7 +97,6 @@ class InterventionController extends AbstractController
             return $this->redirectToRoute('consulterInstrument', ['id' => $instrument->getId()]);
         }
 
-
         $instruments = $doctrine->getRepository(Instrument::class)->findAll();
 
         return $this->render('intervention/ajouter.html.twig', [
@@ -106,6 +105,44 @@ class InterventionController extends AbstractController
             'instruments' => $instruments,
         ]);
     }
+
+    /*public function ajouterInterventionByContrat(ManagerRegistry $doctrine, Request $request, $id)
+    {
+        // Récupérer l'instrument par son id
+        $instrument = $doctrine->getRepository(Instrument::class)->find($id);
+
+        // Vérifier si l'instrument existe
+        if (!$instrument) {
+            throw $this->createNotFoundException('Instrument non trouvé avec l\'identifiant ' . $id);
+        }
+
+        // Créer une nouvelle intervention liée à l'instrument
+        $intervention = new Intervention();
+        $intervention->setInstrument($instrument);
+
+        var_dump($intervention->getInstrument());
+
+        // Ajouter l'association avec le contrat
+        $intervention->setContrats($instrument->getContrat());
+
+        $form = $this->createForm(InterventionType::class, $intervention);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($intervention);
+            $entityManager->flush();
+
+            // Rediriger vers la page de consultation de l'instrument ou du contrat
+            return $this->redirectToRoute('app_contrat_consulter', ['id' => $instrument->getContrat()->getId()]);
+        }
+
+        return $this->render('intervention/ajouter.html.twig', [
+            'form' => $form->createView(),
+            'instrument' => $instrument,
+        ]);
+    }*/
+
     public function modifierIntervention(ManagerRegistry $doctrine, $id, Request $request)
     {
 
