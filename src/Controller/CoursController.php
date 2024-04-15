@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Eleve;
 use App\Entity\TypeCours;
 use MongoDB\Driver\Manager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -58,6 +59,31 @@ class CoursController extends AbstractController
             'pCours' => $cours,
             'countByTypeInstrument' => $countByTypeInstrument,
         ]);
+    }
+
+    public function listerByEleve(ManagerRegistry $doctrine)
+    {
+        $repository = $doctrine->getRepository(Cours::class);
+        $cours = $repository->findAll();
+
+        // Tri des cours par type d'instrument, jour (trié par ID) et heure
+        usort($cours, function ($a, $b) {
+            $dayIdA = $a->getJour()->getId();
+            $dayIdB = $b->getJour()->getId();
+
+            if ($dayIdA === $dayIdB) {
+                $heureDebutA = $a->getHeureDebut()->getTimestamp();
+                $heureDebutB = $b->getHeureDebut()->getTimestamp();
+                return $heureDebutA - $heureDebutB;
+            }
+
+            return $dayIdA - $dayIdB;
+        });
+
+
+        return $this->render('cours/lister.html.twig',
+            ['User' => true,
+                'pCours' => $cours,]);
     }
 
     public function consulter(ManagerRegistry $doctrine, int $id){

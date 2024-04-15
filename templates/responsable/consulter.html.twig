@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consulter Responsable !{% endblock %}
+
+{% block body %}
+    <div class="tab-lister-instrument">
+
+        <H1>Information sur le Responsable</H1>
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary"><a href="{{ path('responsableAjouter') }}">Ajouter un responsable</a></h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+                        <tr><td>Nom : </td><td>{{responsable.nom}}</td>
+                        <tr><td>Prenom : </td><td>{{responsable.prenom}}</td>
+                        <tr><td>Rue : </td><td>{{responsable.numRue}} {{responsable.rue}}</td>
+                        <tr><td>Copos : </td><td>{{responsable.copos}}</td>
+                        <tr><td>Ville : </td><td>{{responsable.ville}}</td>
+                        <tr><td>Tel : </td><td>{{responsable.tel}}</td>
+                        <tr><td>Mail : </td><td>{{responsable.mail}}</td>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
