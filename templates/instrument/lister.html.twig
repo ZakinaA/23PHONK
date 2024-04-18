@@ -44,7 +44,7 @@
                     </tr>
                     </tfoot>
                     <tbody>
-                    {% if user is defined %}
+                    {% if user is defined and app.user is not null and app.user.eleve is not null %}
                         {% for i in app.user.eleve.contrats %}
                             <tr>
                             <td>{{ i.instrument.type.libelle }}</a></td>
@@ -65,6 +65,7 @@
                             </tr>
                         {% endfor %}
                     {% else %}
+                    {% if pInstruments is defined %}
                         {% for i in pInstruments %}
                             <tr>
                             <td>{{ i.type.libelle }}</a></td>
@@ -83,7 +84,10 @@
                             <tr>
                                 <th>Aucun instrument n'a été trouvé.</th>
                             </tr>
+
                         {% endfor %}
+
+                    {% endif %}
                     {% endif %}
                     </tbody>
                 </table>
