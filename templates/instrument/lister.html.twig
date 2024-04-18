@@ -54,10 +54,13 @@
                             <td>{{ i.instrument.utilisation}}</td>
                             <td><a href="{{ path('contratListerParInstrument', {'id': i.instrument.id}) }}">Voir l'historique</a></td>
                             <td><a href="{{ path('interventionLister', {'id': i.instrument.id}) }}">Voir l'historique</a></td>
-                            <td>
+                            <td>{% if is_granted('ROLE_ADMIN') %}
                                 <a href="{{ path('modifierInstrument', {'id': i.instrument.id}) }}">✏️</a>
+                                {% endif %}
                                 <a href="{{ path('consulterInstrument', {'id': i.instrument.id}) }}">👁️</a>
+                                {% if is_granted('ROLE_ADMIN') %}
                                 <a href="#">🗑️</a>
+                                {% endif %}
                             </td>
                         {% else %}
                             <tr>
@@ -76,9 +79,13 @@
                             <td><a href="{{ path('contratListerParInstrument', {'id': i.id}) }}">Voir l'historique</a></td>
                             <td><a href="{{ path('interventionLister', {'id': i.id}) }}">Voir l'historique</a></td>
                             <td>
+                                {% if is_granted('ROLE_ADMIN') %}
                                 <a href="{{ path('modifierInstrument', {'id': i.id}) }}">✏️</a>
+                                {% endif %}
                                 <a href="{{ path('consulterInstrument', {'id': i.id}) }}">👁️</a>
+                                {% if is_granted('ROLE_ADMIN') %}
                                 <a href="#">🗑️</a>
+                                {% endif %}
                             </td>
                         {% else %}
                             <tr>

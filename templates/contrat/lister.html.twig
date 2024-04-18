@@ -76,9 +76,13 @@
                                     {% endif %}
                                 </td>
                                 <td>
+                                    {% if is_granted('ROLE_ADMIN') %}
                                     <a href="{{ path('ContratModifier', {'id': c.id}) }}">✏️</a>
+                                    {% endif %}
                                     <a href="{{ path('consulterContrat', {'id': c.id}) }}">👁️</a>
+                                    {% if is_granted('ROLE_ADMIN') %}
                                     <a href="#">🗑️</a>
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% else %}
