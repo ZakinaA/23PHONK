@@ -8,9 +8,11 @@
     <H1>Information sur le Cours {{cours.typeCours.libelle}} de {{cours.typeInstrument.libelle}} du professeur {{cours.professeur.prenom}} {{cours.professeur.nom}}</H1>
 
     <div class="card shadow mb-4">
+        {% if is_granted('ROLE_ADMIN') %}
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary"><a href="{{ path('coursAjouter') }}">Ajouter un cours</a></h6>
     </div>
+        {% endif %}
     <div class="card-body">
     <div class="table-responsive">
     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

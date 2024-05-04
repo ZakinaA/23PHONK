@@ -26,8 +26,12 @@
                         <th>N°Serie</th>
                         <th>Achat</th>
                         <th>Utilisation</th>
+                        {% if is_granted('ROLE_ADMIN') %}
                         <th>Contrat de prêt</th>
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
                         <th>Intervention</th>
+                        {% endif %}
                         <th>Action</th>
                     </tr>
                     </thead>
@@ -38,13 +42,17 @@
                         <th>N°Serie</th>
                         <th>Achat</th>
                         <th>Utilisation</th>
-                        <th>Contrat de prêt</th>
-                        <th>Intervention</th>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <th>Contrat de prêt</th>
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <th>Intervention</th>
+                        {% endif %}
                         <th>Action</th>
                     </tr>
                     </tfoot>
                     <tbody>
-                    {% if user is defined %}
+                    {% if user is defined and app.user is not null and app.user.eleve is not null %}
                         {% for i in app.user.eleve.contrats %}
                             <tr>
                             <td>{{ i.instrument.type.libelle }}</a></td>
@@ -52,12 +60,19 @@
                             <td>{{ i.instrument.numSerie}}</td>
                             <td>{{ i.instrument.dateAchat|date('d/m/Y')}}</td>
                             <td>{{ i.instrument.utilisation}}</td>
+                            {% if is_granted('ROLE_ADMIN') %}
                             <td><a href="{{ path('contratListerParInstrument', {'id': i.instrument.id}) }}">Voir l'historique</a></td>
+                            {% endif %}
+                            {% if is_granted('ROLE_ADMIN') %}
                             <td><a href="{{ path('interventionLister', {'id': i.instrument.id}) }}">Voir l'historique</a></td>
-                            <td>
+                            {% endif %}
+                            <td>{% if is_granted('ROLE_ADMIN') %}
                                 <a href="{{ path('modifierInstrument', {'id': i.instrument.id}) }}">✏️</a>
+                                {% endif %}
                                 <a href="{{ path('consulterInstrument', {'id': i.instrument.id}) }}">👁️</a>
+                                {% if is_granted('ROLE_ADMIN') %}
                                 <a href="#">🗑️</a>
+                                {% endif %}
                             </td>
                         {% else %}
                             <tr>
@@ -65,6 +80,7 @@
                             </tr>
                         {% endfor %}
                     {% else %}
+                    {% if pInstruments is defined %}
                         {% for i in pInstruments %}
                             <tr>
                             <td>{{ i.type.libelle }}</a></td>
@@ -72,18 +88,29 @@
                             <td>{{ i.numSerie}}</td>
                             <td>{{ i.dateAchat|date('d/m/Y')}}</td>
                             <td>{{ i.utilisation}}</td>
+                             {% if is_granted('ROLE_ADMIN') %}
                             <td><a href="{{ path('contratListerParInstrument', {'id': i.id}) }}">Voir l'historique</a></td>
+                            {% endif %}
+                            {% if is_granted('ROLE_ADMIN') %}
                             <td><a href="{{ path('interventionLister', {'id': i.id}) }}">Voir l'historique</a></td>
+                                {% endif %}
                             <td>
+                                {% if is_granted('ROLE_ADMIN') %}
                                 <a href="{{ path('modifierInstrument', {'id': i.id}) }}">✏️</a>
+                                {% endif %}
                                 <a href="{{ path('consulterInstrument', {'id': i.id}) }}">👁️</a>
+                                {% if is_granted('ROLE_ADMIN') %}
                                 <a href="#">🗑️</a>
+                                {% endif %}
                             </td>
                         {% else %}
                             <tr>
                                 <th>Aucun instrument n'a été trouvé.</th>
                             </tr>
+
                         {% endfor %}
+
+                    {% endif %}
                     {% endif %}
                     </tbody>
                 </table>

@@ -37,7 +37,7 @@
                 </thead>
                 <tfoot>
 
-                    {% if user is defined %}
+                {% if user is defined and app.user is not null and app.user.eleve is not null %}
                         {% for c in app.user.eleve.contrats %}
                             <tr>
                                 <td><a href="{{ path('consulterContrat', { 'id': c.id }) }}">{{ c.eleve.nom}}</a></td>
@@ -76,9 +76,13 @@
                                     {% endif %}
                                 </td>
                                 <td>
+                                    {% if is_granted('ROLE_ADMIN') %}
                                     <a href="{{ path('ContratModifier', {'id': c.id}) }}">✏️</a>
+                                    {% endif %}
                                     <a href="{{ path('consulterContrat', {'id': c.id}) }}">👁️</a>
+                                    {% if is_granted('ROLE_ADMIN') %}
                                     <a href="#">🗑️</a>
+                                    {% endif %}
                                 </td>
                             </tr>
                         {% else %}
@@ -88,7 +92,8 @@
                         {% endfor %}
 
                     {% else %}
-                        {% for c in pContrats %}
+                {% if pContrats is defined %}
+                    {% for c in pContrats %}
                             <tr>
                                 <td><a href="{{ path('consulterContrat', { 'id': c.id }) }}">{{ c.eleve.nom}}</a></td>
                                 <td>{{ c.eleve.prenom}}</td>
@@ -136,6 +141,7 @@
                                         <td>Aucun contrat n'a été trouvé.</td>
                                     </tr>
                         {% endfor %}
+                {% endif %}
                     {% endif %}
                 </tfoot>
             </table>
