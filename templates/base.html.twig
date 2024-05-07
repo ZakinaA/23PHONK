@@ -73,33 +73,35 @@
                     <span>Les cours</span>
                 </a>
             </li>
+            {% if is_granted("ROLE_GEST") %}
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('professionnelLister') }}">
                     <i class="fas fa-fw"></i>
                     <span>Les professionnels</span>
                 </a>
             </li>
-
+            {% endif %}
+            {% if is_granted("ROLE_ADMIN") %}
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('eleveLister') }}">
                     <i class="fas fa-fw"></i>
                     <span>Les élèves</span>
                 </a>
-            </li>
-
+            </li>{% endif %}
+            {% if is_granted("ROLE_GEST") %}
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('professeurLister') }}">
                     <i class="fas fa-fw"></i>
                     <span>Les professeurs</span>
                 </a>
-            </li>
-
+            </li>{% endif %}
+            {% if is_granted("ROLE_ADMIN") %}
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('inscriptionLister') }}">
                     <i class="fas fa-fw"></i>
                     <span>Les inscriptions</span>
                 </a>
-            </li>
+            </li>{% endif %}
 
 {#            <!-- Divider -->#}
 {#            <hr class="sidebar-divider">#}

@@ -54,7 +54,7 @@ class ContratType extends AbstractType
                 'label' => 'Attestation d\'assurance de l\'élève',
                 'attr' => ['class' => 'form-control form-control-user'],
                 'mapped' => false,
-                'required' => false,
+                'required' => true,
             ])
             ->add('etatDetailleDebut', null, [
                 'label' => 'Etat détaillé de l\'instrument au début du prêt',

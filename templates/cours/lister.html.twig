@@ -32,7 +32,9 @@
                                     <td style="text-align: center; vertical-align: middle;">{{ c.cours.typeInstrument.libelle }}</td>
                                     <td style="text-align: center; vertical-align: middle;">{{ c.cours.professeur.nom }}</td>
                                     <td style="text-align: center; vertical-align: middle;">
+                                        {% if is_granted('ROLE_ADMIN') %}
                                         <a href="{{ path('coursModifier', {'id': c.cours.id}) }}">✏️</a>
+                                        {% endif %}
                                         <a href="{{ path('coursConsulter', {'id': c.cours.id}) }}">👁️</a>
                                     </td>
                                 </tr>
@@ -46,7 +48,9 @@
                         <h1 class="h3 mb-2 text-gray-800">Tous les cours</h1>
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
+                                {% if is_granted('ROLE_ADMIN') %}
                                 <h6 class="m-0 font-weight-bold text-primary"><a href="{{ path('coursAjouter') }}">Ajouter un cours</a></h6>
+                                {% endif %}
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -93,8 +97,11 @@
                                     <td style="text-align: center; vertical-align: middle;">{{ c.ageMaxi }}</td>
                                     <td style="text-align: center; vertical-align: middle;">{{ c.nbPlaces }}</td>
                                     <td style="text-align: center; vertical-align: middle;">
-                                        <a href="{{ path('coursModifier', {'id': c.id}) }}">✏️</a>
+                                        {% if is_granted('ROLE_ADMIN') %}
+                                            <a href="{{ path('coursModifier', {'id': c.id}) }}">✏️</a>
+                                        {% endif %}
                                         <a href="{{ path('coursConsulter', {'id': c.id}) }}">👁️</a>
+
                                     </td>
                                 </tr>
                             {% endfor %}
