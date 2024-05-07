@@ -70,9 +70,7 @@
                                 <a href="{{ path('modifierInstrument', {'id': i.instrument.id}) }}">✏️</a>
                                 {% endif %}
                                 <a href="{{ path('consulterInstrument', {'id': i.instrument.id}) }}">👁️</a>
-                                {% if is_granted('ROLE_ADMIN') %}
-                                <a href="#">🗑️</a>
-                                {% endif %}
+
                             </td>
                         {% else %}
                             <tr>
@@ -99,9 +97,7 @@
                                 <a href="{{ path('modifierInstrument', {'id': i.id}) }}">✏️</a>
                                 {% endif %}
                                 <a href="{{ path('consulterInstrument', {'id': i.id}) }}">👁️</a>
-                                {% if is_granted('ROLE_ADMIN') %}
-                                <a href="#">🗑️</a>
-                                {% endif %}
+
                             </td>
                         {% else %}
                             <tr>

@@ -51,9 +51,7 @@
                             <a href="{{ path('modifierIntervention', {'id': i.id}) }}">✏️</a>
                             {% endif %}
                             <a href="{{ path('consulterIntervention', {'id': i.id}) }}">👁️</a>
-                            {% if is_granted('ROLE_ADMIN') %}
-                            <a href="#">🗑️</a>
-                            {% endif %}
+
                         </td>
                     {% else %}
                         <tr>

@@ -36,9 +36,6 @@
                                         <a href="{{ path('coursModifier', {'id': c.cours.id}) }}">✏️</a>
                                         {% endif %}
                                         <a href="{{ path('coursConsulter', {'id': c.cours.id}) }}">👁️</a>
-                                        {% if is_granted('ROLE_ADMIN') %}
-                                        <a href="#">🗑️</a>
-                                        {% endif %}
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -104,9 +101,7 @@
                                             <a href="{{ path('coursModifier', {'id': c.id}) }}">✏️</a>
                                         {% endif %}
                                         <a href="{{ path('coursConsulter', {'id': c.id}) }}">👁️</a>
-                                        {% if is_granted('ROLE_ADMIN') %}
-                                        <a href="#">🗑️</a>
-                                        {% endif %}
+
                                     </td>
                                 </tr>
                             {% endfor %}
