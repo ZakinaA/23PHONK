@@ -37,13 +37,9 @@
                         <td>{{ p.copos}}</td>
                         <td>{{ p.ville}}</td>
                         <td>{{ p.mail}}</td>
-
-
-
                         <td>
                             <a href="{{ path('professionnelModifier', {'id': p.id}) }}">✏️</a>
                             <a href="{{ path('consulterProfessionnel', {'id': p.id}) }}">👁️</a>
-                            <a href="#">🗑️</a>
                         </td>
                     {% else %}
                         <tr>
