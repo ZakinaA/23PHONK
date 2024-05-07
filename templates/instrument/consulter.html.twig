@@ -112,7 +112,6 @@
                                 <div class="dropdown-header">Action :</div>
                                 <a class="dropdown-item" href="#" id="addAccessoryBtn">Ajouter</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Tout supprimmer</a>
                             </div>
                         </div>
                         {% endif %}
@@ -124,12 +123,6 @@
                             {% for i in pAccessoires %}
                                 <tr>
                                     <td>{{ i.libelle }}</a></td>
-
-                                    {% if 'ROLE_ADMIN' in app.user.roles or 'ROLE_GEST' in app.user.roles %}
-                                    <td>
-                                        <a href="#" class="accDelBTN" data="{{ i.id }}">🗑️</a>
-                                    </td>
-                                    {% endif %}
                                 </tr>
                             {% else %}
                                 <tr>
